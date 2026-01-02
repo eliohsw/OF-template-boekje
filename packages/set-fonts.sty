@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.3 Minimal Fonts setup]
+\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.3.1 Minimal Fonts setup]
 
 \RequirePackage{iftex}
 \ifPDFTeX
@@ -55,22 +55,24 @@
 
 \makeatletter
 \SetFontIfAvailable{\setmainfont}{%
-  CMU Serif,
-  STIX Two Text, Times New Roman,
-  TeX Gyre Termes, Latin Modern Roman
+CMU Serif,%
+STIX Two Text,%
+Times New Roman,%
+TeX Gyre Termes,%
+Latin Modern Roman%
 }
 
 % If Source Sans 3 is installed, also try to enable a real semibold series.
 \IfFontExistsTF{Source Sans 3}{%
   \PickFirstFontIfAvailable\sf@ss@sb{%
-    Source Sans 3 Semibold,
-    Source Sans 3 SemiBold,
-    SourceSans3-Semibold
+Source Sans 3 Semibold,%
+Source Sans 3 SemiBold,%
+SourceSans3-Semibold%
   }%
   \PickFirstFontIfAvailable\sf@ss@sbi{%
-    Source Sans 3 Semibold Italic,
-    Source Sans 3 SemiBold Italic,
-    SourceSans3-SemiboldIt
+Source Sans 3 Semibold Italic,%
+Source Sans 3 SemiBold Italic,%
+SourceSans3-SemiboldIt%
   }%
   \ifx\sf@ss@sb\@empty
     \setsansfont{Source Sans 3}%
@@ -93,31 +95,44 @@
   \fi
 }{%
   \SetFontIfAvailable{\setsansfont}{%
-    Helvetica Neue,
-    TeX Gyre Heros, Latin Modern Sans
+Helvetica Neue,%
+TeX Gyre Heros,%
+Latin Modern Sans%
   }%
 }
 
 \SetFontIfAvailable{\setmonofont}{%
-  SF Mono, Menlo,
-  Inconsolata, Latin Modern Mono
+SF Mono,%
+Menlo,%
+Inconsolata,%
+Latin Modern Mono%
 }
 \makeatother
 
 
 \makeatletter
 \SetFontIfAvailable{\setCJKmainfont}{%
-  TW-MOE-Std-Kai,
-  Source Han Sans TC, Source Han Sans SC,
-  Noto Serif CJK TC, Noto Serif CJK SC
+TW-MOE-Std-Kai,%
+Source Han Sans TC,%
+Source Han Sans SC,%
+Noto Serif CJK TC,%
+Noto Serif CJK SC,%
+FandolKai,%
+FandolSong%
 }
 \SetFontIfAvailable{\setCJKsansfont}{%
-  Source Han Sans TC, Source Han Sans SC,
-  Noto Sans CJK TC, Noto Sans CJK SC
+Source Han Sans TC,%
+Source Han Sans SC,%
+Noto Sans CJK TC,%
+Noto Sans CJK SC,%
+FandolHei%
 }
 \SetFontIfAvailable{\setCJKmonofont}{%
-  Source Han Sans TC, Source Han Sans SC,
-  Noto Sans Mono CJK TC, Noto Sans Mono CJK SC
+Source Han Sans TC,%
+Source Han Sans SC,%
+Noto Sans Mono CJK TC,%
+Noto Sans Mono CJK SC,%
+FandolFang%
 }
 \makeatother
 
@@ -130,14 +145,14 @@
 \makeatletter
 \IfFontExistsTF{Source Sans 3}{%
   \PickFirstFontIfAvailable\sf@ss@sb{%
-    Source Sans 3 Semibold,
-    Source Sans 3 SemiBold,
-    SourceSans3-Semibold
+Source Sans 3 Semibold,%
+Source Sans 3 SemiBold,%
+SourceSans3-Semibold%
   }%
   \PickFirstFontIfAvailable\sf@ss@sbi{%
-    Source Sans 3 Semibold Italic,
-    Source Sans 3 SemiBold Italic,
-    SourceSans3-SemiboldIt
+Source Sans 3 Semibold Italic,%
+Source Sans 3 SemiBold Italic,%
+SourceSans3-SemiboldIt%
   }%
   \ifx\sf@ss@sb\@empty
     \newfontfamily\SourceSans{Source Sans 3}%
