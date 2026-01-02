@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.2 Minimal Fonts setup]
+\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.3 Minimal Fonts setup]
 
 \RequirePackage{iftex}
 \ifPDFTeX
@@ -32,6 +32,26 @@
 }
 \makeatother
 
+\makeatletter
+\newcommand*\PickFirstFontIfAvailable[2]{%
+  % #1: macro to receive chosen font name (expanded), #2: comma-separated list
+  \def\sf@found{0}%
+  \def\sf@chosen{}%
+  \@for\sf@name:=#2\do{%
+    \ifnum\sf@found=0\relax
+      \IfFontExistsTF{\sf@name}{%
+        \def\sf@found{1}\edef\sf@chosen{\sf@name}%
+      }{}%
+    \fi
+  }%
+  \ifnum\sf@found=1\relax
+    \edef#1{\sf@chosen}%
+  \else
+    \edef#1{}%
+  \fi
+}
+\makeatother
+
 
 \makeatletter
 \SetFontIfAvailable{\setmainfont}{%
@@ -40,9 +60,42 @@
   TeX Gyre Termes, Latin Modern Roman
 }
 
-\SetFontIfAvailable{\setsansfont}{%
-  Helvetica Neue, Arial,
-  TeX Gyre Heros, Latin Modern Sans
+% If Source Sans 3 is installed, also try to enable a real semibold series.
+\IfFontExistsTF{Source Sans 3}{%
+  \PickFirstFontIfAvailable\sf@ss@sb{%
+    Source Sans 3 Semibold,
+    Source Sans 3 SemiBold,
+    SourceSans3-Semibold
+  }%
+  \PickFirstFontIfAvailable\sf@ss@sbi{%
+    Source Sans 3 Semibold Italic,
+    Source Sans 3 SemiBold Italic,
+    SourceSans3-SemiboldIt
+  }%
+  \ifx\sf@ss@sb\@empty
+    \setsansfont{Source Sans 3}%
+    \PackageWarning{set-fonts}{Source Sans 3 found, but no Semibold face found; \string\sbseries will fall back to \string\bfseries}%
+  \else
+    \ifx\sf@ss@sbi\@empty
+      \setsansfont[
+        FontFace = {sb}{n}{\sf@ss@sb},
+        FontFace = {sbx}{n}{\sf@ss@sb}
+      ]{Source Sans 3}%
+      \PackageWarning{set-fonts}{Source Sans 3 Semibold found, but no Semibold Italic face found}%
+    \else
+      \setsansfont[
+        FontFace = {sb}{n}{\sf@ss@sb},
+        FontFace = {sb}{it}{\sf@ss@sbi},
+        FontFace = {sbx}{n}{\sf@ss@sb},
+        FontFace = {sbx}{it}{\sf@ss@sbi}
+      ]{Source Sans 3}%
+    \fi
+  \fi
+}{%
+  \SetFontIfAvailable{\setsansfont}{%
+    Helvetica Neue,
+    TeX Gyre Heros, Latin Modern Sans
+  }%
 }
 
 \SetFontIfAvailable{\setmonofont}{%
@@ -69,12 +122,52 @@
 \makeatother
 
 \newfontfamily\Arial{Arial}
-\newfontfamily\BebasNeue{Bebas Neue}
+% Bebas Neue is an all-caps display font; avoid global Scale=MatchLowercase shrinking it.
+\newfontfamily\BebasNeue[Scale=MatchUppercase]{Bebas Neue}
 \newfontfamily\TeXGyreHeros{TeX Gyre Heros}
 \newfontfamily\TimesNewRoman{Times New Roman}
 
-\DeclareRobustCommand{\sbseries}{\fontseries{sb}\selectfont}
-\DeclareTextFontCommand{\textsb}{\sbseries}
+\makeatletter
+\IfFontExistsTF{Source Sans 3}{%
+  \PickFirstFontIfAvailable\sf@ss@sb{%
+    Source Sans 3 Semibold,
+    Source Sans 3 SemiBold,
+    SourceSans3-Semibold
+  }%
+  \PickFirstFontIfAvailable\sf@ss@sbi{%
+    Source Sans 3 Semibold Italic,
+    Source Sans 3 SemiBold Italic,
+    SourceSans3-SemiboldIt
+  }%
+  \ifx\sf@ss@sb\@empty
+    \newfontfamily\SourceSans{Source Sans 3}%
+    \DeclareRobustCommand{\sbseries}{\bfseries}%
+    \DeclareTextFontCommand{\textsb}{\sbseries}%
+  \else
+    \ifx\sf@ss@sbi\@empty
+      \newfontfamily\SourceSans[
+        Font = {Source Sans 3},
+        FontFace = {sb}{n}{\sf@ss@sb},
+        FontFace = {sbx}{n}{\sf@ss@sb}
+      ]{Source Sans 3}
+    \else
+      \newfontfamily\SourceSans[
+        Font = {Source Sans 3},
+        FontFace = {sb}{n}{\sf@ss@sb},
+        FontFace = {sb}{it}{\sf@ss@sbi},
+        FontFace = {sbx}{n}{\sf@ss@sb},
+        FontFace = {sbx}{it}{\sf@ss@sbi}
+      ]{Source Sans 3}
+    \fi
+    \DeclareRobustCommand{\sbseries}{\fontseries{sb}\selectfont}%
+    \DeclareTextFontCommand{\textsb}{\sbseries}%
+  \fi
+}{%
+  \newfontfamily\SourceSans{Latin Modern Sans}%
+  \DeclareRobustCommand{\sbseries}{\bfseries}%
+  \DeclareTextFontCommand{\textsb}{\sbseries}%
+}
+\makeatother
 
 \xeCJKsetup{
   CJKmath=true,
