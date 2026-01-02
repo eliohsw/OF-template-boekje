@@ -1,0 +1,42 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{packages/set-operator}[2025/09/06 v0.3 Undefined Operators]
+
+\RequirePackage{amsmath, amssymb}
+
+
+% ========================================================================
+
+\newcommand{\adj}{\operatorname{adj}}
+\newcommand{\csch}{\operatorname{csch}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\diff}{\operatorname{diff}}
+\newcommand{\dis}{\operatorname{dis}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\li}{\operatorname{li}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\per}{\operatorname{per}}
+\newcommand{\Per}{\operatorname{Per}}
+\newcommand{\pow}[2]{\mathbf{Pow}_{#1}(#2)}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\res}{\operatorname{Res}}
+\newcommand{\sech}{\operatorname{sech}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\Span}{\operatorname{span}}           % special case: \span is already defined
+\newcommand{\transpose}[1]{{#1}^\text{T}}
+
+% ========================================================================
+
+\newcommand{\bsquare}{\tikz[baseline=0.75mm]{
+  \draw[line width=0.5pt] (0,0) -- ++(0.4,0) -- ++(0,0.4) -- ++(-0.4,0) --cycle;}
+}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+  \node[shape=circle, draw, inner sep=2pt, line width=0.5pt] (char) {#1};}
+}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+% ========================================================================

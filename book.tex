@@ -1,0 +1,122 @@
+\documentclass[11pt, a4paper]{memoir}
+\message{2026/01/03 v0.1 XeLaTeX Boekje Template}
+
+\usepackage[
+  inner=2.8cm, outer=2.2cm, top=2.5cm, bottom=2cm,
+  showframe
+]{geometry}
+
+\makeatletter
+\def\input@path{{packages/}}
+\makeatother
+
+\usepackage{set-memoir}
+\usepackage[tw]{set-theorems}
+\usepackage{set-fonts}
+\usepackage{set-operator}
+\usepackage{set-tikz}
+\usepackage{set-misc}
+
+% Memoir native style settings
+\makechapterstyle{MyChapter}{%
+  \renewcommand*\chapnamefont{\sffamily\huge\sbseries}%
+  \renewcommand*\chapnumfont {\sffamily\huge\sbseries}%
+  \renewcommand*\chaptitlefont{\sffamily\Huge\sbseries}%
+  \renewcommand*\printchaptername{\chapnamefont \MakeUppercase{Chapter}}%
+  \renewcommand*\printchapternum{\chapnumfont\ \thechapter}%
+  \renewcommand*\afterchapternum{\par\vskip 10pt}%
+}
+\chapterstyle{MyChapter}
+
+\setsecheadstyle{\sffamily\Large\sbseries}
+\setsubsecheadstyle{\sffamily\large\sbseries}
+\setsubsubsecheadstyle{\sffamily\normalsize\sbseries}
+
+% Shortcut for indexing and printing
+\newcommand{\ix}[1]{\index{#1}#1}
+
+% Enable indexing (comment out if not needed)
+% \makeindex 
+
+% Enable acronyms and glossary (comment out if not needed)
+% \input{./contents/glossary.tex}
+% \makeglossaries
+
+\addbibresource{./contents/bibliography/references.bib}
+
+% ================================================================================================
+
+\begin{document}
+
+\justifying
+\setlength{\parindent}{22pt}
+
+\input{./contents/titlepage.tex}
+
+\pagenumbering{roman}
+
+% Page style settings
+\makepagestyle{MyPage}
+\makeevenhead{MyPage}{\sffamily\itshape\leftmark}{}{}
+\makeoddhead {MyPage}{}{}{\sffamily\rightmark}
+\makeevenfoot{MyPage}{\thepage}{}{}
+\makeoddfoot {MyPage}{}{\thepage}{}
+\makeheadrule{MyPage}{\headwidth}{0.4pt}
+\makefootrule{MyPage}{\headwidth}{0.4pt}{\footruleskip}
+\pagestyle{MyPage}
+
+% ================================================================================================
+
+\frontmatter
+
+% Add preface here (comment out if not needed)
+% \input{contents/preface.tex}
+
+% Print Table of Contents
+\renewcommand{\cftdot}{} % Remove dots in TOC
+\renewcommand{\printtoctitle}[1]{\Huge\sffamily\sbseries #1} % Set TOC title font
+
+\tableofcontents
+
+% ================================================================================================
+
+\mainmatter
+
+% Epigraph settings
+\setlength{\epigraphrule}{0.0pt}
+\setlength{\epigraphwidth}{0.6\textwidth}
+% \renewcommand{\textflush}{flushleft}
+% \renewcommand{\sourceflush}{flushright}
+
+% Add more chapters here
+% Chapters may be separated by parts, use \part{} between chapters.
+
+\input{contents/chapters/chapter01.tex}
+
+% Appendices (comment out if not needed)
+% \appendix
+% \renewcommand*\printchaptername{\chapnamefont \MakeUppercase{Appendix}}%
+
+% Add more appendices here
+
+% \input{contents/appendices/appendix01.tex}
+
+% ================================================================================================
+
+\backmatter
+
+% Print Acronyms and Glossary (comment out if not needed)
+% \printglossary[type=\acronymtype]
+% \addcontentsline{toc}{chapter}{Acronyms}
+
+% \printglossary
+% \addcontentsline{toc}{chapter}{Glossary}
+
+% Print Bibliography (comment out if not needed)
+% \printbibliography[heading=bibintoc]
+
+% Print Index (comment out if not needed)
+% \printindex
+
+
+\end{document}

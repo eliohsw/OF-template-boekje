@@ -1,0 +1,83 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.2 Minimal Fonts setup]
+
+\RequirePackage{iftex}
+\ifPDFTeX
+  \PackageError{set-fonts}{This package requires XeLaTeX or LuaLaTeX}{%
+    Use \string\xelatex\space or \string\lualatex.}
+\fi
+
+\RequirePackage[no-math]{fontspec}
+\defaultfontfeatures{Ligatures=TeX, Scale=MatchLowercase}
+
+\RequirePackage{xeCJK}
+
+\RequirePackage{etoolbox}
+\makeatletter
+\newcommand*\SetFontIfAvailable[2]{%
+  \def\sf@found{0}%
+  \def\sf@chosen{}%
+  \@for\sf@name:=#2\do{%
+    \ifnum\sf@found=0\relax
+      \IfFontExistsTF{\sf@name}{%
+        \def\sf@found{1}\edef\sf@chosen{\sf@name}%
+      }{}%
+    \fi
+  }%
+  \ifnum\sf@found=1\relax
+    #1{\sf@chosen}%
+  \else
+    \PackageWarning{set-fonts}{None of these fonts were found: #2. Using defaults.}%
+  \fi
+}
+\makeatother
+
+
+\makeatletter
+\SetFontIfAvailable{\setmainfont}{%
+  CMU Serif,
+  STIX Two Text, Times New Roman,
+  TeX Gyre Termes, Latin Modern Roman
+}
+
+\SetFontIfAvailable{\setsansfont}{%
+  Helvetica Neue, Arial,
+  TeX Gyre Heros, Latin Modern Sans
+}
+
+\SetFontIfAvailable{\setmonofont}{%
+  SF Mono, Menlo,
+  Inconsolata, Latin Modern Mono
+}
+\makeatother
+
+
+\makeatletter
+\SetFontIfAvailable{\setCJKmainfont}{%
+  TW-MOE-Std-Kai,
+  Source Han Sans TC, Source Han Sans SC,
+  Noto Serif CJK TC, Noto Serif CJK SC
+}
+\SetFontIfAvailable{\setCJKsansfont}{%
+  Source Han Sans TC, Source Han Sans SC,
+  Noto Sans CJK TC, Noto Sans CJK SC
+}
+\SetFontIfAvailable{\setCJKmonofont}{%
+  Source Han Sans TC, Source Han Sans SC,
+  Noto Sans Mono CJK TC, Noto Sans Mono CJK SC
+}
+\makeatother
+
+\newfontfamily\Arial{Arial}
+\newfontfamily\BebasNeue{Bebas Neue}
+\newfontfamily\TeXGyreHeros{TeX Gyre Heros}
+\newfontfamily\TimesNewRoman{Times New Roman}
+
+\DeclareRobustCommand{\sbseries}{\fontseries{sb}\selectfont}
+\DeclareTextFontCommand{\textsb}{\sbseries}
+
+\xeCJKsetup{
+  CJKmath=true,
+  PunctStyle=kaiming,
+  RubberPunctSkip=true
+}

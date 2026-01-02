@@ -1,0 +1,122 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{packages/set-memoir}[2025/12/31 v0.3 Memoir Template Required Packages]
+
+% ========================================================================
+
+\RequirePackage{setspace}   % Adjust line spacing
+\RequirePackage{titletoc}   % Customize table of contents
+\RequirePackage{titling}    % Customize the title
+\RequirePackage{tocloft}    % Control TOC formatting
+
+\AtBeginDocument{%
+  \setlength{\headheight}{15pt}%
+  \setlength{\droptitle}{-1cm}%
+  \setlength{\headsep}{0.3cm}%
+  \setlength{\parskip}{0.8em}%
+  \setlength{\baselineskip}{18pt}%
+}
+
+% ========================================================================
+
+\RequirePackage[x11names]{xcolor}  % For extended color support
+\RequirePackage{graphicx}          % For including images
+\RequirePackage{pgfplots}          % For plotting data
+\RequirePackage[most]{tcolorbox}   % For creating colorful boxes (depends on xcolor, pgf)
+\RequirePackage{tikz}              % For drawing diagrams
+\RequirePackage{tikzpagenodes}     % For drawing on the page
+\RequirePackage{tkz-euclide}       % Geometric constructions (depends on TikZ)
+
+\pgfplotsset{compat=1.18}  % Set the version of pgfplots
+
+% ========================================================================
+
+\RequirePackage{polyglossia}            % Multilingual support
+
+\setmainlanguage{english}
+
+% \setotherlanguage[variant=german, spelling=new]{german}
+
+% \setotherlanguage[numerals=greek]{greek}
+% \setotherlanguage{russian}
+
+\RequirePackage[no-math, quiet]{fontspec}      % Modern font selection
+\defaultfontfeatures{Renderer=Basic}
+
+\RequirePackage{xeCJK}                   % For CJK (Chinese, Japanese, Korean) fonts
+
+% ========================================================================
+
+\makeatletter
+\@ifundefined{theHpagenote}{}{\let\theHpagenote\relax}
+\makeatother
+
+\RequirePackage[unicode=true, pdfborder={0 0 0}]{hyperref}            % Hyperlinks
+\RequirePackage[nameinlink]{cleveref}                                 % Smart cross-refs
+\RequirePackage[backend=biber, style=numeric, sorting=none]{biblatex} % Bibliographies with biblatex
+\RequirePackage{makeidx}                                              % Indexing
+\RequirePackage[acronym]{glossaries}                                  % Glossaries
+
+% ========================================================================
+
+\RequirePackage{amsmath, amssymb, amsthm}
+\RequirePackage{bm}        % Bold math
+\RequirePackage{esvect}    % Vector symbols
+\RequirePackage{faktor}    % Quotient groups
+\RequirePackage{mathtools}
+
+% ========================================================================
+
+\RequirePackage{array}
+\RequirePackage{makecell}
+\RequirePackage{multicol}
+\RequirePackage{nicematrix}
+\RequirePackage{tabularx}
+\RequirePackage{xltabular}
+
+% ========================================================================
+
+\RequirePackage{adjustbox}    % Adjust the size of boxes
+\RequirePackage{caption}      % Customize captions
+\RequirePackage{subcaption}   % Subcaptions
+\RequirePackage{indentfirst}  % Indent the first paragraph
+\RequirePackage{ragged2e}     % Ragged text alignment
+\RequirePackage{scalerel}     % Scale objects
+\RequirePackage{seqsplit}     % Split long sequences
+
+% ========================================================================
+
+\RequirePackage{enumitem}  % Customizable lists
+
+\setlist[enumerate]{topsep=0pt, itemsep=0pt}
+\setlist[itemize]{topsep=0pt}
+
+% ========================================================================
+
+\RequirePackage{lineno}    % Line numbering
+\RequirePackage{listings}  % Code formatting
+\RequirePackage{minted}    % Code highlighting
+
+% ========================================================================
+
+\RequirePackage{authblk}    % Author and affiliation formatting
+\RequirePackage{collcell}   % Collect cell content
+\RequirePackage{datetime2}  % Date formatting
+\RequirePackage{epigraph}   % Quotations
+\RequirePackage{etoolbox}   % General programming tools
+\RequirePackage{pdfpages}   % Include PDFs
+\RequirePackage{siunitx}    % SI units
+\RequirePackage{wrapfig}    % Wrap text around figures
+
+% ========================================================================
+
+\RequirePackage{ifthen}     % Conditional statements
+\RequirePackage{xparse}     % Document command parsing
+\RequirePackage{xstring}    % String manipulation
+
+% ========================================================================
+
+% \RequirePackage{blindtext}
+% \RequirePackage{lipsum}
+
+% ========================================================================
+

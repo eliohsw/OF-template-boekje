@@ -1,0 +1,158 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{packages/set-lang}[2025/09/05 v0.4.3 Language and Font Style Settings]
+
+\RequirePackage{kvoptions} % <--- Loads the kvoptions package
+\RequirePackage{ifthen}
+
+\RequirePackage[no-math]{fontspec}
+\RequirePackage{xeCJK}
+
+\newcommand{\myZHlang}{}
+
+\SetupKeyvalOptions{
+  family=set-lang,    % "family" distinguishes your keys from others
+  prefix=setlang@     % "prefix" is the control sequence prefix for the final macros
+}
+
+\DeclareVoidOption{tw}{
+  \xdef\myZHlang{tw}
+}
+\DeclareVoidOption{cn}{
+  \xdef\myZHlang{cn}
+}
+
+\DeclareStringOption{up}
+\DeclareStringOption{sf}
+\DeclareStringOption{tt}
+
+\ProcessKeyvalOptions*\relax
+
+\makeatletter
+\providecommand{\fontpath}{fonts/}
+\makeatother
+
+% Default font settings
+
+% Latin Default ----------------------------
+
+\def\SetMainFont{
+  \setmainfont{CMU Serif}
+}
+
+\def\SetMainFonttnr{
+  \setmainfont{Times New Roman}
+}
+
+\def\SetSansFont{
+  
+}
+
+\def\SetSansFontss{
+  \setsansfont{Source Sans 3}[
+    Path = fonts/SourceSans3/,
+    Extension = .ttf,
+    UprightFont = SourceSans3-Regular,
+    BoldFont = SourceSans3-Bold,
+    ItalicFont = SourceSans3-Italic,
+    BoldItalicFont = SourceSans3-BoldItalic,
+    FontFace = {sb}{n}{SourceSans3-Semibold},
+    FontFace = {sb}{it}{SourceSans3-SemiboldItalic},
+    FontFace = {sbx}{n}{SourceSans3-Semibold},
+    FontFace = {sbx}{it}{SourceSans3-SemiboldItalic}
+  ]
+}
+
+\def\SetSansFontar{
+  \setsansfont{Arial}
+}
+
+\def\SetSansFontitr{
+  \setsansfont{Inter}
+}
+
+\def\SetMonoFont{
+  
+}
+
+\def\SetMonoFontscp{
+  \setmonofont{Source Code Pro}[
+    Path = fonts/SourceCodePro/,
+    Extension = .ttf,
+    Scale=0.9,
+    UprightFont = SourceCodePro-Regular,
+    BoldFont = SourceCodePro-SemiBold,
+    ItalicFont = SourceCodePro-Italic,
+    BoldItalicFont = SourceCodePro-SemiBoldItalic,
+    FontFace = {sb}{n}{SourceCodePro-SemiBold},
+    FontFace = {sb}{it}{SourceCodePro-SemiBoldItalic},
+    FontFace = {sbx}{n}{SourceCodePro-SemiBold},
+    FontFace = {sbx}{it}{SourceCodePro-SemiBoldItalic}
+  ]
+}
+
+\DeclareRobustCommand{\sbseries}{\fontseries{sb}\selectfont}
+\DeclareTextFontCommand{\textsb}{\sbseries}
+
+\newfontfamily\Arial{Arial}
+\newfontfamily\BebasNeue{Bebas Neue}
+\newfontfamily\TeXGyreHeros{TeX Gyre Heros}
+\newfontfamily\TimesNewRoman{Times New Roman}
+
+% User defined font families
+
+
+\makeatletter
+\csname SetMainFont\setlang@up \endcsname
+\csname SetSansFont\setlang@sf \endcsname
+\csname SetMonoFont\setlang@tt \endcsname
+\makeatother
+
+% Chinese Default ----------------------------
+
+\def\setZHfont{
+  \setZHfonttw
+}
+
+\def\setZHfonttw{
+  \setCJKmainfont[
+    Path = fonts/,
+    Extension = .ttf,
+    UprightFont = edukai-5.0,
+    AutoFakeBold = {3.17},
+    AutoFakeSlant = 0.2,
+  ]{TW-MOE-Std-Kai}
+  \setCJKsansfont{Source Han Sans TC VF}[
+    Path = fonts/SourceHanSansTC/,
+    Scale=0.92,
+    UprightFont = SourceHanSansTC-Regular,
+    BoldFont = SourceHanSansTC-Bold,
+  ]
+  \setCJKmonofont{Source Han Serif TC}[
+    Path = fonts/SourceHanSerifTC/,
+    Scale=0.92,
+    AutoFakeSlant=0.2,
+    UprightFont = SourceHanSerifTC-Regular,
+    BoldFont = SourceHanSerifTC-Bold,
+  ]
+}
+
+\def\setZHfontcn{
+  \setCJKmainfont{FandolSong}[
+    Path = fonts/Fandol/,
+    UprightFont = FandolSong-Regular,
+    BoldFont = FandolSong-Bold,
+  ]
+  \setCJKsansfont{FandolHei}[
+    Path = fonts/Fandol/,
+    UprightFont = FandolHei-Regular,
+    BoldFont = FandolHei-Bold,
+  ]
+  \setCJKmonofont{FandolFang}[
+    Path = fonts/Fandol/,
+    UprightFont = FandolFang-Regular,
+  ]
+}
+
+\csname setZHfont\myZHlang \endcsname 
+
+\endinput

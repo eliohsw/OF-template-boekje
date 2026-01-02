@@ -1,0 +1,73 @@
+% ============ Title Settings ====================================
+
+\makeatletter
+\pretitle{%
+  \vspace*{6cm}%   Similar vertical space from the top
+  % \centering
+  \fontsize{40}{48}\selectfont\BebasNeue\bfseries        % Font & size for the main title
+}
+\posttitle{%
+  \par\vspace{0.1cm}%  spacing before subtitle
+  \huge\sffamily\sbseries       % Font & size for the subtitle
+  \@subtitle\par                % Insert the subtitle (we'll define \@subtitle below)
+  \vspace{2cm}%                 % spacing before author
+}
+
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}} % helper command to store subtitle text
+\newcommand{\@subtitle}{}                      % default empty
+
+\preauthor{%
+  % \centering
+  \Large\sffamily              % Font & size for author
+}
+\postauthor{%
+  \par\vspace{0.25cm}
+  \large{\@idnumber}\par       % We'll define \@idnumber for that "B123456" line
+  \vspace{3.5cm}               % Then next space before date
+}
+
+\newcommand{\idnumber}[1]{\gdef\@idnumber{#1}}
+\newcommand{\@idnumber}{}   % default empty
+
+\predate{%
+  % \centering
+  \Large
+}
+\postdate{%
+  \par\vspace{0.25cm}
+  \Large{\@placename}\par    % We'll define \@placename
+  \vfill
+}
+
+\newcommand{\placename}[1]{\gdef\@placename{#1}}
+\newcommand{\@placename}{}   % default empty
+\makeatother
+
+% ============ Title Info ========================================
+
+\title{Main Title}
+\subtitle{Subtitle}
+\author{Artur Author}
+\idnumber{B1234567890}
+\date{\DTMdisplaydate{2025}{1}{1}{-1} -- \DTMdisplaydate{2025}{1}{2}{-1}}
+\placename{Place Name}
+
+% ============ Title Page ========================================
+
+\pagenumbering{gobble}
+\begin{titlingpage}
+  % -- 1) Draw the vertical rule on the entire page
+  \begin{tikzpicture}[remember picture,overlay]
+    % Adjust xshift to position the line exactly where you want it
+    \draw[line width=1.5pt]
+      ($(current page text area.north west) + (0.5cm, -2cm)$) -- 
+      ($(current page text area.south west) + (0.5cm, 2cm)$);
+  \end{tikzpicture}
+
+  % -- 2) Shift content to the right of the rule
+  \noindent
+  \hspace*{1.5cm}% Move text right, slightly more than 2cm to clear the rule
+  \begin{minipage}{0.8\textwidth}
+    \maketitle
+  \end{minipage}
+\end{titlingpage}

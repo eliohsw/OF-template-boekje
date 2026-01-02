@@ -1,0 +1,48 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{packages/set-misc}[2025/02/15 v0.1.3 Miscellaneous Settings]
+
+% ========================================================================
+
+% changemargin
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist
+% e.g. \begin{changemargin}{1in}{1in}
+
+% ========================================================================
+
+% The following code snippet is adapted from: https://tex.stackexchange.com/q/36757
+% Original author: Harold
+% Licensed under CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/)
+% Modifications may have been made.
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+
+% nice matrix settings
+\NiceMatrixOptions{
+  code-for-first-row = \color{blue} ,
+  code-for-last-row = \color{blue} ,
+  code-for-first-col = \color{blue} ,
+  code-for-last-col = \color{blue},
+  cell-space-limits = 3pt
+}
+
+% ========================================================================
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=red,
+  citecolor=blue,
+  urlcolor=blue,
+}
+
+\captionsetup{
+  font={
+    stretch=1.15,
+    small,
+  },
+  labelfont=bf,
+}
