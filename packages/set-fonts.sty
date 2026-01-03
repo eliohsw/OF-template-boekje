@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.3.1 Minimal Fonts setup]
+\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.4.5 Minimal Fonts setup]
 
 \RequirePackage{iftex}
 \ifPDFTeX
@@ -11,171 +11,249 @@
 \defaultfontfeatures{Ligatures=TeX, Scale=MatchUppercase}
 \defaultfontfeatures[CJK]{Scale=MatchLowercase}
 
-\RequirePackage{xeCJK}
+% ========================================================================
+% CJK support
+%   XeLaTeX: use xeCJK
+%   LuaLaTeX: xeCJK is not supported; provide clear stubs
 
-\RequirePackage{etoolbox}
-\makeatletter
-\newcommand*\SetFontIfAvailable[2]{%
-  \def\sf@found{0}%
-  \def\sf@chosen{}%
-  \@for\sf@name:=#2\do{%
-    \ifnum\sf@found=0\relax
-      \IfFontExistsTF{\sf@name}{%
-        \def\sf@found{1}\edef\sf@chosen{\sf@name}%
-      }{}%
-    \fi
-  }%
-  \ifnum\sf@found=1\relax
-    #1{\sf@chosen}%
-  \else
-    \PackageWarning{set-fonts}{None of these fonts were found: #2. Using defaults.}%
-  \fi
-}
-\makeatother
+\ifXeTeX
+  \RequirePackage{xeCJK}
+\else
+  \newcommand\setCJKmainfont[2][]{%
+    \PackageError{set-fonts}{CJK mode requires XeLaTeX (xeCJK)}{%
+      You compiled with LuaLaTeX. Switch to XeLaTeX, or use a LuaLaTeX CJK
+      solution (e.g. luatexja/ctex) and adapt this package accordingly.}%
+  }
+  \newcommand\setCJKsansfont[2][]{\setCJKmainfont[#1]{#2}}
+  \newcommand\setCJKmonofont[2][]{\setCJKmainfont[#1]{#2}}
+\fi
 
-\makeatletter
-\newcommand*\PickFirstFontIfAvailable[2]{%
-  % #1: macro to receive chosen font name (expanded), #2: comma-separated list
-  \def\sf@found{0}%
-  \def\sf@chosen{}%
-  \@for\sf@name:=#2\do{%
-    \ifnum\sf@found=0\relax
-      \IfFontExistsTF{\sf@name}{%
-        \def\sf@found{1}\edef\sf@chosen{\sf@name}%
-      }{}%
-    \fi
-  }%
-  \ifnum\sf@found=1\relax
-    \edef#1{\sf@chosen}%
-  \else
-    \edef#1{}%
-  \fi
-}
-\makeatother
+% ========================================================================
+% Convenience font-switching commands (only define if font exists)
 
+\IfFontExistsTF{Arial}
+  {\newfontfamily\Arial{Arial}}
+  {\providecommand\Arial{\normalfont}}
 
-\makeatletter
-\SetFontIfAvailable{\setmainfont}{%
-CMU Serif,%
-Times New Roman,%
-STIX Two Text,%
-TeX Gyre Termes,%
-Latin Modern Roman%
-}
+\IfFontExistsTF{Bebas Neue}
+  {\newfontfamily\BebasNeue[Scale=MatchUppercase]{Bebas Neue}}
+  {\providecommand\BebasNeue{\normalfont}}
 
-% Configure sans font and the \SourceSans family in one place.
-% If Source Sans 3 is installed, also try to enable a real semibold series.
-\IfFontExistsTF{Source Sans 3}{%
-  \PickFirstFontIfAvailable\sf@ss@sb{%
-Source Sans 3 Semibold,%
-Source Sans 3 SemiBold,%
-SourceSans3-Semibold%
-  }%
-  \PickFirstFontIfAvailable\sf@ss@sbi{%
-Source Sans 3 Semibold Italic,%
-Source Sans 3 SemiBold Italic,%
-SourceSans3-SemiboldIt%
-  }%
-  \ifx\sf@ss@sb\@empty
-    \setsansfont{Source Sans 3}%
-    \newfontfamily\SourceSans{Source Sans 3}%
-    \DeclareRobustCommand{\sbseries}{\bfseries}%
-    \DeclareTextFontCommand{\textsb}{\sbseries}%
-    \PackageWarning{set-fonts}{Source Sans 3 found, but no Semibold face found; \string\sbseries will fall back to \string\bfseries}%
-  \else
-    \ifx\sf@ss@sbi\@empty
-      \setsansfont[
-        FontFace = {sb}{n}{\sf@ss@sb},
-        FontFace = {sbx}{n}{\sf@ss@sb}
-      ]{Source Sans 3}%
-      \newfontfamily\SourceSans[
-        Font = {Source Sans 3},
-        FontFace = {sb}{n}{\sf@ss@sb},
-        FontFace = {sbx}{n}{\sf@ss@sb}
-      ]{Source Sans 3}%
-      \DeclareRobustCommand{\sbseries}{\fontseries{sb}\selectfont}%
-      \DeclareTextFontCommand{\textsb}{\sbseries}%
-      \PackageWarning{set-fonts}{Source Sans 3 Semibold found, but no Semibold Italic face found}%
-    \else
-      \setsansfont[
-        FontFace = {sb}{n}{\sf@ss@sb},
-        FontFace = {sb}{it}{\sf@ss@sbi},
-        FontFace = {sbx}{n}{\sf@ss@sb},
-        FontFace = {sbx}{it}{\sf@ss@sbi}
-      ]{Source Sans 3}%
-      \newfontfamily\SourceSans[
-        Font = {Source Sans 3},
-        FontFace = {sb}{n}{\sf@ss@sb},
-        FontFace = {sb}{it}{\sf@ss@sbi},
-        FontFace = {sbx}{n}{\sf@ss@sb},
-        FontFace = {sbx}{it}{\sf@ss@sbi}
-      ]{Source Sans 3}%
-      \DeclareRobustCommand{\sbseries}{\fontseries{sb}\selectfont}%
-      \DeclareTextFontCommand{\textsb}{\sbseries}%
-    \fi
-  \fi
-}{%
-  \PickFirstFontIfAvailable\sf@fallbackSans{%
-Helvetica Neue,%
-Arial,%
-Inter,%
-TeX Gyre Heros,%
-Latin Modern Sans%
-  }%
-  \ifx\sf@fallbackSans\@empty
-    \setsansfont{Latin Modern Sans}%
-    \newfontfamily\SourceSans{Latin Modern Sans}%
-    \PackageWarning{set-fonts}{None of these sans fonts were found: Helvetica Neue, Arial, Inter, TeX Gyre Heros, Latin Modern Sans. Using defaults.}%
-  \else
-    \setsansfont{\sf@fallbackSans}%
-    \newfontfamily\SourceSans{\sf@fallbackSans}%
-  \fi
-  \DeclareRobustCommand{\sbseries}{\bfseries}%
-  \DeclareTextFontCommand{\textsb}{\sbseries}%
-}
+\IfFontExistsTF{TeX Gyre Heros}
+  {\newfontfamily\TeXGyreHeros{TeX Gyre Heros}}
+  {\providecommand\TeXGyreHeros{\normalfont}}
 
-\SetFontIfAvailable{\setmonofont}{%
-SF Mono,%
-Source Code Pro,%
-Menlo,%
-Latin Modern Mono%
-}
-\makeatother
+\IfFontExistsTF{Times New Roman}
+  {\newfontfamily\TimesNewRoman{Times New Roman}}
+  {\providecommand\TimesNewRoman{\normalfont}}
 
+\ifXeTeX
+  \xeCJKsetup{
+    CJKmath=true,
+    PunctStyle=kaiming,
+    RubberPunctSkip=true
+  }
+\fi
 
-\makeatletter
-\SetFontIfAvailable{\setCJKmainfont}{%
-TW-MOE-Std-Kai,%
-Source Han Serif TC,%
-Source Han Serif SC,%
-Noto Serif CJK TC,%
-Noto Serif CJK SC,%
-FandolKai,%
-FandolSong%
-}
-\SetFontIfAvailable{\setCJKsansfont}{%
-Source Han Sans TC,%
-Source Han Sans SC,%
-Noto Sans CJK TC,%
-Noto Sans CJK SC,%
-FandolHei%
-}
-\SetFontIfAvailable{\setCJKmonofont}{%
-Source Han Sans TC,%
-Source Han Sans SC,%
-Noto Sans Mono CJK TC,%
-Noto Sans Mono CJK SC,%
-FandolFang%
-}
-\makeatother
+\DeclareRobustCommand{\sbseries}{\fontseries{sb}\selectfont}
+\DeclareTextFontCommand{\textsb}{\sbseries}
 
-\newfontfamily\Arial{Arial}
-\newfontfamily\BebasNeue[Scale=MatchUppercase]{Bebas Neue}
-\newfontfamily\TeXGyreHeros{TeX Gyre Heros}
-\newfontfamily\TimesNewRoman{Times New Roman}
+% ========================================================================
+% Font fallback helper
+%
+%   \SetFontFromList[<mode>]{<family>}{<font1, font2, ...>}
+%
+% - <family> : main | sans | mono
+% - <mode>   : (empty) uses \setmainfont/\setsansfont/\setmonofont
+%              CJK     uses \setCJKmainfont/\setCJKsansfont/\setCJKmonofont
+%
+% For each candidate font in the list, the first one that exists is selected.
+% If none exist, the corresponding default is restored.
+%
+% Whitespace note:
+%   Items are trimmed on both ends; empty items are ignored.
 
-\xeCJKsetup{
-  CJKmath=true,
-  PunctStyle=kaiming,
-  RubberPunctSkip=true
-}
+\RequirePackage{xparse}
+\ExplSyntaxOn
+
+% Save defaults at package load so we can restore later.
+\tl_new:N \g__setfonts_rmdefault_tl
+\tl_new:N \g__setfonts_sfdefault_tl
+\tl_new:N \g__setfonts_ttdefault_tl
+\tl_new:N \g__setfonts_CJKrmdefault_tl
+\tl_new:N \g__setfonts_CJKsfdefault_tl
+\tl_new:N \g__setfonts_CJKttdefault_tl
+
+\cs_new_protected:Npn \__setfonts_store_defaults:
+  {
+    \tl_gset:Nx \g__setfonts_rmdefault_tl { \rmdefault }
+    \tl_gset:Nx \g__setfonts_sfdefault_tl { \sfdefault }
+    \tl_gset:Nx \g__setfonts_ttdefault_tl { \ttdefault }
+    \cs_if_exist:NT \CJKrmdefault
+      { \tl_gset:Nx \g__setfonts_CJKrmdefault_tl { \CJKrmdefault } }
+    \cs_if_exist:NT \CJKsfdefault
+      { \tl_gset:Nx \g__setfonts_CJKsfdefault_tl { \CJKsfdefault } }
+    \cs_if_exist:NT \CJKttdefault
+      { \tl_gset:Nx \g__setfonts_CJKttdefault_tl { \CJKttdefault } }
+  }
+\__setfonts_store_defaults:
+
+% ------------------------------------------------------------------------
+% CJK family naming strategy
+%
+% xeCJK warns when redefining an existing CJKfamily. To avoid that noise:
+% - Every time we define a CJK main/sans/mono font, we first assign a fresh,
+%   unique family name to \CJKrmdefault/\CJKsfdefault/\CJKttdefault.
+% - Then \setCJK...font defines that *new* family, so no "redefining" warning.
+%
+% We also only auto-fill CJK sans/mono from the chosen CJK main font if the
+% user hasn't explicitly set them via this package.
+
+\int_new:N \g__setfonts_CJKrm_int
+\int_new:N \g__setfonts_CJKsf_int
+\int_new:N \g__setfonts_CJKtt_int
+
+\bool_new:N \g__setfonts_CJKsf_user_bool
+\bool_new:N \g__setfonts_CJKtt_user_bool
+
+\cs_new_protected:Npn \__setfonts_cjk_set_family:nn #1 #2
+  {
+    \str_case:nnF {#1}
+      {
+        {main}{
+          \int_gincr:N \g__setfonts_CJKrm_int
+          \cs_set:Npx \CJKrmdefault { setfonts-CJKrm-\int_use:N \g__setfonts_CJKrm_int }
+          \setCJKmainfont{#2}
+
+          % Ensure CJK sans/mono exist to avoid xeCJK "Unknown CJK family" warnings,
+          % but do not override a user choice.
+          \bool_if:NF \g__setfonts_CJKsf_user_bool
+            {
+              \int_gincr:N \g__setfonts_CJKsf_int
+              \cs_set:Npx \CJKsfdefault { setfonts-CJKsf-\int_use:N \g__setfonts_CJKsf_int }
+              \setCJKsansfont{#2}
+            }
+          \bool_if:NF \g__setfonts_CJKtt_user_bool
+            {
+              \int_gincr:N \g__setfonts_CJKtt_int
+              \cs_set:Npx \CJKttdefault { setfonts-CJKtt-\int_use:N \g__setfonts_CJKtt_int }
+              \setCJKmonofont{#2}
+            }
+        }
+        {sans}{
+          \int_gincr:N \g__setfonts_CJKsf_int
+          \cs_set:Npx \CJKsfdefault { setfonts-CJKsf-\int_use:N \g__setfonts_CJKsf_int }
+          \setCJKsansfont{#2}
+          \bool_gset_true:N \g__setfonts_CJKsf_user_bool
+        }
+        {mono}{
+          \int_gincr:N \g__setfonts_CJKtt_int
+          \cs_set:Npx \CJKttdefault { setfonts-CJKtt-\int_use:N \g__setfonts_CJKtt_int }
+          \setCJKmonofont{#2}
+          \bool_gset_true:N \g__setfonts_CJKtt_user_bool
+        }
+      }
+      { \PackageError{set-fonts}{Unknown font family `#1'}{Use main, sans, or mono.} }
+  }
+
+% ------------------------------------------------------------------------
+% Restore defaults (only for the requested family/mode).
+\cs_new_protected:Npn \__setfonts_restore_defaults:nn #1 #2
+  {
+    \tl_if_eq:nnTF {#1} {CJK}
+      {
+        \str_case:nnF {#2}
+          {
+            {main}{\cs_if_exist:NT \CJKrmdefault {\cs_set:Npn \CJKrmdefault {\g__setfonts_CJKrmdefault_tl}}}
+            {sans}{\cs_if_exist:NT \CJKsfdefault {\cs_set:Npn \CJKsfdefault {\g__setfonts_CJKsfdefault_tl}}}
+            {mono}{\cs_if_exist:NT \CJKttdefault {\cs_set:Npn \CJKttdefault {\g__setfonts_CJKttdefault_tl}}}
+          }
+          {\PackageError{set-fonts}{Unknown font family `#2'}{Use main, sans, or mono.}}
+
+        % Reset user-choice tracking when restoring.
+        \bool_gset_false:N \g__setfonts_CJKsf_user_bool
+        \bool_gset_false:N \g__setfonts_CJKtt_user_bool
+        \normalfont
+      }
+      {
+        \str_case:nnF {#2}
+          {
+            {main}{\cs_set:Npn \rmdefault {\g__setfonts_rmdefault_tl}}
+            {sans}{\cs_set:Npn \sfdefault {\g__setfonts_sfdefault_tl}}
+            {mono}{\cs_set:Npn \ttdefault {\g__setfonts_ttdefault_tl}}
+          }
+          {\PackageError{set-fonts}{Unknown font family `#2'}{Use main, sans, or mono.}}
+        \normalfont
+      }
+  }
+
+% Apply chosen font (dispatches to the right setter).
+\cs_new_protected:Npn \__setfonts_apply:nnn #1 #2 #3
+  {
+    \tl_if_eq:nnTF {#1} {CJK}
+      { \__setfonts_cjk_set_family:nn {#2} {#3} }
+      {
+        \str_case:nnF {#2}
+          {
+            {main}{\setmainfont{#3}}
+            {sans}{\setsansfont{#3}}
+            {mono}{\setmonofont{#3}}
+          }
+          {\PackageError{set-fonts}{Unknown font family `#2'}{Use main, sans, or mono.}}
+      }
+  }
+
+% ------------------------------------------------------------------------
+% Main selector: pick first existing font from a comma list (whitespace-safe).
+\bool_new:N \l__setfonts_found_bool
+\clist_new:N \l__setfonts_candidates_clist
+\tl_new:N \l__setfonts_candidate_tl
+
+\cs_new_protected:Npn \__setfonts_select_from_list:nnn #1 #2 #3
+  {
+    \bool_set_false:N \l__setfonts_found_bool
+    \clist_set:Nn \l__setfonts_candidates_clist {#3}
+
+    \clist_map_inline:Nn \l__setfonts_candidates_clist
+      {
+        \tl_set:Nn \l__setfonts_candidate_tl {##1}
+        \tl_trim_spaces:N \l__setfonts_candidate_tl
+        \tl_if_blank:nF { \tl_use:N \l__setfonts_candidate_tl }
+          {
+            \IfFontExistsTF { \tl_use:N \l__setfonts_candidate_tl }
+              {
+                \__setfonts_apply:nnn {#1} {#2} { \tl_use:N \l__setfonts_candidate_tl }
+                \bool_set_true:N \l__setfonts_found_bool
+                \clist_map_break:
+              }
+              { }
+          }
+      }
+
+    \bool_if:NF \l__setfonts_found_bool
+      { \__setfonts_restore_defaults:nn {#1} {#2} }
+  }
+
+% Public command
+%   \SetFontFromList{main|sans|mono}{...}
+%   \SetFontFromList[CJK]{main|sans|mono}{...}
+\NewDocumentCommand \SetFontFromList { o m m }
+  {
+    \IfNoValueTF{#1}
+      { \__setfonts_select_from_list:nnn {} {#2} {#3} }
+      {
+        \tl_set:Nn \l_tmpa_tl {#1}
+        \tl_trim_spaces:N \l_tmpa_tl
+        \tl_if_blank:nTF { \tl_use:N \l_tmpa_tl }
+          { \__setfonts_select_from_list:nnn {} {#2} {#3} }
+          {
+            % Normalize mode: detokenize + uppercase, so [cjk] works.
+            \tl_set:Nx \l_tmpa_tl { \tl_upper_case:n { \tl_to_str:N \l_tmpa_tl } }
+            \str_if_eq:VnTF \l_tmpa_tl {CJK}
+              { \__setfonts_select_from_list:nnn {CJK} {#2} {#3} }
+              { \PackageError{set-fonts}{Unknown mode `#1'}{Only [CJK] is supported.} }
+          }
+      }
+  }
+
+\ExplSyntaxOff
