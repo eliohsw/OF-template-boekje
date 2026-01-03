@@ -1,5 +1,5 @@
 \documentclass[11pt, a4paper]{memoir}
-\message{2026/01/03 v0.1 XeLaTeX Boekje Template}
+\message{2026/01/03 v0.3 XeLaTeX Boekje Template}
 
 \usepackage[
   inner=2.8cm, outer=2.2cm, top=2.5cm, bottom=2cm,
@@ -44,27 +44,7 @@
   Source Han Sans SC, Noto Sans CJK SC, FandolFang
 }
 
-\IfFontExistsTF{Source Sans 3}{
-  \newfontfamily\SourceSans[
-    UprightFont    = SourceSans3-Regular,
-    ItalicFont     = SourceSans3-Italic,
-    BoldFont       = SourceSans3-Bold,
-    BoldItalicFont = SourceSans3-BoldItalic,
-  ]{Source Sans 3}
-
-  \makeatletter
-  \setsansfont[
-    UprightFont    = SourceSans3-Regular,
-    ItalicFont     = SourceSans3-Italic,
-    BoldFont       = SourceSans3-Bold,
-    BoldItalicFont = SourceSans3-BoldItalic,
-    FontFace = {sb}{n}{SourceSans3-SemiBold},
-    FontFace = {sb}{it}{SourceSans3-SemiBoldItalic},
-    FontFace = {sbx}{n}{SourceSans3-SemiBold},
-    FontFace = {sbx}{it}{SourceSans3-SemiBoldItalic},
-  ]{Source Sans 3}
-  \makeatother
-}{}
+\SetupSourceSansThree
 
 
 % Memoir native style settings

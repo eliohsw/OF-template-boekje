@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.4.5 Minimal Fonts setup]
+\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.5.1 Minimal Fonts setup]
 
 \RequirePackage{iftex}
 \ifPDFTeX
@@ -256,7 +256,7 @@
 \ExplSyntaxOff
 
 % ========================================================================
-% Semi-bold font series (if available)
+% Semi-bold font series setup
 
 \makeatletter
 
@@ -276,3 +276,34 @@
 }{}
 
 \makeatother
+
+\ExplSyntaxOn
+\NewDocumentCommand \SetupSourceSansThree { } {
+  \IfFontExistsTF { Source Sans 3 }
+    {
+      % Define \SourceSans once (so repeated calls are safe)
+      \cs_if_exist:NF \SourceSans
+        {
+          \newfontfamily \SourceSans [
+            UprightFont    = SourceSans3-Regular,
+            ItalicFont     = SourceSans3-Italic,
+            BoldFont       = SourceSans3-Bold,
+            BoldItalicFont = SourceSans3-BoldItalic,
+          ] { Source Sans 3 }
+        }
+
+      % Set sans + add sb/sbx faces (safe to run multiple times)
+      \setsansfont [
+        UprightFont    = SourceSans3-Regular,
+        ItalicFont     = SourceSans3-Italic,
+        BoldFont       = SourceSans3-Bold,
+        BoldItalicFont = SourceSans3-BoldItalic,
+        FontFace = { sb  }{ n  }{ SourceSans3-SemiBold },
+        FontFace = { sb  }{ it }{ SourceSans3-SemiBoldItalic },
+        FontFace = { sbx }{ n  }{ SourceSans3-SemiBold },
+        FontFace = { sbx }{ it }{ SourceSans3-SemiBoldItalic },
+      ] { Source Sans 3 }
+    }
+    { } % font not installed: do nothing
+}
+\ExplSyntaxOff
