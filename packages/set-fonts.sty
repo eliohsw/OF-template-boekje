@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.4.5 Minimal Fonts setup]
+\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.5 Minimal Fonts setup]
 
 \RequirePackage{iftex}
 \ifPDFTeX
@@ -259,10 +259,8 @@
 % Semi-bold font series (if available)
 
 \makeatletter
-
 \@ifundefined{sbseries}{%
   \DeclareRobustCommand{\sbseries}{%
-    % Test whether the NFSS shape <enc>/<fam>/sb/<shape> is defined
     \ifcsname \f@encoding/\f@family/sb/\f@shape\endcsname
       \fontseries{sb}\selectfont
     \else
@@ -274,5 +272,4 @@
 \@ifundefined{textsb}{%
   \DeclareTextFontCommand{\textsb}{\sbseries}%
 }{}
-
 \makeatother
