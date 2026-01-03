@@ -56,8 +56,8 @@
 \makeatletter
 \SetFontIfAvailable{\setmainfont}{%
 CMU Serif,%
-STIX Two Text,%
 Times New Roman,%
+STIX Two Text,%
 TeX Gyre Termes,%
 Latin Modern Roman%
 }
@@ -96,6 +96,8 @@ SourceSans3-SemiboldIt%
 }{%
   \SetFontIfAvailable{\setsansfont}{%
 Helvetica Neue,%
+Arial,%
+Inter,%
 TeX Gyre Heros,%
 Latin Modern Sans%
   }%
@@ -103,8 +105,8 @@ Latin Modern Sans%
 
 \SetFontIfAvailable{\setmonofont}{%
 SF Mono,%
+Source Code Pro,%
 Menlo,%
-Inconsolata,%
 Latin Modern Mono%
 }
 \makeatother
@@ -113,8 +115,8 @@ Latin Modern Mono%
 \makeatletter
 \SetFontIfAvailable{\setCJKmainfont}{%
 TW-MOE-Std-Kai,%
-Source Han Sans TC,%
-Source Han Sans SC,%
+Source Han Serif TC,%
+Source Han Serif SC,%
 Noto Serif CJK TC,%
 Noto Serif CJK SC,%
 FandolKai,%
@@ -137,7 +139,6 @@ FandolFang%
 \makeatother
 
 \newfontfamily\Arial{Arial}
-% Bebas Neue is an all-caps display font; avoid global Scale=MatchLowercase shrinking it.
 \newfontfamily\BebasNeue[Scale=MatchUppercase]{Bebas Neue}
 \newfontfamily\TeXGyreHeros{TeX Gyre Heros}
 \newfontfamily\TimesNewRoman{Times New Roman}
