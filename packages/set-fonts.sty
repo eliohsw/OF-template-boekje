@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.5.1 Minimal Fonts setup]
+\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.5.2 Minimal Fonts setup]
 
 \RequirePackage{iftex}
 \ifPDFTeX
@@ -260,14 +260,55 @@
 
 \makeatletter
 
+\newif\ifsetfonts@cjk@sb
+
+\ExplSyntaxOn
+\cs_new_protected:Npn \__setfonts_set_cjk_sb_if:
+  {
+    % Default: allow sb when there is no xeCJK context.
+    \setfonts@cjk@sbtrue
+
+    % If xeCJK is loaded, be conservative: only allow sb when we can prove
+    % the CJK sb shape exists (otherwise we fall back to \bfseries to avoid
+    % xeCJK/NFSS substitution warnings).
+    \cs_if_exist:NT \g__xeCJK_family_name_prop
+      {
+        \setfonts@cjk@sbfalse
+        \cs_if_exist:NT \CJK@family
+          {
+            \prop_get:NnNTF \g__xeCJK_family_name_prop { \CJK@family } \l_tmpa_tl
+              {
+                \cs_if_exist:NT \c__xeCJK_encoding_tl
+                  {
+                    	l_set:Nx \l_tmpb_tl
+                      {
+                        	l_use:N \c__xeCJK_encoding_tl/\tl_use:N \l_tmpa_tl/sb/\f@shape
+                      }
+                    \exp_args:NV \@ifundefined \l_tmpb_tl
+                      { \setfonts@cjk@sbfalse }
+                      { \setfonts@cjk@sbtrue }
+                  }
+              }
+              { }
+          }
+      }
+  }
+\ExplSyntaxOff
+
 \@ifundefined{sbseries}{%
   \DeclareRobustCommand{\sbseries}{%
-    % Test whether the NFSS shape <enc>/<fam>/sb/<shape> is defined
-    \ifcsname \f@encoding/\f@family/sb/\f@shape\endcsname
-      \fontseries{sb}\selectfont
-    \else
-      \bfseries
-    \fi
+    % Use series 'sb' when available; otherwise fall back to \bfseries.
+    % For xeCJK, also require that the CJK sb shape exists to avoid warnings.
+    \@ifundefined{\f@encoding/\f@family/sb/\f@shape}
+      {\bfseries}
+      {%
+        \csname __setfonts_set_cjk_sb_if:\endcsname
+        \ifsetfonts@cjk@sb
+          \fontseries{sb}\selectfont
+        \else
+          \bfseries
+        \fi
+      }%
   }%
 }{}
 
