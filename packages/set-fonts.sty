@@ -55,9 +55,6 @@
   }
 \fi
 
-\DeclareRobustCommand{\sbseries}{\fontseries{sb}\selectfont}
-\DeclareTextFontCommand{\textsb}{\sbseries}
-
 % ========================================================================
 % Font fallback helper
 %
@@ -257,3 +254,25 @@
   }
 
 \ExplSyntaxOff
+
+% ========================================================================
+% Semi-bold font series (if available)
+
+\makeatletter
+
+\@ifundefined{sbseries}{%
+  \DeclareRobustCommand{\sbseries}{%
+    % Test whether the NFSS shape <enc>/<fam>/sb/<shape> is defined
+    \ifcsname \f@encoding/\f@family/sb/\f@shape\endcsname
+      \fontseries{sb}\selectfont
+    \else
+      \bfseries
+    \fi
+  }%
+}{}
+
+\@ifundefined{textsb}{%
+  \DeclareTextFontCommand{\textsb}{\sbseries}%
+}{}
+
+\makeatother
