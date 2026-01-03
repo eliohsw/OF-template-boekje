@@ -8,13 +8,40 @@
 \fi
 
 \RequirePackage[no-math]{fontspec}
-\defaultfontfeatures{Ligatures=TeX, Scale=MatchLowercase}
+\defaultfontfeatures{Ligatures=TeX, Scale=MatchUppercase}
+\defaultfontfeatures[CJK]{Scale=MatchLowercase}
 
 \RequirePackage{xeCJK}
-
+\RequirePackage{expl3}
 \RequirePackage{etoolbox}
 \makeatletter
+\ExplSyntaxOn
 \newcommand*\SetFontIfAvailable[2]{%
+  \def\sf@found{0}%
+  \def\sf@chosen{}%
+  \@for\sf@name:=#2\do{%
+    \edef\sf@trimmed{\tl_trim_spaces:n{\sf@name}}%
+    \ifnum\sf@found=0\relax
+      \IfFontExistsTF{\sf@trimmed}{%
+        \def\sf@found{1}\edef\sf@chosen{\sf@trimmed}%
+      }{}%
+    \fi
+  }%
+  \ifnum\sf@found=1\relax
+    #1{\sf@chosen}%
+  \else
+    \PackageWarning{set-fonts}{None of these fonts were found: #2. Using defaults.}%
+  \fi
+}
+\ExplSyntaxOff
+\makeatother
+
+
+\makeatletter
+\newcommand*\SetFontIfAvailableNamed[3]{%
+  % #1: font selection command (e.g., \setmainfont),
+  % #2: comma-separated list of candidates,
+  % #3: human-readable label for logging (e.g., Main, Sans, Mono, CJK Main)
   \def\sf@found{0}%
   \def\sf@chosen{}%
   \@for\sf@name:=#2\do{%
@@ -26,6 +53,7 @@
   }%
   \ifnum\sf@found=1\relax
     #1{\sf@chosen}%
+    \PackageInfo{set-fonts}{#3 font: \sf@chosen}%
   \else
     \PackageWarning{set-fonts}{None of these fonts were found: #2. Using defaults.}%
   \fi
@@ -54,27 +82,38 @@
 
 
 \makeatletter
-\SetFontIfAvailable{\setmainfont}{%
-CMU Serif,%
-Times New Roman,%
-STIX Two Text,%
-TeX Gyre Termes,%
-Latin Modern Roman%
-}
+\SetFontIfAvailableNamed{\setmainfont}{%
+  CMU Serif,
+  Times New Roman,
+  STIX Two Text,
+  TeX Gyre Termes,
+  Latin Modern Roman
+}{Main}
 
 % Configure sans font and the \SourceSans family in one place.
 % If Source Sans 3 is installed, also try to enable a real semibold series.
 \IfFontExistsTF{Source Sans 3}{%
   \PickFirstFontIfAvailable\sf@ss@sb{%
-Source Sans 3 Semibold,%
-Source Sans 3 SemiBold,%
-SourceSans3-Semibold%
+    Source Sans 3 Semibold,
+    Source Sans 3 SemiBold,
+    SourceSans3-Semibold
   }%
   \PickFirstFontIfAvailable\sf@ss@sbi{%
-Source Sans 3 Semibold Italic,%
-Source Sans 3 SemiBold Italic,%
-SourceSans3-SemiboldIt%
+    Source Sans 3 Semibold Italic,
+    Source Sans 3 SemiBold Italic,
+    SourceSans3-SemiboldIt
   }%
+  \PackageInfo{set-fonts}{Sans font: Source Sans 3}%
+  \ifx\sf@ss@sb\@empty
+    \PackageInfo{set-fonts}{Semibold face: not found (\string\sbseries falls back to \string\bfseries)}%
+  \else
+    \PackageInfo{set-fonts}{Semibold face: \sf@ss@sb}%
+    \ifx\sf@ss@sbi\@empty
+      \PackageInfo{set-fonts}{Semibold italic face: not found}%
+    \else
+      \PackageInfo{set-fonts}{Semibold italic face: \sf@ss@sbi}%
+    \fi
+  \fi
   \ifx\sf@ss@sb\@empty
     \setsansfont{Source Sans 3}%
     \newfontfamily\SourceSans{Source Sans 3}%
@@ -115,57 +154,59 @@ SourceSans3-SemiboldIt%
   \fi
 }{%
   \PickFirstFontIfAvailable\sf@fallbackSans{%
-Helvetica Neue,%
-Arial,%
-Inter,%
-TeX Gyre Heros,%
-Latin Modern Sans%
+    Helvetica Neue,
+    Arial,
+    Inter,
+    TeX Gyre Heros,
+    Latin Modern Sans
   }%
   \ifx\sf@fallbackSans\@empty
     \setsansfont{Latin Modern Sans}%
     \newfontfamily\SourceSans{Latin Modern Sans}%
+    \PackageInfo{set-fonts}{Sans font: Latin Modern Sans}%
     \PackageWarning{set-fonts}{None of these sans fonts were found: Helvetica Neue, Arial, Inter, TeX Gyre Heros, Latin Modern Sans. Using defaults.}%
   \else
     \setsansfont{\sf@fallbackSans}%
     \newfontfamily\SourceSans{\sf@fallbackSans}%
+    \PackageInfo{set-fonts}{Sans font: \sf@fallbackSans}%
   \fi
   \DeclareRobustCommand{\sbseries}{\bfseries}%
   \DeclareTextFontCommand{\textsb}{\sbseries}%
 }
 
-\SetFontIfAvailable{\setmonofont}{%
-SF Mono,%
-Source Code Pro,%
-Menlo,%
-Latin Modern Mono%
-}
+\SetFontIfAvailableNamed{\setmonofont}{%
+  SF Mono,
+  Source Code Pro,
+  Menlo,
+  Latin Modern Mono
+}{Mono}
 \makeatother
 
 
 \makeatletter
-\SetFontIfAvailable{\setCJKmainfont}{%
-TW-MOE-Std-Kai,%
-Source Han Serif TC,%
-Source Han Serif SC,%
-Noto Serif CJK TC,%
-Noto Serif CJK SC,%
-FandolKai,%
-FandolSong%
-}
-\SetFontIfAvailable{\setCJKsansfont}{%
-Source Han Sans TC,%
-Source Han Sans SC,%
-Noto Sans CJK TC,%
-Noto Sans CJK SC,%
-FandolHei%
-}
-\SetFontIfAvailable{\setCJKmonofont}{%
-Source Han Sans TC,%
-Source Han Sans SC,%
-Noto Sans Mono CJK TC,%
-Noto Sans Mono CJK SC,%
-FandolFang%
-}
+\SetFontIfAvailableNamed{\setCJKmainfont}{%
+  TW-MOE-Std-Kai,
+  Source Han Serif TC,
+  Source Han Serif SC,
+  Noto Serif CJK TC,
+  Noto Serif CJK SC,
+  FandolKai,
+  FandolSong
+}{CJK Main}
+\SetFontIfAvailableNamed{\setCJKsansfont}{%
+  Source Han Sans TC,
+  Source Han Sans SC,
+  Noto Sans CJK TC,
+  Noto Sans CJK SC,
+  FandolHei
+}{CJK Sans}
+\SetFontIfAvailableNamed{\setCJKmonofont}{%
+  Source Han Sans TC,
+  Source Han Sans SC,
+  Noto Sans Mono CJK TC,
+  Noto Sans Mono CJK SC,
+  FandolFang
+}{CJK Mono}
 \makeatother
 
 \newfontfamily\Arial{Arial}
