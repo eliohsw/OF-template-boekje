@@ -17,74 +17,7 @@
 \usepackage{set-tikz}
 \usepackage{set-misc}
 
-\SetFontFromList{main}{
-  CMU Serif, Times New Roman,
-  TeX Gyre Termes, Latin Modern Roman
-}
-\SetFontFromList{sans}{
-  Source Sans 3, Arial, Fira Sans,
-  TeX Gyre Heros, Latin Modern Sans
-}
-\SetFontFromList{mono}{
-  CMU Typewriter Text,
-  Source Code Pro, 
-  Latin Modern Mono
-}
-
-\newbool{KAI}
-\boolfalse{KAI}
-% \booltrue{KAI}
-
-\ifbool{KAI}{
-  \IfFontExistsTF{TW-MOE-Std-Kai}{
-    \setCJKmainfont{TW-MOE-Std-Kai}[
-      AutoFakeSlant=0.2,
-      AutoFakeBold=3.05
-    ]
-  }{
-    \SetFontFromList[CJK]{main}{
-      TW-Kai,
-      Source Han Serif TC, Noto Serif CJK TC,
-      Source Han Serif SC, Noto Serif CJK SC, FandolSong
-    }
-  }
-}{
-  \SetFontFromList[CJK]{main}{
-    Source Han Serif TC, Noto Serif CJK TC,
-    Source Han Serif SC, Noto Serif CJK SC, FandolSong
-  }
-}
-
-\SetFontFromList[CJK]{sans}{
-  Source Han Sans TC, Noto Sans CJK TC,
-  Source Han Sans SC, Noto Sans CJK SC, FandolHei
-}
-\SetFontFromList[CJK]{mono}{
-  Source Han Sans TC, Noto Sans CJK TC,
-  Source Han Sans SC, Noto Sans CJK SC, FandolFang
-}
-
-\IfFontExistsTF{Source Sans 3}{
-  \newfontfamily\SourceSans[
-    UprightFont    = SourceSans3-Regular,
-    ItalicFont     = SourceSans3-Italic,
-    BoldFont       = SourceSans3-Bold,
-    BoldItalicFont = SourceSans3-BoldItalic,
-  ]{Source Sans 3}
-
-  \makeatletter
-  \setsansfont[
-    UprightFont    = SourceSans3-Regular,
-    ItalicFont     = SourceSans3-Italic,
-    BoldFont       = SourceSans3-Bold,
-    BoldItalicFont = SourceSans3-BoldItalic,
-    FontFace = {sb}{n}{SourceSans3-SemiBold},
-    FontFace = {sb}{it}{SourceSans3-SemiBoldItalic},
-    FontFace = {sbx}{n}{SourceSans3-SemiBold},
-    FontFace = {sbx}{it}{SourceSans3-SemiBoldItalic},
-  ]{Source Sans 3}
-  \makeatother
-}{}
+\input{preamble/schrift.tex}
 
 
 % Memoir native style settings
