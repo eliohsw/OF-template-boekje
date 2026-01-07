@@ -11,7 +11,7 @@
 \makeatother
 
 \usepackage{set-memoir}
-\usepackage[tw]{set-theorems}
+\usepackage[en]{set-theorems}
 \usepackage{set-fonts}
 \usepackage{set-operator}
 \usepackage{set-tikz}
@@ -63,10 +63,14 @@
 \makepagestyle{MyPage}
 \makeevenhead{MyPage}{\sffamily\itshape\leftmark}{}{}
 \makeoddhead {MyPage}{}{}{\sffamily\rightmark}
-\makeevenfoot{MyPage}{\thepage}{}{}
+\makeevenfoot{MyPage}{}{\thepage}{}
 \makeoddfoot {MyPage}{}{\thepage}{}
-\makeheadrule{MyPage}{\headwidth}{0.4pt}
-\makefootrule{MyPage}{\headwidth}{0.4pt}{\footruleskip}
+
+% Head and foot rules (UNCOMMENT if needed)
+% \setlength{\headwidth}{\textwidth}
+% \makeheadrule{MyPage}{\headwidth}{0.4pt}
+% \makefootrule{MyPage}{\headwidth}{0.4pt}{\footruleskip}
+
 \pagestyle{MyPage}
 
 % ================================================================================================
