@@ -30,13 +30,25 @@
   TW-MOE-Std-Kai[
     AutoFakeSlant=0.2,
     AutoFakeBold=3.05
-  ], TW-Kai,
+  ], TW-Kai[
+    AutoFakeSlant=0.2,
+    AutoFakeBold=3.05
+  ],
   Source Han Serif TC, Noto Serif CJK TC,
   Source Han Serif SC, Noto Serif CJK SC, FandolSong
 }
 
 \SetFontFromList[CJK]{sans}{
-  Source Han Sans TC, Noto Sans CJK TC,
+  Source Han Sans TC[
+    UprightFont    = SourceHanSansTC-Regular,
+    ItalicFont     = SourceHanSansTC-Regular,
+    BoldFont       = SourceHanSansTC-Bold,
+    BoldItalicFont = SourceHanSansTC-Bold,
+    FontFace = {sb}{n}{SourceHanSansTC-Medium},
+    FontFace = {sb}{it}{SourceHanSansTC-Medium},
+    FontFace = {sbx}{n}{SourceHanSansTC-Medium},
+    FontFace = {sbx}{it}{SourceHanSansTC-Medium},
+  ], Noto Sans CJK TC,
   Source Han Sans SC, Noto Sans CJK SC, FandolHei
 }
 \SetFontFromList[CJK]{mono}{
