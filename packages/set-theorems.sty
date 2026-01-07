@@ -1,9 +1,10 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-theorems}[2025/02/15 v0.2.11 Theorem-like Environments Settings]
+\ProvidesPackage{packages/set-theorems}[2026/01/07 v0.3 Theorem-like Environments Settings]
 
 \RequirePackage{amsthm}
 \RequirePackage[most]{tcolorbox}
 \RequirePackage{xeCJK}
+\RequirePackage{setspace}
 
 \RequirePackage{etoolbox}
 \RequirePackage{xparse}
@@ -47,6 +48,7 @@
 
 {
   \message{Preset}
+  \xdef\axname{Axiom}
   \xdef\cjname{Conjecture}
   \xdef\corname{Corollary}
   \xdef\dfname{Definition}
@@ -66,6 +68,7 @@
 
 \def\theoremlangen{
   \message{Set Language: English}
+  \xdef\axname{Axiom}
   \xdef\cjname{Conjecture}
   \xdef\corname{Corollary}
   \xdef\dfname{Definition}
@@ -84,6 +87,7 @@
 }
 \def\theoremlangtw{
   \message{Set Language: Chinese (Traditional)}
+  \xdef\axname{公理}
   \xdef\cjname{猜想}
   \xdef\corname{推論}
   \xdef\dfname{定義}
@@ -102,6 +106,7 @@
 }
 \def\theoremlangcn{
   \message{Set Language: Chinese (Simplified)}
+  \xdef\axname{公理}
   \xdef\cjname{猜想}
   \xdef\corname{推论}
   \xdef\dfname{定义}
@@ -120,6 +125,7 @@
 }
 \def\theoremlangde{
   \message{Set Language: German}
+  \xdef\axname{Axiom}
   \xdef\cjname{Vermutung}
   \xdef\corname{Korollar}
   \xdef\dfname{Definition}
@@ -193,19 +199,25 @@
 \makeatother
 
 \tcbset{
+  theoremstretch/.style={
+    fontupper=\setstretch{1.33}\selectfont,
+    fontlower=\setstretch{1.33}\selectfont,
+  },
   theoremstyle/.style={
+    theoremstretch,
     enhanced jigsaw, empty, opacityback=0, sharp corners=all,
     fonttitle=\TheoremHeadFont\TheoremHeadColor, titlerule=0pt, opacitybacktitle=0, toptitle=2mm,
     separator sign ={\enspace}, description delimiters={\mdseries(}{)},
     middle=4mm, lower separated=true, halign lower=justify,
     left=2mm, right=2mm,
-    breakable, toprule at break=0mm, bottomrule at break=0mm,
-    before skip=12pt, after skip=20pt,
+    breakable, toprule at break=0mm, bottomrule at break=0mm, lines before break=1,
+    before skip=12pt minus 4pt, after skip=12pt plus 4pt minus 4pt,
     borderline={0.75pt}{0pt}{black},
     segmentation engine=path,
     segmentation style={draw=black!50, line width=0.6pt, dashed}
   },
   normalstyle/.style={
+    theoremstretch,
     enhanced jigsaw, empty, opacityback=0,
     fonttitle=\rmfamily\bfseries\color{black}, attach title to upper, after title={\hspace{1em}},
     separator sign ={}, description delimiters={\mdseries(}{)},
@@ -213,7 +225,7 @@
     left=0mm, right=0mm, boxsep=0mm,
     leftrule=0pt, rightrule=0pt, toprule=0pt, bottomrule=0pt,
     breakable, toprule at break=0mm, bottomrule at break=0mm,
-    before skip=10pt, after skip=12.5pt,
+    before skip=8pt, after skip=8pt plus 2.5pt,
   },
   geo_base/.style={
     sidebyside adapt= right, boxsep=0pt, sharp corners=all, blankest,
@@ -236,8 +248,11 @@
 \newtcbtheorem[number within=section]{exs}{\bfseries \exsname}{normalstyle}{exs}
 \newtcbtheorem[use counter from=exs]{Exs}{\bfseries \exsname\TheoremExtraSpace}{theoremstyle}{Exs}
 
-\newtcbtheorem[number within=section]{prb}{\bfseries \prname}{normalstyle}{prb}
-\newtcbtheorem[use counter from=prb]{Prb}{\bfseries \prname\TheoremExtraSpace}{theoremstyle}{Prb}
+\newtcbtheorem[number within=section, crefname={\prname}{\prname s}]{prb}{\bfseries \prname}{normalstyle}{prb}
+\newtcbtheorem[use counter from=prb, crefname={Problem}{\prname s}]{Prb}{\bfseries \prname\TheoremExtraSpace}{theoremstyle}{Prb}
+
+\newtcbtheorem{prbx}{\bfseries \prname}{normalstyle}{prbx}
+\newtcbtheorem[use counter from=prbx]{Prbx}{\bfseries \prname\TheoremExtraSpace}{theoremstyle}{Prbx}
 
 
 % Theorems
@@ -252,6 +267,9 @@
 
 \newtcbtheorem[use counter from=thm]{lm}{\bfseries \lmname}{normalstyle}{lm}
 \newtcbtheorem[use counter from=thm]{Lm}{\bfseries \lmname\TheoremExtraSpace}{theoremstyle}{Lm}
+
+\newtcbtheorem[use counter from=thm]{ax}{\bfseries \axname}{normalstyle}{ax}
+\newtcbtheorem[use counter from=thm]{Ax}{\bfseries \axname\TheoremExtraSpace}{theoremstyle}{Ax}
 
 \newtcbtheorem[use counter from=thm]{cj}{\bfseries \cjname}{normalstyle}{cj}
 \newtcbtheorem[use counter from=thm]{Cj}{\bfseries \cjname\TheoremExtraSpace}{theoremstyle}{Cj}
@@ -281,4 +299,23 @@
   \begin{tcolorbox}[quotestyle, #1]
 }{
   \end{tcolorbox}
+}
+
+\newenvironment{centre}
+  {%
+    \par    % End previous paragraph
+    \begingroup
+    \centering
+  }
+  {%
+    \par    % End centered paragraph
+    \endgroup
+  }
+
+% Highlight texts
+\definecolor{highlightyellow}{rgb}{1,0.98,0.84}
+\newtcbox{\hil}{
+  colback=highlightyellow,
+  size=small, frame empty, sharp corners=all, on line,
+  left=2pt, right=2pt, top=2pt, bottom=2pt, boxsep=0pt,
 }
