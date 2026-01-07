@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-fonts}[2026/01/07 v0.6.3 Minimal Fonts setup]
+\ProvidesPackage{packages/set-fonts}[2026/01/07 v0.6.4 Minimal Fonts setup]
 
 \RequirePackage{iftex}
 \ifPDFTeX
@@ -239,7 +239,8 @@
 \tl_new:N   \l__setfonts_fontname_tl
 \tl_new:N   \l__setfonts_fontopts_tl
 \bool_new:N \l__setfonts_inopts_bool
-\int_new:N  \l__setfonts_opts_depth_int
+\int_new:N  \l__setfonts_opts_depth_int  % square-bracket nesting inside per-font options
+\int_new:N  \l__setfonts_opts_brace_int  % curly-brace nesting inside per-font options
 
 \cs_new_protected:Npn \__setfonts_parse_candidate:n #1
   {
@@ -247,39 +248,78 @@
     \tl_clear:N \l__setfonts_fontopts_tl
     \bool_set_false:N \l__setfonts_inopts_bool
     \int_zero:N \l__setfonts_opts_depth_int
+    \int_zero:N \l__setfonts_opts_brace_int
 
-    % Use token-analysis mapping so that explicit spaces are preserved.
-    % (\tl_map_inline:nn discards space tokens by design.)
+    % IMPORTANT: We use \tl_analysis_map_inline:nn (not \tl_map_inline:nn)
+    % so that literal spaces in font names (e.g. "Times New Roman") are
+    % preserved.
+    %
+    % We also treat square brackets inside curly braces as ordinary content,
+    % so complex key values like FontFace={sb}{n}{...} do not confuse the
+    % outer [...] option parsing.
     \tl_analysis_map_inline:nn {#1}
       {
-        % args: ##1 token (wrapped), ##2 char code, ##3 catcode class
         \bool_if:NTF \l__setfonts_inopts_bool
           {
-            \int_compare:nNnTF {##2} = {93} % ]
+            % --- Inside the per-font option bracket [...]
+            \int_compare:nNnTF {##2} = { 123 } % {
               {
-                \int_decr:N \l__setfonts_opts_depth_int
-                \int_compare:nNnTF { \l__setfonts_opts_depth_int } = { 0 }
-                  { \bool_set_false:N \l__setfonts_inopts_bool }
-                  { \tl_put_right:Nx \l__setfonts_fontopts_tl {##1} }
+                \int_incr:N \l__setfonts_opts_brace_int
+                \tl_put_right:Nn \l__setfonts_fontopts_tl {##1}
               }
               {
-                \int_compare:nNnTF {##2} = {91} % [
+                \int_compare:nNnTF {##2} = { 125 } % }
                   {
-                    \int_incr:N \l__setfonts_opts_depth_int
-                    \tl_put_right:Nx \l__setfonts_fontopts_tl {##1}
+                    \int_compare:nNnT { \l__setfonts_opts_brace_int } > { 0 }
+                      { \int_decr:N \l__setfonts_opts_brace_int }
+                    \tl_put_right:Nn \l__setfonts_fontopts_tl {##1}
                   }
-                  { \tl_put_right:Nx \l__setfonts_fontopts_tl {##1} }
+                  {
+                    % Only treat [ and ] as nesting delimiters when we are
+                    % not inside {...}. This prevents stray ']' inside key
+                    % values from prematurely closing the outer option list.
+                    \int_compare:nNnTF {##2} = { 91 } % [
+                      {
+                        \int_compare:nNnTF { \l__setfonts_opts_brace_int } = { 0 }
+                          {
+                            \int_incr:N \l__setfonts_opts_depth_int
+                            \tl_put_right:Nn \l__setfonts_fontopts_tl {##1}
+                          }
+                          { \tl_put_right:Nn \l__setfonts_fontopts_tl {##1} }
+                      }
+                      {
+                        \int_compare:nNnTF {##2} = { 93 } % ]
+                          {
+                            \int_compare:nNnTF { \l__setfonts_opts_brace_int } = { 0 }
+                              {
+                                \int_decr:N \l__setfonts_opts_depth_int
+                                \int_compare:nNnTF { \l__setfonts_opts_depth_int } = { 0 }
+                                  { \bool_set_false:N \l__setfonts_inopts_bool }
+                                  { \tl_put_right:Nn \l__setfonts_fontopts_tl {##1} }
+                              }
+                              { \tl_put_right:Nn \l__setfonts_fontopts_tl {##1} }
+                          }
+                          { \tl_put_right:Nn \l__setfonts_fontopts_tl {##1} }
+                      }
+                  }
               }
           }
           {
-            \int_compare:nNnTF {##2} = {91} % [
+            % --- Not in options: build the font name until the first '['
+            \int_compare:nNnTF {##2} = { 91 } % [
               {
                 \bool_set_true:N \l__setfonts_inopts_bool
                 \int_set:Nn \l__setfonts_opts_depth_int { 1 }
+                \int_zero:N \l__setfonts_opts_brace_int
               }
-              { \tl_put_right:Nx \l__setfonts_fontname_tl {##1} }
+              { \tl_put_right:Nn \l__setfonts_fontname_tl {##1} }
           }
       }
+
+    % Unwrap the \exp_not:n{...} tokens produced by \tl_analysis_map_inline:nn
+    % so downstream trimming + fontspec lookup see real spaces/braces.
+    \tl_set:Nx \l__setfonts_fontname_tl { \l__setfonts_fontname_tl }
+    \tl_set:Nx \l__setfonts_fontopts_tl { \l__setfonts_fontopts_tl }
 
     \tl_trim_spaces:N \l__setfonts_fontname_tl
     \tl_trim_spaces:N \l__setfonts_fontopts_tl
@@ -290,12 +330,13 @@
 % [...] option brackets.
 \seq_new:N \l__setfonts_candidates_seq
 \tl_new:N  \l__setfonts_current_item_tl
-\tl_new:N  \l__setfonts_split_target_tl
 \int_new:N \l__setfonts_list_depth_int
+\int_new:N \l__setfonts_list_brace_int
 
 \cs_new_protected:Npn \__setfonts_seq_put_trimmed:NN #1 #2
   {
-    \tl_set_eq:NN \l_tmpa_tl #2
+    \tl_set:Nn \l_tmpa_tl { \tl_use:N #2 }
+    \tl_set:Nx \l_tmpa_tl { \l_tmpa_tl }
     \tl_trim_spaces:N \l_tmpa_tl
     \tl_if_blank:VF \l_tmpa_tl { \seq_put_right:NV #1 \l_tmpa_tl }
   }
@@ -303,48 +344,64 @@
 \cs_new_protected:Npn \__setfonts_split_candidates:nN #1 #2
   {
     \seq_clear:N #2
-    % Store the target seq variable so we can refer to it inside the 3-arg map code
-    \tl_set:Nn \l__setfonts_split_target_tl {#2}
-
     \tl_clear:N \l__setfonts_current_item_tl
     \int_zero:N \l__setfonts_list_depth_int
+    \int_zero:N \l__setfonts_list_brace_int
 
-    % Use token-analysis mapping so that explicit spaces are preserved.
+    % IMPORTANT: Use \tl_analysis_map_inline:nn to preserve literal spaces.
+    % We ignore commas while inside [...] options, and we ignore any square
+    % brackets that appear *inside* {...} groups within those options.
     \tl_analysis_map_inline:nn {#1}
       {
-        % args: ##1 token (wrapped), ##2 char code, ##3 catcode class
-        \int_compare:nNnTF {##2} = {91} % [
+        % Track curly-brace nesting only when we're already inside [...].
+        \int_compare:nNnT { \l__setfonts_list_depth_int } > { 0 }
           {
-            \int_incr:N \l__setfonts_list_depth_int
-            \tl_put_right:Nx \l__setfonts_current_item_tl {##1}
+            \int_compare:nNnTF {##2} = { 123 } % {
+              { \int_incr:N \l__setfonts_list_brace_int }
+              {
+                \int_compare:nNnTF {##2} = { 125 } % }
+                  {
+                    \int_compare:nNnT { \l__setfonts_list_brace_int } > { 0 }
+                      { \int_decr:N \l__setfonts_list_brace_int }
+                  }
+                  { }
+              }
+          }
+
+        \int_compare:nNnTF {##2} = { 44 } % comma
+          {
+            \int_compare:nNnTF { \l__setfonts_list_depth_int } = { 0 }
+              {
+                \__setfonts_seq_put_trimmed:NN #2 \l__setfonts_current_item_tl
+                \tl_clear:N \l__setfonts_current_item_tl
+              }
+              { \tl_put_right:Nn \l__setfonts_current_item_tl {##1} }
           }
           {
-            \int_compare:nNnTF {##2} = {93} % ]
+            \int_compare:nNnTF {##2} = { 91 } % [
               {
-                \int_compare:nNnT { \l__setfonts_list_depth_int } > { 0 }
-                  { \int_decr:N \l__setfonts_list_depth_int }
-                \tl_put_right:Nx \l__setfonts_current_item_tl {##1}
+                \int_compare:nNnTF { \l__setfonts_list_brace_int } = { 0 }
+                  { \int_incr:N \l__setfonts_list_depth_int }
+                  { }
+                \tl_put_right:Nn \l__setfonts_current_item_tl {##1}
               }
               {
-                \int_compare:nNnTF {##2} = {44} % ,
+                \int_compare:nNnTF {##2} = { 93 } % ]
                   {
-                    \int_compare:nNnTF { \l__setfonts_list_depth_int } = { 0 }
+                    \int_compare:nNnTF { \l__setfonts_list_brace_int } = { 0 }
                       {
-                        \exp_args:NV \__setfonts_seq_put_trimmed:NN
-                          \l__setfonts_split_target_tl
-                          \l__setfonts_current_item_tl
-                        \tl_clear:N \l__setfonts_current_item_tl
+                        \int_compare:nNnT { \l__setfonts_list_depth_int } > { 0 }
+                          { \int_decr:N \l__setfonts_list_depth_int }
                       }
-                      { \tl_put_right:Nx \l__setfonts_current_item_tl {##1} }
+                      { }
+                    \tl_put_right:Nn \l__setfonts_current_item_tl {##1}
                   }
-                  { \tl_put_right:Nx \l__setfonts_current_item_tl {##1} }
+                  { \tl_put_right:Nn \l__setfonts_current_item_tl {##1} }
               }
           }
       }
 
-    \exp_args:NV \__setfonts_seq_put_trimmed:NN
-      \l__setfonts_split_target_tl
-      \l__setfonts_current_item_tl
+    \__setfonts_seq_put_trimmed:NN #2 \l__setfonts_current_item_tl
   }
 
 % ------------------------------------------------------------------------

@@ -8,7 +8,16 @@
   TeX Gyre Termes, Latin Modern Roman
 }
 \SetFontFromList{sans}{
-  Source Sans 3, Arial, Fira Sans,
+  Source Sans 3[
+    UprightFont    = SourceSans3-Regular,
+    ItalicFont     = SourceSans3-Italic,
+    BoldFont       = SourceSans3-Bold,
+    BoldItalicFont = SourceSans3-BoldItalic,
+    FontFace = {sb}{n}{SourceSans3-SemiBold},
+    FontFace = {sb}{it}{SourceSans3-SemiBoldItalic},
+    FontFace = {sbx}{n}{SourceSans3-SemiBold},
+    FontFace = {sbx}{it}{SourceSans3-SemiBoldItalic},
+  ], Arial, Fira Sans,
   TeX Gyre Heros, Latin Modern Sans
 }
 \SetFontFromList{mono}{
@@ -34,25 +43,3 @@
   Source Han Sans TC, Noto Sans CJK TC,
   Source Han Sans SC, Noto Sans CJK SC, FandolFang
 }
-
-\IfFontExistsTF{Source Sans 3}{
-  \newfontfamily\SourceSans[
-    UprightFont    = SourceSans3-Regular,
-    ItalicFont     = SourceSans3-Italic,
-    BoldFont       = SourceSans3-Bold,
-    BoldItalicFont = SourceSans3-BoldItalic,
-  ]{Source Sans 3}
-
-  \makeatletter
-  \setsansfont[
-    UprightFont    = SourceSans3-Regular,
-    ItalicFont     = SourceSans3-Italic,
-    BoldFont       = SourceSans3-Bold,
-    BoldItalicFont = SourceSans3-BoldItalic,
-    FontFace = {sb}{n}{SourceSans3-SemiBold},
-    FontFace = {sb}{it}{SourceSans3-SemiBoldItalic},
-    FontFace = {sbx}{n}{SourceSans3-SemiBold},
-    FontFace = {sbx}{it}{SourceSans3-SemiBoldItalic},
-  ]{Source Sans 3}
-  \makeatother
-}{}
