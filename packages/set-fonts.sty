@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-fonts}[2026/01/03 v0.5 Minimal Fonts setup]
+\ProvidesPackage{packages/set-fonts}[2026/01/07 v0.6.3 Minimal Fonts setup]
 
 \RequirePackage{iftex}
 \ifPDFTeX
@@ -73,6 +73,15 @@
 \RequirePackage{xparse}
 \ExplSyntaxOn
 
+% ------------------------------------------------------------------------
+% Debug toggle (prints probing/selection decisions to the .log/terminal)
+%   Usage (preamble):
+%     \SetFontsDebugOn
+%     \SetFontsDebugOff
+\bool_new:N \g__setfonts_debug_bool
+\cs_new_protected:Npn \SetFontsDebugOn  { \bool_gset_true:N  \g__setfonts_debug_bool }
+\cs_new_protected:Npn \SetFontsDebugOff { \bool_gset_false:N \g__setfonts_debug_bool }
+
 % Save defaults at package load so we can restore later.
 \tl_new:N \g__setfonts_rmdefault_tl
 \tl_new:N \g__setfonts_sfdefault_tl
@@ -113,14 +122,28 @@
 \bool_new:N \g__setfonts_CJKsf_user_bool
 \bool_new:N \g__setfonts_CJKtt_user_bool
 
-\cs_new_protected:Npn \__setfonts_cjk_set_family:nn #1 #2
+% Call a font setter with per-font options.
+%   #1 = setter (e.g., \setmainfont)
+%   #2 = options (no outer brackets); may be blank
+%   #3 = font name
+%
+% IMPORTANT: no space is inserted before '['; otherwise LaTeX optional-arg
+% detection would fail.
+\cs_new_protected:Npn \__setfonts_set_font:Nnn #1 #2 #3
+  {
+    \tl_if_blank:nTF {#2}
+      {#1{#3}}
+      {#1[#2]{#3}}
+  }
+
+\cs_new_protected:Npn \__setfonts_cjk_set_family:nnn #1 #2 #3
   {
     \str_case:nnF {#1}
       {
         {main}{
           \int_gincr:N \g__setfonts_CJKrm_int
           \cs_set:Npx \CJKrmdefault { setfonts-CJKrm-\int_use:N \g__setfonts_CJKrm_int }
-          \setCJKmainfont{#2}
+          \__setfonts_set_font:Nnn \setCJKmainfont {#2} {#3}
 
           % Ensure CJK sans/mono exist to avoid xeCJK "Unknown CJK family" warnings,
           % but do not override a user choice.
@@ -128,25 +151,25 @@
             {
               \int_gincr:N \g__setfonts_CJKsf_int
               \cs_set:Npx \CJKsfdefault { setfonts-CJKsf-\int_use:N \g__setfonts_CJKsf_int }
-              \setCJKsansfont{#2}
+              \__setfonts_set_font:Nnn \setCJKsansfont {#2} {#3}
             }
           \bool_if:NF \g__setfonts_CJKtt_user_bool
             {
               \int_gincr:N \g__setfonts_CJKtt_int
               \cs_set:Npx \CJKttdefault { setfonts-CJKtt-\int_use:N \g__setfonts_CJKtt_int }
-              \setCJKmonofont{#2}
+              \__setfonts_set_font:Nnn \setCJKmonofont {#2} {#3}
             }
         }
         {sans}{
           \int_gincr:N \g__setfonts_CJKsf_int
           \cs_set:Npx \CJKsfdefault { setfonts-CJKsf-\int_use:N \g__setfonts_CJKsf_int }
-          \setCJKsansfont{#2}
+          \__setfonts_set_font:Nnn \setCJKsansfont {#2} {#3}
           \bool_gset_true:N \g__setfonts_CJKsf_user_bool
         }
         {mono}{
           \int_gincr:N \g__setfonts_CJKtt_int
           \cs_set:Npx \CJKttdefault { setfonts-CJKtt-\int_use:N \g__setfonts_CJKtt_int }
-          \setCJKmonofont{#2}
+          \__setfonts_set_font:Nnn \setCJKmonofont {#2} {#3}
           \bool_gset_true:N \g__setfonts_CJKtt_user_bool
         }
       }
@@ -185,45 +208,239 @@
   }
 
 % Apply chosen font (dispatches to the right setter).
-\cs_new_protected:Npn \__setfonts_apply:nnn #1 #2 #3
+%
+% #1 mode  : (empty) | CJK
+% #2 family: main | sans | mono
+% #3 opts  : options passed to \set...font (without surrounding brackets)
+% #4 font  : font name
+\cs_new_protected:Npn \__setfonts_apply:nnnn #1 #2 #3 #4
   {
     \tl_if_eq:nnTF {#1} {CJK}
-      { \__setfonts_cjk_set_family:nn {#2} {#3} }
+      { \__setfonts_cjk_set_family:nnn {#2} {#3} {#4} }
       {
         \str_case:nnF {#2}
           {
-            {main}{\setmainfont{#3}}
-            {sans}{\setsansfont{#3}}
-            {mono}{\setmonofont{#3}}
+            {main}{\__setfonts_set_font:Nnn \setmainfont {#3} {#4}}
+            {sans}{\__setfonts_set_font:Nnn \setsansfont {#3} {#4}}
+            {mono}{\__setfonts_set_font:Nnn \setmonofont {#3} {#4}}
           }
           {\PackageError{set-fonts}{Unknown font family `#2'}{Use main, sans, or mono.}}
       }
   }
 
 % ------------------------------------------------------------------------
-% Main selector: pick first existing font from a comma list (whitespace-safe).
+% Parse a list item like:
+%   Font Name
+%   Font Name[<options>]
+%
+% into two tls:
+%   \l__setfonts_fontname_tl
+%   \l__setfonts_fontopts_tl   (no outer brackets)
+\tl_new:N   \l__setfonts_fontname_tl
+\tl_new:N   \l__setfonts_fontopts_tl
+\bool_new:N \l__setfonts_inopts_bool
+\int_new:N  \l__setfonts_opts_depth_int
+
+\cs_new_protected:Npn \__setfonts_parse_candidate:n #1
+  {
+    \tl_clear:N \l__setfonts_fontname_tl
+    \tl_clear:N \l__setfonts_fontopts_tl
+    \bool_set_false:N \l__setfonts_inopts_bool
+    \int_zero:N \l__setfonts_opts_depth_int
+
+    % Use token-analysis mapping so that explicit spaces are preserved.
+    % (\tl_map_inline:nn discards space tokens by design.)
+    \tl_analysis_map_inline:nn {#1}
+      {
+        % args: ##1 token (wrapped), ##2 char code, ##3 catcode class
+        \bool_if:NTF \l__setfonts_inopts_bool
+          {
+            \int_compare:nNnTF {##2} = {93} % ]
+              {
+                \int_decr:N \l__setfonts_opts_depth_int
+                \int_compare:nNnTF { \l__setfonts_opts_depth_int } = { 0 }
+                  { \bool_set_false:N \l__setfonts_inopts_bool }
+                  { \tl_put_right:Nx \l__setfonts_fontopts_tl {##1} }
+              }
+              {
+                \int_compare:nNnTF {##2} = {91} % [
+                  {
+                    \int_incr:N \l__setfonts_opts_depth_int
+                    \tl_put_right:Nx \l__setfonts_fontopts_tl {##1}
+                  }
+                  { \tl_put_right:Nx \l__setfonts_fontopts_tl {##1} }
+              }
+          }
+          {
+            \int_compare:nNnTF {##2} = {91} % [
+              {
+                \bool_set_true:N \l__setfonts_inopts_bool
+                \int_set:Nn \l__setfonts_opts_depth_int { 1 }
+              }
+              { \tl_put_right:Nx \l__setfonts_fontname_tl {##1} }
+          }
+      }
+
+    \tl_trim_spaces:N \l__setfonts_fontname_tl
+    \tl_trim_spaces:N \l__setfonts_fontopts_tl
+  }
+
+% ------------------------------------------------------------------------
+% Split a comma-separated list into items, but do NOT split at commas inside
+% [...] option brackets.
+\seq_new:N \l__setfonts_candidates_seq
+\tl_new:N  \l__setfonts_current_item_tl
+\tl_new:N  \l__setfonts_split_target_tl
+\int_new:N \l__setfonts_list_depth_int
+
+\cs_new_protected:Npn \__setfonts_seq_put_trimmed:NN #1 #2
+  {
+    \tl_set_eq:NN \l_tmpa_tl #2
+    \tl_trim_spaces:N \l_tmpa_tl
+    \tl_if_blank:VF \l_tmpa_tl { \seq_put_right:NV #1 \l_tmpa_tl }
+  }
+
+\cs_new_protected:Npn \__setfonts_split_candidates:nN #1 #2
+  {
+    \seq_clear:N #2
+    % Store the target seq variable so we can refer to it inside the 3-arg map code
+    \tl_set:Nn \l__setfonts_split_target_tl {#2}
+
+    \tl_clear:N \l__setfonts_current_item_tl
+    \int_zero:N \l__setfonts_list_depth_int
+
+    % Use token-analysis mapping so that explicit spaces are preserved.
+    \tl_analysis_map_inline:nn {#1}
+      {
+        % args: ##1 token (wrapped), ##2 char code, ##3 catcode class
+        \int_compare:nNnTF {##2} = {91} % [
+          {
+            \int_incr:N \l__setfonts_list_depth_int
+            \tl_put_right:Nx \l__setfonts_current_item_tl {##1}
+          }
+          {
+            \int_compare:nNnTF {##2} = {93} % ]
+              {
+                \int_compare:nNnT { \l__setfonts_list_depth_int } > { 0 }
+                  { \int_decr:N \l__setfonts_list_depth_int }
+                \tl_put_right:Nx \l__setfonts_current_item_tl {##1}
+              }
+              {
+                \int_compare:nNnTF {##2} = {44} % ,
+                  {
+                    \int_compare:nNnTF { \l__setfonts_list_depth_int } = { 0 }
+                      {
+                        \exp_args:NV \__setfonts_seq_put_trimmed:NN
+                          \l__setfonts_split_target_tl
+                          \l__setfonts_current_item_tl
+                        \tl_clear:N \l__setfonts_current_item_tl
+                      }
+                      { \tl_put_right:Nx \l__setfonts_current_item_tl {##1} }
+                  }
+                  { \tl_put_right:Nx \l__setfonts_current_item_tl {##1} }
+              }
+          }
+      }
+
+    \exp_args:NV \__setfonts_seq_put_trimmed:NN
+      \l__setfonts_split_target_tl
+      \l__setfonts_current_item_tl
+  }
+
+% ------------------------------------------------------------------------
+% Main selector: pick first existing font from a list.
 \bool_new:N \l__setfonts_found_bool
-\clist_new:N \l__setfonts_candidates_clist
-\tl_new:N \l__setfonts_candidate_tl
+
+% ------------------------------------------------------------------------
+% Option-aware existence test
+%
+% We *must* include candidate options in the existence test; otherwise fonts
+% that are only accessible via Path/Extension/FontIndex/Renderer/etc. will be
+% falsely reported as missing and skipped.
+%
+%   #1 = fontspec options (may be blank)
+%   #2 = font name (already trimmed)
+%
+% This relies on fontspec internals, but keeps the test non-fatal.
+\prg_new_conditional:Nnn \__setfonts_fontspec_if_exist:nn {TF,T,F}
+  {
+    \group_begin:
+      \__fontspec_init:
+
+      % Keep fontspec's internal state consistent with an actual \set...font call.
+      \tl_clear:N \l__fontspec_family_label_tl
+
+      \__fontspec_sanitise_fontname:Nn \l_fontspec_fontname_tl      {#2}
+      \__fontspec_sanitise_fontname:Nn \l__fontspec_fontname_up_tl   {#2}
+      \__fontspec_sanitise_fontname:Nn \l__fontspec_basename_tl      {#2}
+
+      % If the font name itself looks like a filename (e.g. *.otf), switch to
+      % file-loading mode (Path may still be set via options below).
+      \__fontspec_if_detect_external:nT {#2}
+        { \keys_set:nn {fontspec-preparse-external} {Path} }
+
+      % Read options (including Path/Extension/FontIndex/Renderer/...)
+      \keys_set_known:nn {fontspec-preparse-cfg} {#1}
+      \__fontspec_extract_all_features:n {#1}
+      \__fontspec_preparse_features:
+
+      \__fontspec_primitive_font_if_exist:nTF
+        { \__fontspec_construct_font_call:nn { \l__fontspec_fontname_up_tl } {} }
+        { \group_end: \prg_return_true: }
+        { \group_end: \prg_return_false: }
+  }
 
 \cs_new_protected:Npn \__setfonts_select_from_list:nnn #1 #2 #3
   {
     \bool_set_false:N \l__setfonts_found_bool
-    \clist_set:Nn \l__setfonts_candidates_clist {#3}
+    \__setfonts_split_candidates:nN {#3} \l__setfonts_candidates_seq
 
-    \clist_map_inline:Nn \l__setfonts_candidates_clist
+    \seq_map_inline:Nn \l__setfonts_candidates_seq
       {
-        \tl_set:Nn \l__setfonts_candidate_tl {##1}
-        \tl_trim_spaces:N \l__setfonts_candidate_tl
-        \tl_if_blank:nF { \tl_use:N \l__setfonts_candidate_tl }
+        \__setfonts_parse_candidate:n {##1}
+        \tl_if_blank:VF \l__setfonts_fontname_tl
           {
-            \IfFontExistsTF { \tl_use:N \l__setfonts_candidate_tl }
+            \bool_if:NT \g__setfonts_debug_bool
               {
-                \__setfonts_apply:nnn {#1} {#2} { \tl_use:N \l__setfonts_candidate_tl }
-                \bool_set_true:N \l__setfonts_found_bool
-                \clist_map_break:
+                \iow_term:x
+                  {
+                    set-fonts:~probe~mode=
+                      \tl_if_blank:nTF {#1} {Latin} {#1}
+                    ,~family=#2,
+                    ~font='\tl_to_str:N \l__setfonts_fontname_tl',
+                    ~opts='\tl_to_str:N \l__setfonts_fontopts_tl'
+                  }
               }
-              { }
+
+            \__setfonts_fontspec_if_exist:nnTF
+              { \tl_use:N \l__setfonts_fontopts_tl }
+              { \tl_use:N \l__setfonts_fontname_tl }
+              {
+                \bool_if:NT \g__setfonts_debug_bool
+                  {
+                    \iow_term:x
+                      {
+                        set-fonts:~select~'\tl_to_str:N \l__setfonts_fontname_tl'
+                      }
+                  }
+
+                \__setfonts_apply:nnnn
+                  {#1}
+                  {#2}
+                  {\tl_use:N \l__setfonts_fontopts_tl}
+                  {\tl_use:N \l__setfonts_fontname_tl}
+                \bool_set_true:N \l__setfonts_found_bool
+                \seq_map_break:
+              }
+              {
+                \bool_if:NT \g__setfonts_debug_bool
+                  {
+                    \iow_term:x
+                      {
+                        set-fonts:~miss~'\tl_to_str:N \l__setfonts_fontname_tl'
+                      }
+                  }
+              }
           }
       }
 
@@ -254,6 +471,7 @@
   }
 
 \ExplSyntaxOff
+
 
 % ========================================================================
 % Semi-bold font series (if available)

@@ -1,5 +1,8 @@
 % Font setup
 
+% Enable font debugging information
+\SetFontsDebugOn
+
 \SetFontFromList{main}{
   CMU Serif, Times New Roman,
   TeX Gyre Termes, Latin Modern Roman
@@ -14,28 +17,13 @@
   Latin Modern Mono
 }
 
-\newbool{KAI}
-\boolfalse{KAI}
-% \booltrue{KAI}
-
-\ifbool{KAI}{
-  \IfFontExistsTF{TW-MOE-Std-Kai}{
-    \setCJKmainfont{TW-MOE-Std-Kai}[
-      AutoFakeSlant=0.2,
-      AutoFakeBold=3.05
-    ]
-  }{
-    \SetFontFromList[CJK]{main}{
-      TW-Kai,
-      Source Han Serif TC, Noto Serif CJK TC,
-      Source Han Serif SC, Noto Serif CJK SC, FandolSong
-    }
-  }
-}{
-  \SetFontFromList[CJK]{main}{
-    Source Han Serif TC, Noto Serif CJK TC,
-    Source Han Serif SC, Noto Serif CJK SC, FandolSong
-  }
+\SetFontFromList[CJK]{main}{
+  TW-MOE-Std-Kai[
+    AutoFakeSlant=0.2,
+    AutoFakeBold=3.05
+  ], TW-Kai,
+  Source Han Serif TC, Noto Serif CJK TC,
+  Source Han Serif SC, Noto Serif CJK SC, FandolSong
 }
 
 \SetFontFromList[CJK]{sans}{
