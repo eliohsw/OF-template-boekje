@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-memoir}[2026/01/03 v0.3.1 Basic packages for memoir class]
+\ProvidesPackage{packages/set-memoir}[2026/01/07 v0.4 Basic packages for memoir class]
 
 % ========================================================================
 
@@ -47,6 +47,13 @@
 
 \makeatletter
 \@ifundefined{theHpagenote}{}{\let\theHpagenote\relax}
+\makeatother
+
+% Silence memoir/glossaries redefinition warnings
+\makeatletter
+\let\printglossary\relax
+\let\theglossary\relax
+\let\endtheglossary\relax
 \makeatother
 
 \RequirePackage[unicode=true, pdfborder={0 0 0}]{hyperref}            % Hyperlinks
