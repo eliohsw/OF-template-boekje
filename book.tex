@@ -3,7 +3,7 @@
 
 \usepackage[
   inner=2.8cm, outer=2.2cm, top=2.5cm, bottom=2cm,
-  showframe
+  showframe % show page layout for debugging
 ]{geometry}
 
 \makeatletter
@@ -38,10 +38,10 @@
 % Shortcut for indexing and printing
 \newcommand{\ix}[1]{\index{#1}#1}
 
-% Enable indexing (comment out if not needed)
-% \makeindex 
+% Enable indexing (UNCOMMENT if needed)
+% \makeindex
 
-% Enable acronyms and glossary (comment out if not needed)
+% Enable acronyms and glossary (UNCOMMENT if needed)
 % \input{./contents/glossary.tex}
 % \makeglossaries
 
@@ -72,7 +72,7 @@
 
 \frontmatter
 
-% Add preface here (comment out if not needed)
+% Add preface here (UNCOMMENT if needed)
 % \input{contents/preface.tex}
 
 % Print Table of Contents
@@ -91,35 +91,34 @@
 % \renewcommand{\textflush}{flushleft}
 % \renewcommand{\sourceflush}{flushright}
 
-% Add more chapters here
+% ADD MORE chapters here
 % Chapters may be separated by parts, use \part{} between chapters.
-
+% \part{Part Name}
 \input{contents/chapters/chapter01.tex}
 
-% Appendices (comment out if not needed)
+% Appendices (UNCOMMENT if needed)
 % \appendix
 % \renewcommand*\printchaptername{\chapnamefont \MakeUppercase{Appendix}}%
 
-% Add more appendices here
-
+% ADD MORE appendices here
 % \input{contents/appendices/appendix01.tex}
 
 % ================================================================================================
 
 \backmatter
 
-% Print Acronyms and Glossary (comment out if not needed)
+% Print Acronyms (UNCOMMENT if needed)
 % \printglossary[type=\acronymtype]
 % \addcontentsline{toc}{chapter}{Acronyms}
 
+% Print Glossary (UNCOMMENT if needed)
 % \printglossary
 % \addcontentsline{toc}{chapter}{Glossary}
 
-% Print Bibliography (comment out if not needed)
+% Print Bibliography (UNCOMMENT if needed)
 % \printbibliography[heading=bibintoc]
 
-% Print Index (comment out if not needed)
+% Print Index (UNCOMMENT if needed)
 % \printindex
-
 
 \end{document}
