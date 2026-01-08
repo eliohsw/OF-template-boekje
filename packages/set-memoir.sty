@@ -1,11 +1,10 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-memoir}[2026/01/07 v0.4.1 Basic packages for memoir class]
+\ProvidesPackage{packages/set-memoir}[2026/01/08 v0.5 Basic packages for memoir class]
 
 % ========================================================================
 
 \DisemulatePackage{setspace}
 \RequirePackage{setspace}   % Adjust line spacing
-\RequirePackage{titletoc}   % Customize table of contents
 \RequirePackage{titling}    % Customize the title
 \RequirePackage{tocloft}    % Control TOC formatting
 
@@ -32,16 +31,9 @@
 % ========================================================================
 
 \RequirePackage{polyglossia}                   % Multilingual support
-
 \setmainlanguage{english}
 
-% \setotherlanguage[variant=german, spelling=new]{german}
-
-% \setotherlanguage[numerals=greek]{greek}
-% \setotherlanguage{russian}
-
 \RequirePackage[no-math, quiet]{fontspec}      % Modern font selection
-
 \RequirePackage{xeCJK}                         % For CJK (Chinese, Japanese, Korean) fonts
 
 % ========================================================================
@@ -57,11 +49,14 @@
 \let\endtheglossary\relax
 \makeatother
 
-\RequirePackage[unicode=true, pdfborder={0 0 0}]{hyperref}            % Hyperlinks
-\RequirePackage[nameinlink]{cleveref}                                 % Smart cross-refs
-\RequirePackage[backend=biber, style=numeric, sorting=none]{biblatex} % Bibliographies with biblatex
-\RequirePackage{makeidx}                                              % Indexing
-\RequirePackage[acronym]{glossaries}                                  % Glossaries
+\RequirePackage[unicode=true, pdfborder={0 0 0}]{hyperref}    % Hyperlinks
+\RequirePackage[nameinlink]{cleveref}                         % Smart cross-refs
+\RequirePackage[
+  backend=biber, style=numeric, sorting=none,
+  % language=english, autolang=other % for multilingual bibliographies
+]{biblatex}                                                   % Bibliographies with biblatex
+\RequirePackage{makeidx}                                      % Indexing
+\RequirePackage[acronym]{glossaries}                          % Glossaries
 
 % ========================================================================
 
@@ -83,8 +78,6 @@
 % ========================================================================
 
 \RequirePackage{adjustbox}    % Adjust the size of boxes
-\RequirePackage{caption}      % Customize captions
-\RequirePackage{subcaption}   % Subcaptions
 \RequirePackage{indentfirst}  % Indent the first paragraph
 \RequirePackage{ragged2e}     % Ragged text alignment
 \RequirePackage{scalerel}     % Scale objects
