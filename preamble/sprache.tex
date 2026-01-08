@@ -1,0 +1,50 @@
+% Set language-specific fonts (Polyglossia)
+
+% Usage:
+% 1.
+% \text<language>{...}
+% 2.
+% \begin{<language>}
+%   Text in the specified language.
+% \end{<language>}
+
+% 1. Set Latin based languages
+%    Use \set<language>font , \set<language>fontsf , \set<language>fonttt
+
+\setotherlanguage[variant=german, spelling=new]{german}
+
+% 2. Define fonts for other languages
+%    Use \newfontfamily
+%    Use \<language>font , \<language>fontsf , \<language>fonttt
+%    Make sure the font supports the script and language
+
+\setotherlanguage{russian}
+\newfontfamily\russianfont[
+  Script=Cyrillic,
+  Language=Russian
+]{Times New Roman}
+
+\setotherlanguage[numerals=greek]{greek}
+\newfontfamily\greekfont[
+  Script=Greek,
+  Language=Greek,
+]{Times New Roman}
+
+\setotherlanguage{thai}
+\newfontfamily\thaifont[
+  Script=Thai,
+  Language=Thai,
+]{Sarabun}
+
+\setotherlanguage{arabic}
+\AtBeginEnvironment{Arabic}{\setlength{\parindent}{0pt}}
+\newfontfamily\arabicfont[
+  Script=Arabic,
+  Language=Arabic,
+  Scale=1.0
+]{Amiri}
+% {arabic} is defined internally by LaTeX, use the environment {Arabic} instead.
+
+% Language mappings
+\DeclareLanguageMapping{arabic}{english}
+\DeclareLanguageMapping{thai}{english}
