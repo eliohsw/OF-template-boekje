@@ -7,6 +7,12 @@
 % Enable font debugging information
 \SetFontsDebugOn
 
+% Usage:
+% \SetFontFromList[∅|CJK]{main|sans|mono}{<font1[per-font options], font2[per-font options], ...>}
+%
+% For each candidate font in the list, the first one that exists is selected.
+% If none exist, the corresponding default is restored.
+
 \SetFontFromList{main}{
   CMU Serif, Times New Roman,
   TeX Gyre Termes, Latin Modern Roman
