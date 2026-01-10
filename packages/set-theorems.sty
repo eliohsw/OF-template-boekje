@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-theorems}[2026/01/10 v0.5.2 Theorem-like Environments Settings]
+\ProvidesPackage{packages/set-theorems}[2026/01/10 v0.5 Theorem-like Environments Settings]
 
 \RequirePackage{iftex}
 \ifXeTeX\else
@@ -75,6 +75,16 @@
 \def\rmkname{Remark}
 \def\pfname{Proof}
 \def\solname{Solution}
+\def\axnameplural{Axioms}
+\def\cjnameplural{Conjectures}
+\def\cornameplural{Corollaries}
+\def\dfnameplural{Definitions}
+\def\exnameplural{Examples}
+\def\exsnameplural{Exercises}
+\def\lmnameplural{Lemmas}
+\def\ppnameplural{Properties}
+\def\prpnameplural{Propositions}
+\def\thrmnameplural{Theorems}
 
 \pgfkeys{
   /settheorems/names/.is family,
@@ -89,6 +99,16 @@
   ppname/.code       = {\def\ppname{#1}},
   prname/.code       = {\def\prname{#1}},
   prnameplural/.code = {\def\prnameplural{#1}},
+  axnameplural/.code = {\def\axnameplural{#1}},
+  cjnameplural/.code = {\def\cjnameplural{#1}},
+  cornameplural/.code = {\def\cornameplural{#1}},
+  dfnameplural/.code = {\def\dfnameplural{#1}},
+  exnameplural/.code = {\def\exnameplural{#1}},
+  exsnameplural/.code = {\def\exsnameplural{#1}},
+  lmnameplural/.code = {\def\lmnameplural{#1}},
+  ppnameplural/.code = {\def\ppnameplural{#1}},
+  prpnameplural/.code = {\def\prpnameplural{#1}},
+  thrmnameplural/.code = {\def\thrmnameplural{#1}},
   prpname/.code      = {\def\prpname{#1}},
   thrmname/.code     = {\def\thrmname{#1}},
   hintname/.code     = {\def\hintname{#1}},
@@ -110,6 +130,16 @@
     ppname={Property},
     prname={Problem},
     prnameplural={Problems},
+    axnameplural={Axioms},
+    cjnameplural={Conjectures},
+    cornameplural={Corollaries},
+    dfnameplural={Definitions},
+    exnameplural={Examples},
+    exsnameplural={Exercises},
+    lmnameplural={Lemmas},
+    ppnameplural={Properties},
+    prpnameplural={Propositions},
+    thrmnameplural={Theorems},
     prpname={Proposition},
     thrmname={Theorem},
     hintname={Hint},
@@ -123,12 +153,22 @@
     cjname={猜想},
     corname={推論},
     dfname={定義},
-    exname={範例},
-    exsname={練習},
+    exname={例},
+    exsname={習題},
     lmname={引理},
     ppname={性質},
     prname={問題},
     prnameplural={問題},
+    axnameplural={公理},
+    cjnameplural={猜想},
+    cornameplural={推論},
+    dfnameplural={定義},
+    exnameplural={例},
+    exsnameplural={習題},
+    lmnameplural={引理},
+    ppnameplural={性質},
+    prpnameplural={命題},
+    thrmnameplural={定理},
     prpname={命題},
     thrmname={定理},
     hintname={提示},
@@ -142,12 +182,22 @@
     cjname={猜想},
     corname={推论},
     dfname={定义},
-    exname={范例},
-    exsname={练习},
+    exname={例},
+    exsname={习题},
     lmname={引理},
     ppname={性质},
     prname={问题},
     prnameplural={问题},
+    axnameplural={公理},
+    cjnameplural={猜想},
+    cornameplural={推论},
+    dfnameplural={定义},
+    exnameplural={例},
+    exsnameplural={习题},
+    lmnameplural={引理},
+    ppnameplural={性质},
+    prpnameplural={命题},
+    thrmnameplural={定理},
     prpname={命题},
     thrmname={定理},
     hintname={提示},
@@ -167,7 +217,17 @@
     ppname={Eigenschaft},
     prname={Problem},
     prnameplural={Probleme},
-    prpname={Aussage},
+    axnameplural={Axiome},
+    cjnameplural={Vermutungen},
+    cornameplural={Korollare},
+    dfnameplural={Definitionen},
+    exnameplural={Beispiele},
+    exsnameplural={\"Ubungen},
+    lmnameplural={Lemmata},
+    ppnameplural={Eigenschaften},
+    prpnameplural={Propositionen},
+    thrmnameplural={S\"atze},
+    prpname={Proposition},
     thrmname={Satz},
     hintname={Hinweis},
     rmkname={Bemerkung},
@@ -250,8 +310,6 @@
 
 % If cleveref is not loaded, tcolorbox's theorem option 'crefname' would
 % otherwise trigger an undefined \crefname. Provide harmless fallbacks.
-\providecommand{\crefname}[3]{}
-\providecommand{\Crefname}[3]{}
 
 \makeatletter
 \@ifclassloaded{beamer}{%
@@ -314,8 +372,8 @@
 \newtcbtheorem[number within=section]{exs}{\bfseries \exsname}{normalstyle}{exs}
 \newtcbtheorem[use counter from=exs]{Exs}{\bfseries \exsname\TheoremExtraSpace}{theoremstyle}{Exs}
 
-\newtcbtheorem[number within=section, crefname={\prname}{\prnameplural}]{prb}{\bfseries \prname}{normalstyle}{prb}
-\newtcbtheorem[use counter from=prb, crefname={\prname}{\prnameplural}]{Prb}{\bfseries \prname\TheoremExtraSpace}{theoremstyle}{Prb}
+\newtcbtheorem[number within=section]{prb}{\bfseries \prname}{normalstyle}{prb}
+\newtcbtheorem[use counter from=prb]{Prb}{\bfseries \prname\TheoremExtraSpace}{theoremstyle}{Prb}
 
 \newtcbtheorem{prbx}{\bfseries \prname}{normalstyle}{prbx}
 \newtcbtheorem[use counter from=prbx]{Prbx}{\bfseries \prname\TheoremExtraSpace}{theoremstyle}{Prbx}
@@ -343,6 +401,61 @@
 
 \newtcbtheorem[use counter from=thm]{prp}{\bfseries \prpname}{normalstyle}{prp}
 \newtcbtheorem[use counter from=thm]{Prp}{\bfseries \prpname\TheoremExtraSpace}{theoremstyle}{Prp}
+
+\makeatletter
+\AtBeginDocument{%
+  \@ifpackageloaded{cleveref}{%
+    \crefname{ex}{\exname}{\exnameplural}%
+    \Crefname{ex}{\exname}{\exnameplural}%
+    \crefname{Ex}{\exname}{\exnameplural}%
+    \Crefname{Ex}{\exname}{\exnameplural}%
+    \crefname{exs}{\exsname}{\exsnameplural}%
+    \Crefname{exs}{\exsname}{\exsnameplural}%
+    \crefname{Exs}{\exsname}{\exsnameplural}%
+    \Crefname{Exs}{\exsname}{\exsnameplural}%
+    \crefname{prb}{\prname}{\prnameplural}%
+    \Crefname{prb}{\prname}{\prnameplural}%
+    \crefname{Prb}{\prname}{\prnameplural}%
+    \Crefname{Prb}{\prname}{\prnameplural}%
+    \crefname{prbx}{\prname}{\prnameplural}%
+    \Crefname{prbx}{\prname}{\prnameplural}%
+    \crefname{Prbx}{\prname}{\prnameplural}%
+    \Crefname{Prbx}{\prname}{\prnameplural}%
+    \crefname{thm}{\thrmname}{\thrmnameplural}%
+    \Crefname{thm}{\thrmname}{\thrmnameplural}%
+    \crefname{Thm}{\thrmname}{\thrmnameplural}%
+    \Crefname{Thm}{\thrmname}{\thrmnameplural}%
+    \crefname{df}{\dfname}{\dfnameplural}%
+    \Crefname{df}{\dfname}{\dfnameplural}%
+    \crefname{Df}{\dfname}{\dfnameplural}%
+    \Crefname{Df}{\dfname}{\dfnameplural}%
+    \crefname{pp}{\ppname}{\ppnameplural}%
+    \Crefname{pp}{\ppname}{\ppnameplural}%
+    \crefname{Pp}{\ppname}{\ppnameplural}%
+    \Crefname{Pp}{\ppname}{\ppnameplural}%
+    \crefname{lm}{\lmname}{\lmnameplural}%
+    \Crefname{lm}{\lmname}{\lmnameplural}%
+    \crefname{Lm}{\lmname}{\lmnameplural}%
+    \Crefname{Lm}{\lmname}{\lmnameplural}%
+    \crefname{ax}{\axname}{\axnameplural}%
+    \Crefname{ax}{\axname}{\axnameplural}%
+    \crefname{Ax}{\axname}{\axnameplural}%
+    \Crefname{Ax}{\axname}{\axnameplural}%
+    \crefname{cj}{\cjname}{\cjnameplural}%
+    \Crefname{cj}{\cjname}{\cjnameplural}%
+    \crefname{Cj}{\cjname}{\cjnameplural}%
+    \Crefname{Cj}{\cjname}{\cjnameplural}%
+    \crefname{cor}{\corname}{\cornameplural}%
+    \Crefname{cor}{\corname}{\cornameplural}%
+    \crefname{Cor}{\corname}{\cornameplural}%
+    \Crefname{Cor}{\corname}{\cornameplural}%
+    \crefname{prp}{\prpname}{\prpnameplural}%
+    \Crefname{prp}{\prpname}{\prpnameplural}%
+    \crefname{Prp}{\prpname}{\prpnameplural}%
+    \Crefname{Prp}{\prpname}{\prpnameplural}%
+  }{}%
+}
+\makeatother
 
 
 \newenvironment{hint}{\noindent\textbf{\hintname .}\hspace{1ex}}{\hfill}
