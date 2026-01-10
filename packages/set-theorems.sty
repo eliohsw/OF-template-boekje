@@ -1,5 +1,13 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-theorems}[2026/01/07 v0.3 Theorem-like Environments Settings]
+\ProvidesPackage{packages/set-theorems}[2026/01/10 v0.5.2 Theorem-like Environments Settings]
+
+\RequirePackage{iftex}
+\ifXeTeX\else
+  \PackageError{packages/set-theorems}
+    {This package requires XeLaTeX (XeTeX engine)}
+    {You are compiling with a non-XeTeX engine.\MessageBreak
+     Please switch to XeLaTeX.}
+\fi
 
 \RequirePackage{amsthm}
 \RequirePackage[most]{tcolorbox}
@@ -8,27 +16,30 @@
 
 \RequirePackage{etoolbox}
 \RequirePackage{xparse}
+\RequirePackage{pgfkeys}
 
 \newcommand{\mytheoremLang}{}
 \newcommand{\myproofLang}{}
 
-\DeclareOption{en}{
-  \xdef\mytheoremLang{en}
-  \xdef\myproofLang{lat}
+\DeclareOption{en}{%
+  \xdef\mytheoremLang{en}%
+  \xdef\myproofLang{lat}%
 }
-\DeclareOption{de}{
-  \xdef\mytheoremLang{de}
-  \xdef\myproofLang{lat}
+\DeclareOption{de}{%
+  \xdef\mytheoremLang{de}%
+  \xdef\myproofLang{lat}%
 }
-\DeclareOption{tw}{
-  \xdef\mytheoremLang{tw}
-  \xdef\myproofLang{zh}
+\DeclareOption{tw}{%
+  \xdef\mytheoremLang{tw}%
+  \xdef\myproofLang{zh}%
 }
-\DeclareOption{cn}{
-  \xdef\mytheoremLang{cn}
-  \xdef\myproofLang{zh}
+\DeclareOption{cn}{%
+  \xdef\mytheoremLang{cn}%
+  \xdef\myproofLang{zh}%
 }
 
+% Default: behave like [en] if the user passes no language option.
+\ExecuteOptions{en}
 \ProcessOptions\relax
 
 % Modified from amsthm.sty
@@ -46,152 +57,208 @@
 \renewcommand\qedhere{} % to ensure code portability
 \makeatother
 
-{
-  \message{Preset}
-  \xdef\axname{Axiom}
-  \xdef\cjname{Conjecture}
-  \xdef\corname{Corollary}
-  \xdef\dfname{Definition}
-  \xdef\exname{Example}
-  \xdef\exsname{Exercise}
-  \xdef\lmname{Lemma}
-  \xdef\ppname{Property}
-  \xdef\prname{Problem}
-  \xdef\prpname{Proposition}
-  \xdef\thrmname{Theorem}
-  \xdef\hintname{Hint}
-  \xdef\rmkname{Remark}
+% Preset (English defaults)
+\message{Preset}
+\def\axname{Axiom}
+\def\cjname{Conjecture}
+\def\corname{Corollary}
+\def\dfname{Definition}
+\def\exname{Example}
+\def\exsname{Exercise}
+\def\lmname{Lemma}
+\def\ppname{Property}
+\def\prname{Problem}
+\def\prnameplural{Problems}
+\def\prpname{Proposition}
+\def\thrmname{Theorem}
+\def\hintname{Hint}
+\def\rmkname{Remark}
+\def\pfname{Proof}
+\def\solname{Solution}
 
-  \xdef\pfname{Proof}
-  \xdef\solname{Solution}
+\pgfkeys{
+  /settheorems/names/.is family,
+  /settheorems/names,
+  axname/.code       = {\def\axname{#1}},
+  cjname/.code       = {\def\cjname{#1}},
+  corname/.code      = {\def\corname{#1}},
+  dfname/.code       = {\def\dfname{#1}},
+  exname/.code       = {\def\exname{#1}},
+  exsname/.code      = {\def\exsname{#1}},
+  lmname/.code       = {\def\lmname{#1}},
+  ppname/.code       = {\def\ppname{#1}},
+  prname/.code       = {\def\prname{#1}},
+  prnameplural/.code = {\def\prnameplural{#1}},
+  prpname/.code      = {\def\prpname{#1}},
+  thrmname/.code     = {\def\thrmname{#1}},
+  hintname/.code     = {\def\hintname{#1}},
+  rmkname/.code      = {\def\rmkname{#1}},
+  pfname/.code       = {\def\pfname{#1}},
+  solname/.code      = {\def\solname{#1}},
 }
 
-\def\theoremlangen{
-  \message{Set Language: English}
-  \xdef\axname{Axiom}
-  \xdef\cjname{Conjecture}
-  \xdef\corname{Corollary}
-  \xdef\dfname{Definition}
-  \xdef\exname{Example}
-  \xdef\exsname{Exercise}
-  \xdef\lmname{Lemma}
-  \xdef\ppname{Property}
-  \xdef\prname{Problem}
-  \xdef\prpname{Proposition}
-  \xdef\thrmname{Theorem}
-  \xdef\hintname{Hint}
-  \xdef\rmkname{Remark}
-
-  \xdef\pfname{Proof}
-  \xdef\solname{Solution}
+\pgfkeys{
+  /settheorems/lang/en/.style={
+    /settheorems/names/.cd,
+    axname={Axiom},
+    cjname={Conjecture},
+    corname={Corollary},
+    dfname={Definition},
+    exname={Example},
+    exsname={Exercise},
+    lmname={Lemma},
+    ppname={Property},
+    prname={Problem},
+    prnameplural={Problems},
+    prpname={Proposition},
+    thrmname={Theorem},
+    hintname={Hint},
+    rmkname={Remark},
+    pfname={Proof},
+    solname={Solution},
+  },
+  /settheorems/lang/tw/.style={
+    /settheorems/names/.cd,
+    axname={公理},
+    cjname={猜想},
+    corname={推論},
+    dfname={定義},
+    exname={範例},
+    exsname={練習},
+    lmname={引理},
+    ppname={性質},
+    prname={問題},
+    prnameplural={問題},
+    prpname={命題},
+    thrmname={定理},
+    hintname={提示},
+    rmkname={注},
+    pfname={證明},
+    solname={解答},
+  },
+  /settheorems/lang/cn/.style={
+    /settheorems/names/.cd,
+    axname={公理},
+    cjname={猜想},
+    corname={推论},
+    dfname={定义},
+    exname={范例},
+    exsname={练习},
+    lmname={引理},
+    ppname={性质},
+    prname={问题},
+    prnameplural={问题},
+    prpname={命题},
+    thrmname={定理},
+    hintname={提示},
+    rmkname={注},
+    pfname={证明},
+    solname={解答},
+  },
+  /settheorems/lang/de/.style={
+    /settheorems/names/.cd,
+    axname={Axiom},
+    cjname={Vermutung},
+    corname={Korollar},
+    dfname={Definition},
+    exname={Beispiel},
+    exsname={\"Ubung},
+    lmname={Lemma},
+    ppname={Eigenschaft},
+    prname={Problem},
+    prnameplural={Probleme},
+    prpname={Aussage},
+    thrmname={Satz},
+    hintname={Hinweis},
+    rmkname={Bemerkung},
+    pfname={Beweis},
+    solname={L\"osung},
+  },
 }
-\def\theoremlangtw{
-  \message{Set Language: Chinese (Traditional)}
-  \xdef\axname{公理}
-  \xdef\cjname{猜想}
-  \xdef\corname{推論}
-  \xdef\dfname{定義}
-  \xdef\exname{範例}
-  \xdef\exsname{練習}
-  \xdef\lmname{引理}
-  \xdef\ppname{性質}
-  \xdef\prname{問題}
-  \xdef\prpname{命題}
-  \xdef\thrmname{定理}
-  \xdef\hintname{提示}
-  \xdef\rmkname{注}
 
-  \xdef\pfname{證明}
-  \xdef\solname{解答}
+\def\theoremlangen{%
+  \message{Set Language: English}%
+  \pgfkeys{/settheorems/lang/en}%
 }
-\def\theoremlangcn{
-  \message{Set Language: Chinese (Simplified)}
-  \xdef\axname{公理}
-  \xdef\cjname{猜想}
-  \xdef\corname{推论}
-  \xdef\dfname{定义}
-  \xdef\exname{范例}
-  \xdef\exsname{练习}
-  \xdef\lmname{引理}
-  \xdef\ppname{性质}
-  \xdef\prname{问题}
-  \xdef\prpname{命题}
-  \xdef\thrmname{定理}
-  \xdef\hintname{提示}
-  \xdef\rmkname{注}
-
-  \xdef\pfname{证明}
-  \xdef\solname{解答}
+\def\theoremlangtw{%
+  \message{Set Language: Chinese (Traditional)}%
+  \pgfkeys{/settheorems/lang/tw}%
 }
-\def\theoremlangde{
-  \message{Set Language: German}
-  \xdef\axname{Axiom}
-  \xdef\cjname{Vermutung}
-  \xdef\corname{Korollar}
-  \xdef\dfname{Definition}
-  \xdef\exname{Beispiel}      
-  \xdef\exsname{Übung}
-  \xdef\lmname{Lemma}
-  \xdef\ppname{Merkmal}
-  \xdef\prname{Problem}
-  \xdef\prpname{Aussage}
-  \xdef\thrmname{Satz}
-  \xdef\hintname{Hinweis}
-  \xdef\rmkname{Bemerkung}
-
-  \xdef\pfname{Beweis}
-  \xdef\solname{Lösung}
-
-  \renewcommand*{\proofname}{Beweis}
+\def\theoremlangcn{%
+  \message{Set Language: Chinese (Simplified)}%
+  \pgfkeys{/settheorems/lang/cn}%
+}
+\def\theoremlangde{%
+  \message{Set Language: German}%
+  \pgfkeys{/settheorems/lang/de}%
+  \renewcommand*{\proofname}{Beweis}%
 }
 
-\def\prooflanglat{
+
+\def\prooflanglat{%
   \message{Proof Environment Script: Latin}
 
-  \NewDocumentEnvironment{pf}{O{black}}{
-    \AtBeginEnvironment{proof}{\color{##1}}
-    \begin{proof}[\pfname]
-  }{
-    \end{proof}
-  }
-  \NewDocumentEnvironment{sol}{O{black}}{
-    \AtBeginEnvironment{proofsol}{\color{##1}}
-    \begin{proofsol}[\solname]
-    \renewcommand{\qedsymbol}{}
-  }{
-    \end{proofsol}
-  }
+  \NewDocumentEnvironment{pf}{O{black}}{%
+    \begingroup
+      \color{##1}%
+      \begin{proof}[\pfname]%
+  }{%
+      \end{proof}%
+    \endgroup
+  }%
+
+  \NewDocumentEnvironment{sol}{O{black}}{%
+    \begingroup
+      \color{##1}%
+      \renewcommand{\qedsymbol}{}%
+      \begin{proofsol}[\solname]%
+  }{%
+      \end{proofsol}%
+    \endgroup
+  }%
 }
-\def\prooflangzh{
+
+\def\prooflangzh{%
   \message{Proof Environment Script: Chinese}
 
-  \NewDocumentEnvironment{pf}{O{black}}{
-    \AtBeginEnvironment{proof}{\color{##1}}
-    \begin{proof}[\upshape\bfseries\pfname]
-  }{
-    \end{proof}
-  }
-  \NewDocumentEnvironment{sol}{O{black}}{
-    \AtBeginEnvironment{proofsol}{\color{##1}}
-    \begin{proofsol}[\upshape\bfseries\solname]
-    \renewcommand{\qedsymbol}{}
-  }{
-    \end{proofsol}
-  }
+  \NewDocumentEnvironment{pf}{O{black}}{%
+    \begingroup
+      \color{##1}%
+      \begin{proof}[\upshape\bfseries\pfname]%
+  }{%
+      \end{proof}%
+    \endgroup
+  }%
+
+  \NewDocumentEnvironment{sol}{O{black}}{%
+    \begingroup
+      \color{##1}%
+      \renewcommand{\qedsymbol}{}%
+      \begin{proofsol}[\upshape\bfseries\solname]%
+  }{%
+      \end{proofsol}%
+    \endgroup
+  }%
 }
 
-\csname theoremlang\mytheoremLang \endcsname 
-\csname prooflang\myproofLang \endcsname
+\csname theoremlang\mytheoremLang\endcsname
+\csname prooflang\myproofLang\endcsname
+
 
 \tcbuselibrary{theorems}
 \tcbuselibrary{breakable}
 
+% If cleveref is not loaded, tcolorbox's theorem option 'crefname' would
+% otherwise trigger an undefined \crefname. Provide harmless fallbacks.
+\providecommand{\crefname}[3]{}
+\providecommand{\Crefname}[3]{}
+
 \makeatletter
-\@ifclassloaded{beamer}{
+\@ifclassloaded{beamer}{%
   \def\TheoremHeadFont{\sffamily\sbseries}
   \def\TheoremHeadColor{\color{beamer@blendedblue}}
   \def\TheoremExtraSpace{~}
-}{
+}{%
   \def\TheoremHeadFont{\rmfamily\bfseries}
   \def\TheoremHeadColor{\color{black}}
   \def\TheoremExtraSpace{}
@@ -241,21 +308,18 @@
   },
 }
 
-% Handouts and Teaching Materials
 \newtcbtheorem[number within=section]{ex}{\bfseries \exname}{normalstyle}{ex}
 \newtcbtheorem[use counter from=ex]{Ex}{\bfseries \exname\TheoremExtraSpace}{theoremstyle}{Ex}
 
 \newtcbtheorem[number within=section]{exs}{\bfseries \exsname}{normalstyle}{exs}
 \newtcbtheorem[use counter from=exs]{Exs}{\bfseries \exsname\TheoremExtraSpace}{theoremstyle}{Exs}
 
-\newtcbtheorem[number within=section, crefname={\prname}{\prname s}]{prb}{\bfseries \prname}{normalstyle}{prb}
-\newtcbtheorem[use counter from=prb, crefname={Problem}{\prname s}]{Prb}{\bfseries \prname\TheoremExtraSpace}{theoremstyle}{Prb}
+\newtcbtheorem[number within=section, crefname={\prname}{\prnameplural}]{prb}{\bfseries \prname}{normalstyle}{prb}
+\newtcbtheorem[use counter from=prb, crefname={\prname}{\prnameplural}]{Prb}{\bfseries \prname\TheoremExtraSpace}{theoremstyle}{Prb}
 
 \newtcbtheorem{prbx}{\bfseries \prname}{normalstyle}{prbx}
 \newtcbtheorem[use counter from=prbx]{Prbx}{\bfseries \prname\TheoremExtraSpace}{theoremstyle}{Prbx}
 
-
-% Theorems
 \newtcbtheorem[number within=section]{thm}{\bfseries \thrmname}{normalstyle}{thm}
 \newtcbtheorem[use counter from=thm]{Thm}{\bfseries \thrmname\TheoremExtraSpace}{theoremstyle}{Thm}
 
@@ -303,16 +367,15 @@
 
 \newenvironment{centre}
   {%
-    \par    % End previous paragraph
+    \par
     \begingroup
     \centering
   }
   {%
-    \par    % End centered paragraph
+    \par
     \endgroup
   }
 
-% Highlight texts
 \definecolor{highlightyellow}{rgb}{1,0.98,0.84}
 \newtcbox{\hil}{
   colback=highlightyellow,
