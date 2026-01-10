@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-theorems}[2026/01/10 v0.5 Theorem-like Environments Settings]
+\ProvidesPackage{packages/set-theorems}[2026/01/10 v0.5.3 Theorem-like Environments Settings]
 
 \RequirePackage{iftex}
 \ifXeTeX\else
@@ -366,95 +366,100 @@
   },
 }
 
-\newtcbtheorem[number within=section]{ex}{\bfseries \exname}{normalstyle}{ex}
-\newtcbtheorem[use counter from=ex]{Ex}{\bfseries \exname\TheoremExtraSpace}{theoremstyle}{Ex}
+\newtcbtheorem[number within=section]{ex}{\bfseries \exname}{normalstyle,label type=ex}{ex}
+\newtcbtheorem[use counter from=ex]{Ex}{\bfseries \exname\TheoremExtraSpace}{theoremstyle,label type=Ex}{Ex}
 
-\newtcbtheorem[number within=section]{exs}{\bfseries \exsname}{normalstyle}{exs}
-\newtcbtheorem[use counter from=exs]{Exs}{\bfseries \exsname\TheoremExtraSpace}{theoremstyle}{Exs}
+\newtcbtheorem[number within=section]{exs}{\bfseries \exsname}{normalstyle,label type=exs}{exs}
+\newtcbtheorem[use counter from=exs]{Exs}{\bfseries \exsname\TheoremExtraSpace}{theoremstyle,label type=Exs}{Exs}
 
-\newtcbtheorem[number within=section]{prb}{\bfseries \prname}{normalstyle}{prb}
-\newtcbtheorem[use counter from=prb]{Prb}{\bfseries \prname\TheoremExtraSpace}{theoremstyle}{Prb}
+\newtcbtheorem[number within=section]{prb}{\bfseries \prname}{normalstyle,label type=prb}{prb}
+\newtcbtheorem[use counter from=prb]{Prb}{\bfseries \prname\TheoremExtraSpace}{theoremstyle,label type=Prb}{Prb}
 
-\newtcbtheorem{prbx}{\bfseries \prname}{normalstyle}{prbx}
-\newtcbtheorem[use counter from=prbx]{Prbx}{\bfseries \prname\TheoremExtraSpace}{theoremstyle}{Prbx}
+\newtcbtheorem{prbx}{\bfseries \prname}{normalstyle,label type=prbx}{prbx}
+\newtcbtheorem[use counter from=prbx]{Prbx}{\bfseries \prname\TheoremExtraSpace}{theoremstyle,label type=Prbx}{Prbx}
 
-\newtcbtheorem[number within=section]{thm}{\bfseries \thrmname}{normalstyle}{thm}
-\newtcbtheorem[use counter from=thm]{Thm}{\bfseries \thrmname\TheoremExtraSpace}{theoremstyle}{Thm}
+\newtcbtheorem[number within=section]{thm}{\bfseries \thrmname}{normalstyle,label type=thm}{thm}
+\newtcbtheorem[use counter from=thm]{Thm}{\bfseries \thrmname\TheoremExtraSpace}{theoremstyle,label type=Thm}{Thm}
 
-\newtcbtheorem[use counter from=thm]{df}{\bfseries \dfname}{normalstyle}{df}
-\newtcbtheorem[use counter from=thm]{Df}{\bfseries \dfname\TheoremExtraSpace}{theoremstyle}{Df}
+\newtcbtheorem[use counter from=thm]{df}{\bfseries \dfname}{normalstyle,label type=df}{df}
+\newtcbtheorem[use counter from=thm]{Df}{\bfseries \dfname\TheoremExtraSpace}{theoremstyle,label type=Df}{Df}
 
-\newtcbtheorem[use counter from=thm]{pp}{\bfseries \ppname}{normalstyle}{pp}
-\newtcbtheorem[use counter from=thm]{Pp}{\bfseries \ppname\TheoremExtraSpace}{theoremstyle}{Pp}
+\newtcbtheorem[use counter from=thm]{pp}{\bfseries \ppname}{normalstyle,label type=pp}{pp}
+\newtcbtheorem[use counter from=thm]{Pp}{\bfseries \ppname\TheoremExtraSpace}{theoremstyle,label type=Pp}{Pp}
 
-\newtcbtheorem[use counter from=thm]{lm}{\bfseries \lmname}{normalstyle}{lm}
-\newtcbtheorem[use counter from=thm]{Lm}{\bfseries \lmname\TheoremExtraSpace}{theoremstyle}{Lm}
+\newtcbtheorem[use counter from=thm]{lm}{\bfseries \lmname}{normalstyle,label type=lm}{lm}
+\newtcbtheorem[use counter from=thm]{Lm}{\bfseries \lmname\TheoremExtraSpace}{theoremstyle,label type=Lm}{Lm}
 
-\newtcbtheorem[use counter from=thm]{ax}{\bfseries \axname}{normalstyle}{ax}
-\newtcbtheorem[use counter from=thm]{Ax}{\bfseries \axname\TheoremExtraSpace}{theoremstyle}{Ax}
+\newtcbtheorem[use counter from=thm]{ax}{\bfseries \axname}{normalstyle,label type=ax}{ax}
+\newtcbtheorem[use counter from=thm]{Ax}{\bfseries \axname\TheoremExtraSpace}{theoremstyle,label type=Ax}{Ax}
 
-\newtcbtheorem[use counter from=thm]{cj}{\bfseries \cjname}{normalstyle}{cj}
-\newtcbtheorem[use counter from=thm]{Cj}{\bfseries \cjname\TheoremExtraSpace}{theoremstyle}{Cj}
+\newtcbtheorem[use counter from=thm]{cj}{\bfseries \cjname}{normalstyle,label type=cj}{cj}
+\newtcbtheorem[use counter from=thm]{Cj}{\bfseries \cjname\TheoremExtraSpace}{theoremstyle,label type=Cj}{Cj}
 
-\newtcbtheorem[use counter from=thm]{cor}{\bfseries \corname}{normalstyle}{cor}
-\newtcbtheorem[use counter from=thm]{Cor}{\bfseries \corname\TheoremExtraSpace}{theoremstyle}{Cor}
+\newtcbtheorem[use counter from=thm]{cor}{\bfseries \corname}{normalstyle,label type=cor}{cor}
+\newtcbtheorem[use counter from=thm]{Cor}{\bfseries \corname\TheoremExtraSpace}{theoremstyle,label type=Cor}{Cor}
 
-\newtcbtheorem[use counter from=thm]{prp}{\bfseries \prpname}{normalstyle}{prp}
-\newtcbtheorem[use counter from=thm]{Prp}{\bfseries \prpname\TheoremExtraSpace}{theoremstyle}{Prp}
-
+\newtcbtheorem[use counter from=thm]{prp}{\bfseries \prpname}{normalstyle,label type=prp}{prp}
+\newtcbtheorem[use counter from=thm]{Prp}{\bfseries \prpname\TheoremExtraSpace}{theoremstyle,label type=Prp}{Prp}
 \makeatletter
-\AtBeginDocument{%
-  \@ifpackageloaded{cleveref}{%
-    \crefname{ex}{\exname}{\exnameplural}%
-    \Crefname{ex}{\exname}{\exnameplural}%
-    \crefname{Ex}{\exname}{\exnameplural}%
-    \Crefname{Ex}{\exname}{\exnameplural}%
-    \crefname{exs}{\exsname}{\exsnameplural}%
-    \Crefname{exs}{\exsname}{\exsnameplural}%
-    \crefname{Exs}{\exsname}{\exsnameplural}%
-    \Crefname{Exs}{\exsname}{\exsnameplural}%
-    \crefname{prb}{\prname}{\prnameplural}%
-    \Crefname{prb}{\prname}{\prnameplural}%
-    \crefname{Prb}{\prname}{\prnameplural}%
-    \Crefname{Prb}{\prname}{\prnameplural}%
-    \crefname{prbx}{\prname}{\prnameplural}%
-    \Crefname{prbx}{\prname}{\prnameplural}%
-    \crefname{Prbx}{\prname}{\prnameplural}%
-    \Crefname{Prbx}{\prname}{\prnameplural}%
-    \crefname{thm}{\thrmname}{\thrmnameplural}%
-    \Crefname{thm}{\thrmname}{\thrmnameplural}%
-    \crefname{Thm}{\thrmname}{\thrmnameplural}%
-    \Crefname{Thm}{\thrmname}{\thrmnameplural}%
-    \crefname{df}{\dfname}{\dfnameplural}%
-    \Crefname{df}{\dfname}{\dfnameplural}%
-    \crefname{Df}{\dfname}{\dfnameplural}%
-    \Crefname{Df}{\dfname}{\dfnameplural}%
-    \crefname{pp}{\ppname}{\ppnameplural}%
-    \Crefname{pp}{\ppname}{\ppnameplural}%
-    \crefname{Pp}{\ppname}{\ppnameplural}%
-    \Crefname{Pp}{\ppname}{\ppnameplural}%
-    \crefname{lm}{\lmname}{\lmnameplural}%
-    \Crefname{lm}{\lmname}{\lmnameplural}%
-    \crefname{Lm}{\lmname}{\lmnameplural}%
-    \Crefname{Lm}{\lmname}{\lmnameplural}%
-    \crefname{ax}{\axname}{\axnameplural}%
-    \Crefname{ax}{\axname}{\axnameplural}%
-    \crefname{Ax}{\axname}{\axnameplural}%
-    \Crefname{Ax}{\axname}{\axnameplural}%
-    \crefname{cj}{\cjname}{\cjnameplural}%
-    \Crefname{cj}{\cjname}{\cjnameplural}%
-    \crefname{Cj}{\cjname}{\cjnameplural}%
-    \Crefname{Cj}{\cjname}{\cjnameplural}%
-    \crefname{cor}{\corname}{\cornameplural}%
-    \Crefname{cor}{\corname}{\cornameplural}%
-    \crefname{Cor}{\corname}{\cornameplural}%
-    \Crefname{Cor}{\corname}{\cornameplural}%
-    \crefname{prp}{\prpname}{\prpnameplural}%
-    \Crefname{prp}{\prpname}{\prpnameplural}%
-    \crefname{Prp}{\prpname}{\prpnameplural}%
-    \Crefname{Prp}{\prpname}{\prpnameplural}%
-  }{}%
+% Cleveref needs the label types registered before any \cref/\Cref usage.
+% Do it immediately if cleveref is already loaded; otherwise defer to begin document.
+\newcommand*\settheorems@declarecrefnames{%
+  \crefname{ex}{\exname}{\exnameplural}%
+  \Crefname{ex}{\exname}{\exnameplural}%
+  \crefname{Ex}{\exname}{\exnameplural}%
+  \Crefname{Ex}{\exname}{\exnameplural}%
+  \crefname{exs}{\exsname}{\exsnameplural}%
+  \Crefname{exs}{\exsname}{\exsnameplural}%
+  \crefname{Exs}{\exsname}{\exsnameplural}%
+  \Crefname{Exs}{\exsname}{\exsnameplural}%
+  \crefname{prb}{\prname}{\prnameplural}%
+  \Crefname{prb}{\prname}{\prnameplural}%
+  \crefname{Prb}{\prname}{\prnameplural}%
+  \Crefname{Prb}{\prname}{\prnameplural}%
+  \crefname{prbx}{\prname}{\prnameplural}%
+  \Crefname{prbx}{\prname}{\prnameplural}%
+  \crefname{Prbx}{\prname}{\prnameplural}%
+  \Crefname{Prbx}{\prname}{\prnameplural}%
+  \crefname{thm}{\thrmname}{\thrmnameplural}%
+  \Crefname{thm}{\thrmname}{\thrmnameplural}%
+  \crefname{Thm}{\thrmname}{\thrmnameplural}%
+  \Crefname{Thm}{\thrmname}{\thrmnameplural}%
+  \crefname{df}{\dfname}{\dfnameplural}%
+  \Crefname{df}{\dfname}{\dfnameplural}%
+  \crefname{Df}{\dfname}{\dfnameplural}%
+  \Crefname{Df}{\dfname}{\dfnameplural}%
+  \crefname{pp}{\ppname}{\ppnameplural}%
+  \Crefname{pp}{\ppname}{\ppnameplural}%
+  \crefname{Pp}{\ppname}{\ppnameplural}%
+  \Crefname{Pp}{\ppname}{\ppnameplural}%
+  \crefname{lm}{\lmname}{\lmnameplural}%
+  \Crefname{lm}{\lmname}{\lmnameplural}%
+  \crefname{Lm}{\lmname}{\lmnameplural}%
+  \Crefname{Lm}{\lmname}{\lmnameplural}%
+  \crefname{ax}{\axname}{\axnameplural}%
+  \Crefname{ax}{\axname}{\axnameplural}%
+  \crefname{Ax}{\axname}{\axnameplural}%
+  \Crefname{Ax}{\axname}{\axnameplural}%
+  \crefname{cj}{\cjname}{\cjnameplural}%
+  \Crefname{cj}{\cjname}{\cjnameplural}%
+  \crefname{Cj}{\cjname}{\cjnameplural}%
+  \Crefname{Cj}{\cjname}{\cjnameplural}%
+  \crefname{cor}{\corname}{\cornameplural}%
+  \Crefname{cor}{\corname}{\cornameplural}%
+  \crefname{Cor}{\corname}{\cornameplural}%
+  \Crefname{Cor}{\corname}{\cornameplural}%
+  \crefname{prp}{\prpname}{\prpnameplural}%
+  \Crefname{prp}{\prpname}{\prpnameplural}%
+  \crefname{Prp}{\prpname}{\prpnameplural}%
+  \Crefname{Prp}{\prpname}{\prpnameplural}%
 }
+
+\@ifpackageloaded{cleveref}{%
+  \settheorems@declarecrefnames
+}{%
+  \AtBeginDocument{\@ifpackageloaded{cleveref}{\settheorems@declarecrefnames}{}}%
+}%
 \makeatother
 
 
