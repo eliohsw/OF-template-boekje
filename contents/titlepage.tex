@@ -1,33 +1,33 @@
-% ============ Title Settings ====================================
+% Title settings
 
 \makeatletter
 \pretitle{%
-  \vspace*{6cm}%   Similar vertical space from the top
+  \vspace*{6cm}
   % \centering
-  \fontsize{40}{48}\selectfont\BebasNeue\bfseries        % Font & size for the main title
+  \fontsize{40}{48}\selectfont\BebasNeue\bfseries
 }
 \posttitle{%
-  \par\vspace{0.1cm}%  spacing before subtitle
-  \huge\sffamily\sbseries       % Font & size for the subtitle
-  \@subtitle\par                % Insert the subtitle (we'll define \@subtitle below)
-  \vspace{2cm}%                 % spacing before author
+  \par\vspace{0.1cm}
+  \huge\sffamily\sbseries
+  \@subtitle\par
+  \vspace{2cm}%
 }
 
-\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}} % helper command to store subtitle text
-\newcommand{\@subtitle}{}                      % default empty
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+\newcommand{\@subtitle}{}
 
 \preauthor{%
   % \centering
-  \Large\sffamily              % Font & size for author
+  \Large\sffamily
 }
 \postauthor{%
   \par\vspace{0.25cm}
-  \large{\@idnumber}\par       % We'll define \@idnumber for that "B123456" line
-  \vspace{3.5cm}               % Then next space before date
+  \large{\@idnumber}\par
+  \vspace{3.5cm}
 }
 
 \newcommand{\idnumber}[1]{\gdef\@idnumber{#1}}
-\newcommand{\@idnumber}{}   % default empty
+\newcommand{\@idnumber}{}
 
 \predate{%
   % \centering
@@ -35,37 +35,36 @@
 }
 \postdate{%
   \par\vspace{0.25cm}
-  \Large{\@placename}\par    % We'll define \@placename
+  \Large{\@placename}\par
   \vfill
 }
 
 \newcommand{\placename}[1]{\gdef\@placename{#1}}
-\newcommand{\@placename}{}   % default empty
+\newcommand{\@placename}{}
 \makeatother
 
-% ============ Title Info ========================================
-
+% ---------------------------------------------------------------
+% FILL IN TITLE PAGE INFORMATION HERE
 \title{Main Title}
 \subtitle{Subtitle}
-\author{Artur Author}
+\author{Author Name}
 \idnumber{B1234567890}
 \date{\DTMdisplaydate{2025}{1}{1}{-1} -- \DTMdisplaydate{2025}{1}{2}{-1}}
 \placename{Place Name}
+% ---------------------------------------------------------------
 
-% ============ Title Page ========================================
-
+% Title page layout
 \hypersetup{pageanchor=false}
 \pagenumbering{gobble}
 \begin{titlingpage}
-  % -- 1) Draw the vertical rule on the entire page
+  % Vertical rule on the left side
   \begin{tikzpicture}[remember picture,overlay]
-    % Adjust xshift to position the line exactly where you want it
     \draw[line width=1.5pt]
       ($(current page text area.north west) + (0.5cm, -2cm)$) -- 
       ($(current page text area.south west) + (0.5cm, 2cm)$);
   \end{tikzpicture}
 
-  % -- 2) Shift content to the right of the rule
+  % Title content
   \noindent
   \hspace*{1.5cm}% Move text right, slightly more than 2cm to clear the rule
   \begin{minipage}{0.8\textwidth}
