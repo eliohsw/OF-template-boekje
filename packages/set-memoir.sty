@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-memoir}[2026/01/08 v0.6 Basic packages for memoir class]
+\ProvidesPackage{packages/set-memoir}[2026/01/11 v0.6.1 Basic packages for memoir class]
 
 \RequirePackage{iftex}
 \ifXeTeX\else
@@ -9,11 +9,17 @@
      Please switch to XeLaTeX.}
 \fi
 
-% Language options
-\newif\ifpackagesetmemoir@english
+% Declare options
+\newif\ifpackagesetmemoirenglish
 
-\DeclareOption{en}{\packagesetmemoir@englishtrue}
-\DeclareOption{de}{\packagesetmemoir@englishfalse}
+\DeclareOption{en}{\packagesetmemoirenglishtrue}
+\DeclareOption{de}{\packagesetmemoirenglishfalse}
+
+\newif\ifpackagesetmemoirglossary
+\DeclareOption{glo}{\packagesetmemoirglossarytrue}
+
+\newif\ifpackagesetmemoirindex
+\DeclareOption{idx}{\packagesetmemoirindextrue}
 
 \ExecuteOptions{en}
 \ProcessOptions\relax
@@ -49,7 +55,7 @@
 
 \RequirePackage{polyglossia}                   % Multilingual support
 
-\ifpackagesetmemoir@english
+\ifpackagesetmemoirenglish
   \setmainlanguage{english}
 \else
   \setmainlanguage{german}
@@ -73,12 +79,16 @@
 
 \RequirePackage[unicode=true, pdfborder={0 0 0}]{hyperref}    % Hyperlinks
 \RequirePackage[nameinlink]{cleveref}                         % Smart cross-refs
-\RequirePackage[
+\RequirePackage[                                              % Bibliographies with biblatex
   backend=biber, style=numeric, sorting=none,
   % language=english, autolang=other % for multilingual bibliographies
-]{biblatex}                                                   % Bibliographies with biblatex
-\RequirePackage{makeidx}                                      % Indexing
-\RequirePackage[acronym]{glossaries}                          % Glossaries
+]{biblatex}
+\ifpackagesetmemoirindex
+  \RequirePackage{makeidx}                                    % Indexing
+\fi
+\ifpackagesetmemoirglossary
+  \RequirePackage[acronym]{glossaries}                        % Acronyms and glossaries
+\fi
 
 % ========================================================================
 
