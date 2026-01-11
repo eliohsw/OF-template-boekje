@@ -10,8 +10,13 @@
 \def\input@path{{packages/}}
 \makeatother
 
+% Main packages for memoir class
+% Options: en (English), de (German), glo (glossary), idx (index)
 \usepackage[en]{set-memoir}
+% Additional theorem environments
+% Options: en (English), de (German), tw (Traditional Chinese), cn (Simplified Chinese)
 \usepackage[en]{set-theorems}
+% Set fonts for Latin and CJK scripts
 \usepackage{set-fonts}
 
 % The template also provides additional packages for common use cases
@@ -23,7 +28,7 @@
 % Provided by \usepackage{set-fonts}
 \input{preamble/schrift.tex}
 
-% Set language-specific fonts (Polyglossia) (COMMENT OUT if not needed)
+% Set language-specific fonts (Polyglossia) (UNCOMMENT if needed)
 % \input{preamble/sprache.tex}
 
 
