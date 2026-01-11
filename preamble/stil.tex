@@ -1,0 +1,14 @@
+% Memoir native style settings
+\makechapterstyle{MyChapter}{%
+  \renewcommand*\chapnamefont{\sffamily\huge\sbseries}%
+  \renewcommand*\chapnumfont {\sffamily\huge\sbseries}%
+  \renewcommand*\chaptitlefont{\sffamily\Huge\sbseries}%
+  \renewcommand*\printchaptername{\chapnamefont \MakeUppercase{\chaptername}}%
+  \renewcommand*\printchapternum{\chapnumfont\ \thechapter}%
+  \renewcommand*\afterchapternum{\par\vskip 10pt}%
+}
+\chapterstyle{MyChapter}
+
+\setsecheadstyle{\sffamily\Large\sbseries}
+\setsubsecheadstyle{\sffamily\large\sbseries}
+\setsubsubsecheadstyle{\sffamily\normalsize\sbseries}
