@@ -11,13 +11,13 @@
 
 % Declare options
 \newif\ifpackagesetmemoirenglish
+\newif\ifpackagesetmemoirgerman
 
 \DeclareOption{en}{\packagesetmemoirenglishtrue}
-\DeclareOption{de}{\packagesetmemoirenglishfalse}
+\DeclareOption{de}{\packagesetmemoirgermantrue}
 
 \newif\ifpackagesetmemoirglossary
 \DeclareOption{glo}{\packagesetmemoirglossarytrue}
-
 \newif\ifpackagesetmemoirindex
 \DeclareOption{idx}{\packagesetmemoirindextrue}
 
@@ -57,8 +57,9 @@
 
 \ifpackagesetmemoirenglish
   \setmainlanguage{english}
-\else
-  \setmainlanguage{german}
+\fi
+\ifpackagesetmemoirgerman
+  \setmainlanguage[variant=german, spelling=new]{german}
 \fi
 
 \RequirePackage[no-math, quiet]{fontspec}      % Modern font selection
