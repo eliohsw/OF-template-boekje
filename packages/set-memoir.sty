@@ -1,12 +1,29 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-memoir}[2026/01/08 v0.5 Basic packages for memoir class]
+\ProvidesPackage{packages/set-memoir}[2026/01/08 v0.6 Basic packages for memoir class]
+
+\RequirePackage{iftex}
+\ifXeTeX\else
+  \PackageError{packages/set-memoir}
+    {This package requires XeLaTeX (XeTeX engine)}
+    {You are compiling with a non-XeTeX engine.\MessageBreak
+     Please switch to XeLaTeX.}
+\fi
+
+% Language options
+\newif\ifpackagesetmemoir@english
+
+\DeclareOption{en}{\packagesetmemoir@englishtrue}
+\DeclareOption{de}{\packagesetmemoir@englishfalse}
+
+\ExecuteOptions{en}
+\ProcessOptions\relax
 
 % ========================================================================
 
 \DisemulatePackage{setspace}
-\RequirePackage{setspace}   % Adjust line spacing
-\RequirePackage{titling}    % Customize the title
-\RequirePackage{tocloft}    % Control TOC formatting
+\RequirePackage{setspace}      % Adjust line spacing
+\RequirePackage{titling}       % Customize the title
+\RequirePackage{tocloft}       % Control TOC formatting
 
 \AtBeginDocument{%
   \setlength{\headheight}{15pt}%
@@ -31,7 +48,12 @@
 % ========================================================================
 
 \RequirePackage{polyglossia}                   % Multilingual support
-\setmainlanguage{english}
+
+\ifpackagesetmemoir@english
+  \setmainlanguage{english}
+\else
+  \setmainlanguage{german}
+\fi
 
 \RequirePackage[no-math, quiet]{fontspec}      % Modern font selection
 \RequirePackage{xeCJK}                         % For CJK (Chinese, Japanese, Korean) fonts

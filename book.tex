@@ -10,18 +10,21 @@
 \def\input@path{{packages/}}
 \makeatother
 
-\usepackage{set-memoir}
+\usepackage[en]{set-memoir}
 \usepackage[en]{set-theorems}
 \usepackage{set-fonts}
-\usepackage{set-operator}
-\usepackage{set-tikz}
-\usepackage{set-misc}
+
+% The template also provides additional packages for common use cases
+% \usepackage{set-operator}
+% \usepackage{set-tikz}
+% \usepackage{set-misc}
 
 % Set latin script and CJK fonts
+% Provided by \usepackage{set-fonts}
 \input{preamble/schrift.tex}
 
-% Set language-specific fonts (Polyglossia) (UNCOMMENT if needed)
-% \input{preamble/sprache.tex}
+% Set language-specific fonts (Polyglossia) (COMMENT OUT if not needed)
+\input{preamble/sprache.tex}
 
 
 % Memoir native style settings
@@ -29,7 +32,7 @@
   \renewcommand*\chapnamefont{\sffamily\huge\sbseries}%
   \renewcommand*\chapnumfont {\sffamily\huge\sbseries}%
   \renewcommand*\chaptitlefont{\sffamily\Huge\sbseries}%
-  \renewcommand*\printchaptername{\chapnamefont \MakeUppercase{Chapter}}%
+  \renewcommand*\printchaptername{\chapnamefont \MakeUppercase{\chaptername}}%
   \renewcommand*\printchapternum{\chapnumfont\ \thechapter}%
   \renewcommand*\afterchapternum{\par\vskip 10pt}%
 }
