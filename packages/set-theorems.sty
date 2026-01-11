@@ -42,51 +42,36 @@
 \ExecuteOptions{en}
 \ProcessOptions\relax
 
-% Modified from amsthm.sty
-% Additional proof styling inspired by: https://tex.stackexchange.com/a/659956
-\makeatletter
-\newenvironment{proofsol}[1][\proofname]{\par
-  \normalfont \topsep6\p@\@plus6\p@\relax
-  \trivlist
-  \item[\hskip\labelsep
-        \itshape
-    #1\@addpunct{.}]\ignorespaces
-}{%
-  \endtrivlist\@endpefalse
-}
-\renewcommand\qedhere{} % to ensure code portability
-\makeatother
-
 % Preset (English defaults)
 \message{Preset}
-\def\axname{Axiom}
-\def\cjname{Conjecture}
-\def\corname{Corollary}
-\def\dfname{Definition}
-\def\exname{Example}
-\def\exsname{Exercise}
-\def\lmname{Lemma}
-\def\ppname{Property}
-\def\prname{Problem}
-\def\prpname{Proposition}
-\def\thrmname{Theorem}
+  \def\axname{Axiom}
+  \def\cjname{Conjecture}
+  \def\corname{Corollary}
+  \def\dfname{Definition}
+  \def\exname{Example}
+  \def\exsname{Exercise}
+  \def\lmname{Lemma}
+  \def\ppname{Property}
+  \def\prname{Problem}
+  \def\prpname{Proposition}
+  \def\thrmname{Theorem}
 
-\def\axnameplural{Axioms}
-\def\cjnameplural{Conjectures}
-\def\cornameplural{Corollaries}
-\def\dfnameplural{Definitions}
-\def\exnameplural{Examples}
-\def\exsnameplural{Exercises}
-\def\lmnameplural{Lemmas}
-\def\ppnameplural{Properties}
-\def\prnameplural{Problems}
-\def\prpnameplural{Propositions}
-\def\thrmnameplural{Theorems}
+  \def\axnameplural{Axioms}
+  \def\cjnameplural{Conjectures}
+  \def\cornameplural{Corollaries}
+  \def\dfnameplural{Definitions}
+  \def\exnameplural{Examples}
+  \def\exsnameplural{Exercises}
+  \def\lmnameplural{Lemmas}
+  \def\ppnameplural{Properties}
+  \def\prnameplural{Problems}
+  \def\prpnameplural{Propositions}
+  \def\thrmnameplural{Theorems}
 
-\def\hintname{Hint}
-\def\rmkname{Remark}
-\def\pfname{Proof}
-\def\solname{Solution}
+  \def\hintname{Hint}
+  \def\rmkname{Remark}
+  \def\pfname{Proof}
+  \def\solname{Solution}
 
 \pgfkeys{
   /settheorems/names/.is family,
@@ -238,6 +223,67 @@
   },
 }
 
+\makeatletter
+% Cleveref needs the label types registered before any \cref/\Cref usage.
+% Do it immediately if cleveref is already loaded; otherwise defer to begin document.
+\newcommand*\settheorems@declarecrefnames{%
+  \crefname{ex}{\exname}{\exnameplural}%
+  \Crefname{ex}{\exname}{\exnameplural}%
+  \crefname{Ex}{\exname}{\exnameplural}%
+  \Crefname{Ex}{\exname}{\exnameplural}%
+  \crefname{exs}{\exsname}{\exsnameplural}%
+  \Crefname{exs}{\exsname}{\exsnameplural}%
+  \crefname{Exs}{\exsname}{\exsnameplural}%
+  \Crefname{Exs}{\exsname}{\exsnameplural}%
+  \crefname{prb}{\prname}{\prnameplural}%
+  \Crefname{prb}{\prname}{\prnameplural}%
+  \crefname{Prb}{\prname}{\prnameplural}%
+  \Crefname{Prb}{\prname}{\prnameplural}%
+  \crefname{prbx}{\prname}{\prnameplural}%
+  \Crefname{prbx}{\prname}{\prnameplural}%
+  \crefname{Prbx}{\prname}{\prnameplural}%
+  \Crefname{Prbx}{\prname}{\prnameplural}%
+  \crefname{thm}{\thrmname}{\thrmnameplural}%
+  \Crefname{thm}{\thrmname}{\thrmnameplural}%
+  \crefname{Thm}{\thrmname}{\thrmnameplural}%
+  \Crefname{Thm}{\thrmname}{\thrmnameplural}%
+  \crefname{df}{\dfname}{\dfnameplural}%
+  \Crefname{df}{\dfname}{\dfnameplural}%
+  \crefname{Df}{\dfname}{\dfnameplural}%
+  \Crefname{Df}{\dfname}{\dfnameplural}%
+  \crefname{pp}{\ppname}{\ppnameplural}%
+  \Crefname{pp}{\ppname}{\ppnameplural}%
+  \crefname{Pp}{\ppname}{\ppnameplural}%
+  \Crefname{Pp}{\ppname}{\ppnameplural}%
+  \crefname{lm}{\lmname}{\lmnameplural}%
+  \Crefname{lm}{\lmname}{\lmnameplural}%
+  \crefname{Lm}{\lmname}{\lmnameplural}%
+  \Crefname{Lm}{\lmname}{\lmnameplural}%
+  \crefname{ax}{\axname}{\axnameplural}%
+  \Crefname{ax}{\axname}{\axnameplural}%
+  \crefname{Ax}{\axname}{\axnameplural}%
+  \Crefname{Ax}{\axname}{\axnameplural}%
+  \crefname{cj}{\cjname}{\cjnameplural}%
+  \Crefname{cj}{\cjname}{\cjnameplural}%
+  \crefname{Cj}{\cjname}{\cjnameplural}%
+  \Crefname{Cj}{\cjname}{\cjnameplural}%
+  \crefname{cor}{\corname}{\cornameplural}%
+  \Crefname{cor}{\corname}{\cornameplural}%
+  \crefname{Cor}{\corname}{\cornameplural}%
+  \Crefname{Cor}{\corname}{\cornameplural}%
+  \crefname{prp}{\prpname}{\prpnameplural}%
+  \Crefname{prp}{\prpname}{\prpnameplural}%
+  \crefname{Prp}{\prpname}{\prpnameplural}%
+  \Crefname{Prp}{\prpname}{\prpnameplural}%
+}
+
+\@ifpackageloaded{cleveref}{%
+  \settheorems@declarecrefnames
+}{%
+  \AtBeginDocument{\@ifpackageloaded{cleveref}{\settheorems@declarecrefnames}{}}%
+}%
+\makeatother
+
 \def\theoremlangen{%
   \message{Set Language: English}%
   \pgfkeys{/settheorems/lang/en}%
@@ -255,6 +301,20 @@
   \pgfkeys{/settheorems/lang/de}%
 }
 
+% Modified from amsthm.sty
+% Additional proof styling inspired by: https://tex.stackexchange.com/a/659956
+\makeatletter
+\newenvironment{proofsol}[1][\proofname]{\par
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \item[\hskip\labelsep
+        \itshape
+    #1\@addpunct{.}]\ignorespaces
+}{%
+  \endtrivlist\@endpefalse
+}
+\renewcommand\qedhere{} % to ensure code portability
+\makeatother
 
 \def\prooflanglat{%
   \message{Proof Environment Script: Latin}
@@ -308,9 +368,6 @@
 
 \tcbuselibrary{theorems}
 \tcbuselibrary{breakable}
-
-% If cleveref is not loaded, tcolorbox's theorem option 'crefname' would
-% otherwise trigger an undefined \crefname. Provide harmless fallbacks.
 
 \makeatletter
 \@ifclassloaded{beamer}{%
@@ -402,67 +459,6 @@
 
 \newtcbtheorem[use counter from=thm]{prp}{\bfseries \prpname}{normalstyle,label type=prp}{prp}
 \newtcbtheorem[use counter from=thm]{Prp}{\bfseries \prpname\TheoremExtraSpace}{theoremstyle,label type=prp}{Prp}
-
-\makeatletter
-% Cleveref needs the label types registered before any \cref/\Cref usage.
-% Do it immediately if cleveref is already loaded; otherwise defer to begin document.
-\newcommand*\settheorems@declarecrefnames{%
-  \crefname{ex}{\exname}{\exnameplural}%
-  \Crefname{ex}{\exname}{\exnameplural}%
-  \crefname{Ex}{\exname}{\exnameplural}%
-  \Crefname{Ex}{\exname}{\exnameplural}%
-  \crefname{exs}{\exsname}{\exsnameplural}%
-  \Crefname{exs}{\exsname}{\exsnameplural}%
-  \crefname{Exs}{\exsname}{\exsnameplural}%
-  \Crefname{Exs}{\exsname}{\exsnameplural}%
-  \crefname{prb}{\prname}{\prnameplural}%
-  \Crefname{prb}{\prname}{\prnameplural}%
-  \crefname{Prb}{\prname}{\prnameplural}%
-  \Crefname{Prb}{\prname}{\prnameplural}%
-  \crefname{prbx}{\prname}{\prnameplural}%
-  \Crefname{prbx}{\prname}{\prnameplural}%
-  \crefname{Prbx}{\prname}{\prnameplural}%
-  \Crefname{Prbx}{\prname}{\prnameplural}%
-  \crefname{thm}{\thrmname}{\thrmnameplural}%
-  \Crefname{thm}{\thrmname}{\thrmnameplural}%
-  \crefname{Thm}{\thrmname}{\thrmnameplural}%
-  \Crefname{Thm}{\thrmname}{\thrmnameplural}%
-  \crefname{df}{\dfname}{\dfnameplural}%
-  \Crefname{df}{\dfname}{\dfnameplural}%
-  \crefname{Df}{\dfname}{\dfnameplural}%
-  \Crefname{Df}{\dfname}{\dfnameplural}%
-  \crefname{pp}{\ppname}{\ppnameplural}%
-  \Crefname{pp}{\ppname}{\ppnameplural}%
-  \crefname{Pp}{\ppname}{\ppnameplural}%
-  \Crefname{Pp}{\ppname}{\ppnameplural}%
-  \crefname{lm}{\lmname}{\lmnameplural}%
-  \Crefname{lm}{\lmname}{\lmnameplural}%
-  \crefname{Lm}{\lmname}{\lmnameplural}%
-  \Crefname{Lm}{\lmname}{\lmnameplural}%
-  \crefname{ax}{\axname}{\axnameplural}%
-  \Crefname{ax}{\axname}{\axnameplural}%
-  \crefname{Ax}{\axname}{\axnameplural}%
-  \Crefname{Ax}{\axname}{\axnameplural}%
-  \crefname{cj}{\cjname}{\cjnameplural}%
-  \Crefname{cj}{\cjname}{\cjnameplural}%
-  \crefname{Cj}{\cjname}{\cjnameplural}%
-  \Crefname{Cj}{\cjname}{\cjnameplural}%
-  \crefname{cor}{\corname}{\cornameplural}%
-  \Crefname{cor}{\corname}{\cornameplural}%
-  \crefname{Cor}{\corname}{\cornameplural}%
-  \Crefname{Cor}{\corname}{\cornameplural}%
-  \crefname{prp}{\prpname}{\prpnameplural}%
-  \Crefname{prp}{\prpname}{\prpnameplural}%
-  \crefname{Prp}{\prpname}{\prpnameplural}%
-  \Crefname{Prp}{\prpname}{\prpnameplural}%
-}
-
-\@ifpackageloaded{cleveref}{%
-  \settheorems@declarecrefnames
-}{%
-  \AtBeginDocument{\@ifpackageloaded{cleveref}{\settheorems@declarecrefnames}{}}%
-}%
-\makeatother
 
 \newenvironment{hint}{\noindent\textbf{\hintname .}\hspace{1ex}}{\hfill}
 \newenvironment{rem}{\noindent\textbf{\rmkname .}\hspace{1ex}}{\hfill}
