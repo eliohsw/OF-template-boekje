@@ -14,6 +14,12 @@ To compile the document, type `make` or `make xelatexmk` in your terminal, or by
 - **packages/** — Custom packages for specialized formatting and features
 - **preamble/** — Document preamble configuration
 
+## Usage
+
+Review the load options for **set-memoir.sty** and **set-theorems.sty**, configure font settings in **schrift.tex**, enable multilingual settings by uncommenting **sprache.tex**, and edit the style of the book in **stil.tex**. Edit the files for your preferences.
+
+The template also provides additional operators, TikZ settings, and miscelleneous settings via **set-operator.sty**, **set-tikz.sty**, and **set-misc.sty**. These packages are not required to be loaded in the main document.
+
 ## Recommendations
 
 Additional font and language settings can be adjusted in **preamble/schrift.tex** and **preamble/sprache.tex**.  However, it is recommended to install the following fonts on your machine for better aesthetics:
