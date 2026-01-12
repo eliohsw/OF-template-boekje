@@ -16,12 +16,20 @@ To compile the document, type `make` or `make xelatexmk` in your terminal, or by
 
 ## Usage
 
-1. In `book.tex`, set the `set-memoir` options for language (`en`, `de`, `tw`, `cn`) and features (`glo`, `idx`).
-2. Configure fonts in `preamble/schrift.tex` (Latin and CJK lists). Install the fonts you select.
-3. For extra languages, uncomment `\input{preamble/sprache.tex}` and adjust its font declarations.
-4. Customize headings and spacing in `preamble/stil.tex`.
-5. Add content in `contents/` and include new chapters or appendices via `\input{...}` in `book.tex`.
-6. Uncomment optional features in `book.tex` (glossary, index, bibliography) when needed.
+1. Build locally with `make` (recommended). It runs `latexmk` with `-shell-escape` and the local `packages/` path.
+2. In `book.tex`, set the `boekje` options for language (`en`, `de`, `tw`, `cn`) and features (`glo`, `idx`).
+3. Optional modules in `book.tex`: enable `boekje-label` for Chinese labels (`tw`/`cn`) and `boekje-code` for code listings (`style=style1` or other custom styles).
+4. Configure fonts in `preamble/schrift.tex` (Latin and CJK lists). Install the fonts you select.
+5. For extra languages, uncomment `\input{preamble/sprache.tex}` and adjust its font declarations.
+6. Customize headings and spacing in `preamble/stil.tex`.
+7. Add content in `contents/` and include new chapters or appendices via `\input{...}` in `book.tex`.
+8. Uncomment optional features in `book.tex` (glossary, index, bibliography) when needed.
+
+> [!NOTE]
+> For VS Code LaTeX Workshop integration, merge the LaTeX Workshop recipes/tools from `settings.json` into your own settings (notably `xelatexmk`, `minted-style`, and `TEXINPUTS`). The template defaults to `make` for a clean, reproducible build.
+
+> [!CAUTION]
+> Custom minted styles (for `boekje-code`) are generated locally by `script/mint_injector.py` from `script/mint_styles.py` and cached in `_minted/*.style.minted`. Overleaf cannot generate these files due to restricted shell-escape, so compile locally and commit the cached style file if you need Overleaf. This cache workaround is not ideal, but it is the current approach.
 
 ## Recommendations
 
