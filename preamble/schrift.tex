@@ -4,8 +4,8 @@
 % See https://ctan.org/pkg/fontspec and https://ctan.org/pkg/xecjk
 % See also packages/set-fonts.sty
 
-% Enable font debugging information
-\SetFontsDebugOn
+% Enable font debugging information (UNCOMMENT if needed)
+% \SetFontsDebugOn
 
 % Usage:
 % \SetFontFromList[∅|CJK]{main|sans|mono}{<font1[per-font options], font2[per-font options], ...>}
@@ -27,7 +27,8 @@
     FontFace = {sb}{it}{SourceSans3-SemiBoldItalic},
     FontFace = {sbx}{n}{SourceSans3-SemiBold},
     FontFace = {sbx}{it}{SourceSans3-SemiBoldItalic},
-  ], Source Sans Pro[
+  ],
+  Source Sans Pro[
     UprightFont    = SourceSansPro-Regular,
     ItalicFont     = SourceSansPro-It,
     BoldFont       = SourceSansPro-Bold,
@@ -36,7 +37,8 @@
     FontFace = {sb}{it}{SourceSansPro-SemiboldIt},
     FontFace = {sbx}{n}{SourceSansPro-Semibold},
     FontFace = {sbx}{it}{SourceSansPro-SemiboldIt},
-  ], Noto Sans, Arial, Fira Sans,
+  ],
+  Noto Sans, Arial, Fira Sans,
   TeX Gyre Heros, Latin Modern Sans
 }
 \SetFontFromList{mono}{
@@ -47,16 +49,55 @@
 
 \SetFontFromList[CJK]{main}{
   % Kaiti
-  TW-MOE-Std-Kai[
-    AutoFakeSlant=0.2,
-    AutoFakeBold=3.05
-  ], TW-Kai[
-    AutoFakeSlant=0.2,
-    AutoFakeBold=3.05
-  ],
+  % TW-MOE-Std-Kai[
+  %   AutoFakeSlant=0.2,
+  %   AutoFakeBold=3.05
+  % ], TW-Kai[
+  %   AutoFakeSlant=0.2,
+  %   AutoFakeBold=3.05
+  % ],
   % Mingti/Songti
-  Source Han Serif TC, Noto Serif CJK TC,
-  Source Han Serif SC, Noto Serif CJK SC, FandolSong
+  Source Han Serif TC[
+    UprightFont    = SourceHanSerifTC-Regular,
+    ItalicFont     = SourceHanSerifTC-Regular,
+    BoldFont       = SourceHanSerifTC-Bold,
+    BoldItalicFont = SourceHanSerifTC-Bold,
+    FontFace = {sb}{n}{SourceHanSerifTC-SemiBold},
+    FontFace = {sb}{it}{SourceHanSerifTC-SemiBold},
+    FontFace = {sbx}{n}{SourceHanSerifTC-SemiBold},
+    FontFace = {sbx}{it}{SourceHanSerifTC-SemiBold},
+  ],
+  Noto Serif CJK TC[
+    UprightFont    = NotoSerifCJKtc-Regular,
+    ItalicFont     = NotoSerifCJKtc-Regular,
+    BoldFont       = NotoSerifCJKtc-Bold,
+    BoldItalicFont = NotoSerifCJKtc-Bold,
+    FontFace = {sb}{n}{NotoSerifCJKtc-SemiBold},
+    FontFace = {sb}{it}{NotoSerifCJKtc-SemiBold},
+    FontFace = {sbx}{n}{NotoSerifCJKtc-SemiBold},
+    FontFace = {sbx}{it}{NotoSerifCJKtc-SemiBold},
+  ],
+  Source Han Serif SC[
+    UprightFont    = SourceHanSerifSC-Regular,
+    ItalicFont     = SourceHanSerifSC-Regular,
+    BoldFont       = SourceHanSerifSC-Bold,
+    BoldItalicFont = SourceHanSerifSC-Bold,
+    FontFace = {sb}{n}{SourceHanSerifSC-SemiBold},
+    FontFace = {sb}{it}{SourceHanSerifSC-SemiBold},
+    FontFace = {sbx}{n}{SourceHanSerifSC-SemiBold},
+    FontFace = {sbx}{it}{SourceHanSerifSC-SemiBold},
+  ],
+  Noto Serif CJK SC[
+    UprightFont    = NotoSerifCJKsc-Regular,
+    ItalicFont     = NotoSerifCJKsc-Regular,
+    BoldFont       = NotoSerifCJKsc-Bold,
+    BoldItalicFont = NotoSerifCJKsc-Bold,
+    FontFace = {sb}{n}{NotoSerifCJKsc-SemiBold},
+    FontFace = {sb}{it}{NotoSerifCJKsc-SemiBold},
+    FontFace = {sbx}{n}{NotoSerifCJKsc-SemiBold},
+    FontFace = {sbx}{it}{NotoSerifCJKsc-SemiBold},
+  ],
+  FandolSong
 }
 
 \SetFontFromList[CJK]{sans}{
@@ -69,10 +110,79 @@
     FontFace = {sb}{it}{SourceHanSansTC-Medium},
     FontFace = {sbx}{n}{SourceHanSansTC-Medium},
     FontFace = {sbx}{it}{SourceHanSansTC-Medium},
-  ], Noto Sans CJK TC,
-  Source Han Sans SC, Noto Sans CJK SC, FandolHei
+  ],
+  Noto Sans CJK TC[
+    UprightFont    = NotoSansCJKtc-Regular,
+    ItalicFont     = NotoSansCJKtc-Regular,
+    BoldFont       = NotoSansCJKtc-Bold,
+    BoldItalicFont = NotoSansCJKtc-Bold,
+    FontFace = {sb}{n}{NotoSansCJKtc-Medium},
+    FontFace = {sb}{it}{NotoSansCJKtc-Medium},
+    FontFace = {sbx}{n}{NotoSansCJKtc-Medium},
+    FontFace = {sbx}{it}{NotoSansCJKtc-Medium},
+  ],
+  Source Han Sans SC[
+    UprightFont    = SourceHanSansSC-Regular,
+    ItalicFont     = SourceHanSansSC-Regular,
+    BoldFont       = SourceHanSansSC-Bold,
+    BoldItalicFont = SourceHanSansSC-Bold,
+    FontFace = {sb}{n}{SourceHanSansSC-Medium},
+    FontFace = {sb}{it}{SourceHanSansSC-Medium},
+    FontFace = {sbx}{n}{SourceHanSansSC-Medium},
+    FontFace = {sbx}{it}{SourceHanSansSC-Medium},
+  ],
+  Noto Sans CJK SC[
+    UprightFont    = NotoSansCJKsc-Regular,
+    ItalicFont     = NotoSansCJKsc-Regular,
+    BoldFont       = NotoSansCJKsc-Bold,
+    BoldItalicFont = NotoSansCJKsc-Bold,
+    FontFace = {sb}{n}{NotoSansCJKsc-Medium},
+    FontFace = {sb}{it}{NotoSansCJKsc-Medium},
+    FontFace = {sbx}{n}{NotoSansCJKsc-Medium},
+    FontFace = {sbx}{it}{NotoSansCJKsc-Medium},
+  ],
+  FandolHei
 }
 \SetFontFromList[CJK]{mono}{
-  Source Han Sans TC, Noto Sans CJK TC,
-  Source Han Sans SC, Noto Sans CJK SC, FandolFang
+  Source Han Sans TC[
+    UprightFont    = SourceHanSansTC-Regular,
+    ItalicFont     = SourceHanSansTC-Regular,
+    BoldFont       = SourceHanSansTC-Bold,
+    BoldItalicFont = SourceHanSansTC-Bold,
+    FontFace = {sb}{n}{SourceHanSansTC-Medium},
+    FontFace = {sb}{it}{SourceHanSansTC-Medium},
+    FontFace = {sbx}{n}{SourceHanSansTC-Medium},
+    FontFace = {sbx}{it}{SourceHanSansTC-Medium},
+  ],
+  Noto Sans CJK TC[
+    UprightFont    = NotoSansCJKtc-Regular,
+    ItalicFont     = NotoSansCJKtc-Regular,
+    BoldFont       = NotoSansCJKtc-Bold,
+    BoldItalicFont = NotoSansCJKtc-Bold,
+    FontFace = {sb}{n}{NotoSansCJKtc-Medium},
+    FontFace = {sb}{it}{NotoSansCJKtc-Medium},
+    FontFace = {sbx}{n}{NotoSansCJKtc-Medium},
+    FontFace = {sbx}{it}{NotoSansCJKtc-Medium},
+  ],
+  Source Han Sans SC[
+    UprightFont    = SourceHanSansSC-Regular,
+    ItalicFont     = SourceHanSansSC-Regular,
+    BoldFont       = SourceHanSansSC-Bold,
+    BoldItalicFont = SourceHanSansSC-Bold,
+    FontFace = {sb}{n}{SourceHanSansSC-Medium},
+    FontFace = {sb}{it}{SourceHanSansSC-Medium},
+    FontFace = {sbx}{n}{SourceHanSansSC-Medium},
+    FontFace = {sbx}{it}{SourceHanSansSC-Medium},
+  ],
+  Noto Sans CJK SC[
+    UprightFont    = NotoSansCJKsc-Regular,
+    ItalicFont     = NotoSansCJKsc-Regular,
+    BoldFont       = NotoSansCJKsc-Bold,
+    BoldItalicFont = NotoSansCJKsc-Bold,
+    FontFace = {sb}{n}{NotoSansCJKsc-Medium},
+    FontFace = {sb}{it}{NotoSansCJKsc-Medium},
+    FontFace = {sbx}{n}{NotoSansCJKsc-Medium},
+    FontFace = {sbx}{it}{NotoSansCJKsc-Medium},
+  ],
+  FandolFang
 }
