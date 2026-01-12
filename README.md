@@ -16,9 +16,7 @@ To compile the document, type `make` or `make xelatexmk` in your terminal, or by
 
 ## Usage
 
-Review the load options for **set-memoir.sty** and **set-theorems.sty**, configure font settings in **schrift.tex**, enable multilingual settings by uncommenting **sprache.tex**, and edit the style of the book in **stil.tex**. Edit the files for your preferences.
-
-The template also provides additional operators, TikZ settings, and miscelleneous settings via **set-operator.sty**, **set-tikz.sty**, and **set-misc.sty**. These packages are not required to be loaded in the main document.
+Review the load options for **set-memoir.sty** and **set-theorems.sty**, configure font settings in **schrift.tex**, enable multilingual settings by uncommenting **sprache.tex**, and edit the style of the book in **stil.tex**. Edit each file for your preferences.
 
 ## Recommendations
 
