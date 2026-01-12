@@ -16,7 +16,12 @@ To compile the document, type `make` or `make xelatexmk` in your terminal, or by
 
 ## Usage
 
-Review the load options for **set-memoir.sty**, configure font settings in **schrift.tex**, enable multilingual settings by uncommenting **sprache.tex**, and edit the style of the book in **stil.tex**. Edit each file for your preferences.
+1. In `book.tex`, set the `set-memoir` options for language (`en`, `de`, `tw`, `cn`) and features (`glo`, `idx`).
+2. Configure fonts in `preamble/schrift.tex` (Latin and CJK lists). Install the fonts you select.
+3. For extra languages, uncomment `\input{preamble/sprache.tex}` and adjust its font declarations.
+4. Customize headings and spacing in `preamble/stil.tex`.
+5. Add content in `contents/` and include new chapters or appendices via `\input{...}` in `book.tex`.
+6. Uncomment optional features in `book.tex` (glossary, index, bibliography) when needed.
 
 ## Recommendations
 
