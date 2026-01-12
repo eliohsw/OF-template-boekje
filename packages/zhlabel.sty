@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/style}[2026/01/12 v0.1.1 Chinese names and labels]
+\ProvidesPackage{packages/zhlabel}[2026/01/12 v0.1.1 Chinese names and labels]
 
 \RequirePackage{zhnumber}
 \RequirePackage{etoolbox}
@@ -24,19 +24,19 @@
 % Change translations without overriding Polyglossia’s language settings
 % Modified from: https://gist.github.com/anamewing/5154b6278f63e8d738bb5d57413a923f
 
-\newcommand*{\style@setzhchapternum}{%
+\newcommand*{\zhlabel@setzhchapternum}{%
   % Display chapters as 第<zhnumber>章; guard against zero-valued counters (e.g., before first chapter)
   \renewcommand*{\printchaptername}{}%
   \renewcommand*{\printchapternum}{\chapnumfont 第\zhnumber{\arabic{chapter}}章}%
 }
 
-\newcommand*{\style@setleftmarkzh}{%
+\newcommand*{\zhlabel@setleftmarkzh}{%
   \renewcommand{\chaptermark}[1]{%
     \markboth{第\zhnumber{\arabic{chapter}}章　##1}{}%
   }%
 }
 
-\newcommand*{\style@setlabels@tw}{%
+\newcommand*{\zhlabel@setlabels@tw}{%
   \renewcommand*{\contentsname}{目錄}%
   \renewcommand*{\listfigurename}{圖目錄}%
   \renewcommand*{\listtablename}{表目錄}%
@@ -49,7 +49,7 @@
   \renewcommand*{\indexname}{索引}%
 }
 
-\newcommand*{\style@setlabels@cn}{%
+\newcommand*{\zhlabel@setlabels@cn}{%
   \renewcommand*{\contentsname}{目录}%
   \renewcommand*{\listfigurename}{图目录}%
   \renewcommand*{\listtablename}{表目录}%
@@ -62,7 +62,7 @@
   \renewcommand*{\indexname}{索引}%
 }
 
-\newcommand*{\style@setcreflabels@tw}{
+\newcommand*{\zhlabel@setcreflabels@tw}{
   \crefname{equation}{式}{式}
   \Crefname{equation}{式}{式}
   \crefname{figure}{圖}{圖}
@@ -113,7 +113,7 @@
   \crefrangemultiformat{subsubsection}{##3第##1節##4至##5第##2節##6}{和##3第##1節##4至##5第##2節##6}{，##3第##1節##4至##5第##2節##6}{和##3第##1節##4至##5第##2節##6}%
 }
 
-\newcommand*{\style@setcreflabels@cn}{
+\newcommand*{\zhlabel@setcreflabels@cn}{
   \crefname{equation}{式}{式}
   \Crefname{equation}{式}{式}
   \crefname{figure}{图}{图}
@@ -164,7 +164,7 @@
   \crefrangemultiformat{subsubsection}{##3第##1节##4至##5第##2节##6}{和##3第##1节##4至##5第##2节##6}{，##3第##1节##4至##5第##2节##6}{和##3第##1节##4至##5第##2节##6}%
 }
 
-\newcommand*{\style@setcrefconjunctions}{%
+\newcommand*{\zhlabel@setcrefconjunctions}{%
   % Use Chinese conjunctions for cleveref lists/ranges and prevent later English resets
   \renewcommand*{\crefpairconjunction}{~和~}%
   \renewcommand*{\crefmiddleconjunction}{、}%
@@ -177,18 +177,18 @@
 
 \AtBeginDocument{%
   \ifdefstring{\Lang}{tw}{
-    \style@setzhchapternum
-    \style@setleftmarkzh
-    \appto\captionsenglish{\style@setlabels@tw}\captionsenglish
-    \style@setcrefconjunctions
-    \style@setcreflabels@tw
+    \zhlabel@setzhchapternum
+    \zhlabel@setleftmarkzh
+    \appto\captionsenglish{\zhlabel@setlabels@tw}\captionsenglish
+    \zhlabel@setcrefconjunctions
+    \zhlabel@setcreflabels@tw
   }{}%
   \ifdefstring{\Lang}{cn}{
-    \style@setzhchapternum
-    \style@setleftmarkzh
-    \appto\captionsenglish{\style@setlabels@cn}\captionsenglish
-    \style@setcrefconjunctions
-    \style@setcreflabels@cn
+    \zhlabel@setzhchapternum
+    \zhlabel@setleftmarkzh
+    \appto\captionsenglish{\zhlabel@setlabels@cn}\captionsenglish
+    \zhlabel@setcrefconjunctions
+    \zhlabel@setcreflabels@cn
   }{}%
 }
 

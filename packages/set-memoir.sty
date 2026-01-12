@@ -155,17 +155,17 @@
 
 % ========================================================================
 
-\RequirePackage{packages/set-fonts}
+\RequirePackage{packages/listfonts}
 
 \ifdefstring{\memo@Lang}{en}{
-  \RequirePackage[en]{packages/set-theorems}
+  \RequirePackage[en]{packages/newtcbthm}
 }{}
 \ifdefstring{\memo@Lang}{de}{
-  \RequirePackage[de]{packages/set-theorems}
+  \RequirePackage[de]{packages/newtcbthm}
 }{}
 \ifdefstring{\memo@Lang}{tw}{
-  \RequirePackage[tw]{packages/set-theorems}
+  \RequirePackage[tw]{packages/newtcbthm}
 }{}
 \ifdefstring{\memo@Lang}{cn}{
-  \RequirePackage[cn]{packages/set-theorems}
+  \RequirePackage[cn]{packages/newtcbthm}
 }{}

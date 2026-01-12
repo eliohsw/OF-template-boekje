@@ -1,9 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-theorems}[2026/01/11 v0.5.4 Theorem-like Environments Settings]
+\ProvidesPackage{packages/newtcbthm}[2026/01/11 v0.5.4 Theorem-like Environments Settings]
 
 \RequirePackage{iftex}
 \ifXeTeX\else
-  \PackageError{packages/set-theorems}
+  \PackageError{packages/newtcbthm}
     {This package requires XeLaTeX (XeTeX engine)}
     {You are compiling with a non-XeTeX engine.\MessageBreak
      Please switch to XeLaTeX.}
@@ -74,8 +74,8 @@
   \def\solname{Solution}
 
 \pgfkeys{
-  /settheorems/names/.is family,
-  /settheorems/names,
+  /newtcbthm/names/.is family,
+  /newtcbthm/names,
   axname/.code       = {\def\axname{#1}},
   cjname/.code       = {\def\cjname{#1}},
   corname/.code      = {\def\corname{#1}},
@@ -105,8 +105,8 @@
 }
 
 \pgfkeys{
-  /settheorems/lang/en/.style={
-    /settheorems/names/.cd,
+  /newtcbthm/lang/en/.style={
+    /newtcbthm/names/.cd,
     axname={Axiom},
     cjname={Conjecture},
     corname={Corollary},
@@ -134,8 +134,8 @@
     pfname={Proof},
     solname={Solution},
   },
-  /settheorems/lang/tw/.style={
-    /settheorems/names/.cd,
+  /newtcbthm/lang/tw/.style={
+    /newtcbthm/names/.cd,
     axname={公理},
     cjname={猜想},
     corname={推論},
@@ -163,8 +163,8 @@
     pfname={證明},
     solname={解答},
   },
-  /settheorems/lang/cn/.style={
-    /settheorems/names/.cd,
+  /newtcbthm/lang/cn/.style={
+    /newtcbthm/names/.cd,
     axname={公理},
     cjname={猜想},
     corname={推论},
@@ -192,8 +192,8 @@
     pfname={证明},
     solname={解答},
   },
-  /settheorems/lang/de/.style={
-    /settheorems/names/.cd,
+  /newtcbthm/lang/de/.style={
+    /newtcbthm/names/.cd,
     axname={Axiom},
     cjname={Vermutung},
     corname={Korollar},
@@ -226,7 +226,7 @@
 \makeatletter
 % Cleveref needs the label types registered before any \cref/\Cref usage.
 % Do it immediately if cleveref is already loaded; otherwise defer to begin document.
-\newcommand*\settheorems@declarecrefnames{%
+\newcommand*\newtcbthm@declarecrefnames{%
   \crefname{ex}{\exname}{\exnameplural}%
   \Crefname{ex}{\exname}{\exnameplural}%
   \crefname{Ex}{\exname}{\exnameplural}%
@@ -278,27 +278,27 @@
 }
 
 \@ifpackageloaded{cleveref}{%
-  \settheorems@declarecrefnames
+  \newtcbthm@declarecrefnames
 }{%
-  \AtBeginDocument{\@ifpackageloaded{cleveref}{\settheorems@declarecrefnames}{}}%
+  \AtBeginDocument{\@ifpackageloaded{cleveref}{\newtcbthm@declarecrefnames}{}}%
 }%
 \makeatother
 
 \def\theoremlangen{%
   \message{Set Language: English}%
-  \pgfkeys{/settheorems/lang/en}%
+  \pgfkeys{/newtcbthm/lang/en}%
 }
 \def\theoremlangtw{%
   \message{Set Language: Chinese (Traditional)}%
-  \pgfkeys{/settheorems/lang/tw}%
+  \pgfkeys{/newtcbthm/lang/tw}%
 }
 \def\theoremlangcn{%
   \message{Set Language: Chinese (Simplified)}%
-  \pgfkeys{/settheorems/lang/cn}%
+  \pgfkeys{/newtcbthm/lang/cn}%
 }
 \def\theoremlangde{%
   \message{Set Language: German}%
-  \pgfkeys{/settheorems/lang/de}%
+  \pgfkeys{/newtcbthm/lang/de}%
 }
 
 % Modified from amsthm.sty

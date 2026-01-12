@@ -1,9 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-fonts}[2026/01/07 v0.6.4 Minimal Fonts setup]
+\ProvidesPackage{packages/listfonts}[2026/01/07 v0.6.4 Minimal Fonts setup]
 
 \RequirePackage{iftex}
 \ifPDFTeX
-  \PackageError{set-fonts}{This package requires XeLaTeX or LuaLaTeX}{%
+  \PackageError{listfonts}{This package requires XeLaTeX or LuaLaTeX}{%
     Use \string\xelatex\space or \string\lualatex.}
 \fi
 
@@ -20,7 +20,7 @@
   \RequirePackage{xeCJK}
 \else
   \newcommand\setCJKmainfont[2][]{%
-    \PackageError{set-fonts}{CJK mode requires XeLaTeX (xeCJK)}{%
+    \PackageError{listfonts}{CJK mode requires XeLaTeX (xeCJK)}{%
       You compiled with LuaLaTeX. Switch to XeLaTeX, or use a LuaLaTeX CJK
       solution (e.g. luatexja/ctex) and adapt this package accordingly.}%
   }
@@ -173,7 +173,7 @@
           \bool_gset_true:N \g__setfonts_CJKtt_user_bool
         }
       }
-      { \PackageError{set-fonts}{Unknown font family `#1'}{Use main, sans, or mono.} }
+      { \PackageError{listfonts}{Unknown font family `#1'}{Use main, sans, or mono.} }
   }
 
 % ------------------------------------------------------------------------
@@ -188,7 +188,7 @@
             {sans}{\cs_if_exist:NT \CJKsfdefault {\cs_set:Npn \CJKsfdefault {\g__setfonts_CJKsfdefault_tl}}}
             {mono}{\cs_if_exist:NT \CJKttdefault {\cs_set:Npn \CJKttdefault {\g__setfonts_CJKttdefault_tl}}}
           }
-          {\PackageError{set-fonts}{Unknown font family `#2'}{Use main, sans, or mono.}}
+          {\PackageError{listfonts}{Unknown font family `#2'}{Use main, sans, or mono.}}
 
         % Reset user-choice tracking when restoring.
         \bool_gset_false:N \g__setfonts_CJKsf_user_bool
@@ -202,7 +202,7 @@
             {sans}{\cs_set:Npn \sfdefault {\g__setfonts_sfdefault_tl}}
             {mono}{\cs_set:Npn \ttdefault {\g__setfonts_ttdefault_tl}}
           }
-          {\PackageError{set-fonts}{Unknown font family `#2'}{Use main, sans, or mono.}}
+          {\PackageError{listfonts}{Unknown font family `#2'}{Use main, sans, or mono.}}
         \normalfont
       }
   }
@@ -224,7 +224,7 @@
             {sans}{\__setfonts_set_font:Nnn \setsansfont {#3} {#4}}
             {mono}{\__setfonts_set_font:Nnn \setmonofont {#3} {#4}}
           }
-          {\PackageError{set-fonts}{Unknown font family `#2'}{Use main, sans, or mono.}}
+          {\PackageError{listfonts}{Unknown font family `#2'}{Use main, sans, or mono.}}
       }
   }
 
@@ -461,7 +461,7 @@
               {
                 \iow_term:x
                   {
-                    set-fonts:~probe~mode=
+                    listfonts:~probe~mode=
                       \tl_if_blank:nTF {#1} {Latin} {#1}
                     ,~family=#2,
                     ~font='\tl_to_str:N \l__setfonts_fontname_tl',
@@ -477,7 +477,7 @@
                   {
                     \iow_term:x
                       {
-                        set-fonts:~select~'\tl_to_str:N \l__setfonts_fontname_tl'
+                        listfonts:~select~'\tl_to_str:N \l__setfonts_fontname_tl'
                       }
                   }
 
@@ -494,7 +494,7 @@
                   {
                     \iow_term:x
                       {
-                        set-fonts:~miss~'\tl_to_str:N \l__setfonts_fontname_tl'
+                        listfonts:~miss~'\tl_to_str:N \l__setfonts_fontname_tl'
                       }
                   }
               }
@@ -522,7 +522,7 @@
             \tl_set:Nx \l_tmpa_tl { \tl_upper_case:n { \tl_to_str:N \l_tmpa_tl } }
             \str_if_eq:VnTF \l_tmpa_tl {CJK}
               { \__setfonts_select_from_list:nnn {CJK} {#2} {#3} }
-              { \PackageError{set-fonts}{Unknown mode `#1'}{Only [CJK] is supported.} }
+              { \PackageError{listfonts}{Unknown mode `#1'}{Only [CJK] is supported.} }
           }
       }
   }
