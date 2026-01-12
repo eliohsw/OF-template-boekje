@@ -1,11 +1,14 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/style}[2026/01/12 v0.1.0 Chinese names and labels]
+\ProvidesPackage{packages/style}[2026/01/12 v0.1.1 Chinese names and labels]
 
 \RequirePackage{zhnumber}
 \RequirePackage{etoolbox}
 \RequirePackage{atbegshi}
 
 \def\Lang{}
+
+\DeclareOption{en}{}
+\DeclareOption{de}{} % Harmless options
 
 \DeclareOption{tw}{
   \xdef\Lang{tw}%

@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-memoir}[2026/01/11 v0.6.1 Basic packages for memoir class]
+\ProvidesPackage{packages/set-memoir}[2026/01/12 v0.6.2 Basic packages for memoir class]
 
 \RequirePackage{iftex}
 \ifXeTeX\else
@@ -10,11 +10,13 @@
 \fi
 
 % Declare options
-\newif\ifpackagesetmemoirenglish
-\newif\ifpackagesetmemoirgerman
+\def\memo@Lang{en}
+\def\poly@Lang{en}
 
-\DeclareOption{en}{\packagesetmemoirenglishtrue}
-\DeclareOption{de}{\packagesetmemoirgermantrue}
+\DeclareOption{en}{\def\memo@Lang{en}}
+\DeclareOption{tw}{\def\memo@Lang{tw}}
+\DeclareOption{cn}{\def\memo@Lang{cn}}
+\DeclareOption{de}{\def\memo@Lang{de}\def\poly@Lang{de}}
 
 \newif\ifpackagesetmemoirglossary
 \DeclareOption{glo}{\packagesetmemoirglossarytrue}
@@ -55,12 +57,12 @@
 
 \RequirePackage{polyglossia}                   % Multilingual support
 
-\ifpackagesetmemoirenglish
+\ifdefstring{\poly@Lang}{en}{
   \setmainlanguage{english}
-\fi
-\ifpackagesetmemoirgerman
+}{}
+\ifdefstring{\poly@Lang}{de}{
   \setmainlanguage[variant=german, spelling=new]{german}
-\fi
+}{}
 
 \RequirePackage[no-math, quiet]{fontspec}      % Modern font selection
 \RequirePackage{xeCJK}                         % For CJK (Chinese, Japanese, Korean) fonts
@@ -153,3 +155,17 @@
 
 % ========================================================================
 
+\RequirePackage{packages/set-fonts}
+
+\ifdefstring{\memo@Lang}{en}{
+  \RequirePackage[en]{packages/set-theorems}
+}{}
+\ifdefstring{\memo@Lang}{de}{
+  \RequirePackage[de]{packages/set-theorems}
+}{}
+\ifdefstring{\memo@Lang}{tw}{
+  \RequirePackage[tw]{packages/set-theorems}
+}{}
+\ifdefstring{\memo@Lang}{cn}{
+  \RequirePackage[cn]{packages/set-theorems}
+}{}
