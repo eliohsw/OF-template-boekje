@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-code}[2026/01/12 v0.4.3 Code Listing Settings]
+\ProvidesPackage{packages/set-code}[2026/01/12 v0.4.4 Code Listing Settings]
 
 % ========================================================================
 
@@ -19,29 +19,23 @@
 
 \ProcessKeyvalOptions*\relax
 
-% Auto-generate custom minted style files for bundled styles.
+% Auto-generate custom minted style files when a local injector is available.
 \edef\setcode@style@normalized{\detokenize\expandafter{\setcode@style}}
-\edef\setcode@customstyle@a{\detokenize{style1}}
-\edef\setcode@customstyle@b{\detokenize{style2}}
-\def\setcode@maybe@generate{%
-  \edef\setcode@stylefile{_minted/\setcode@style@normalized.style.minted}%
-  \IfFileExists{\setcode@stylefile}{}{%
+\ifx\setcode@style@normalized\@empty
+  \relax
+\else
+  \IfFileExists{script/mint_injector.py}{%
     \immediate\write18{mkdir -p _minted && python3 script/mint_injector.py --style \setcode@style@normalized\space --texfile \jobname.tex}%
-  }%
-}
-\ifx\setcode@style@normalized\setcode@customstyle@a
-  \setcode@maybe@generate
-\else\ifx\setcode@style@normalized\setcode@customstyle@b
-  \setcode@maybe@generate
-\fi\fi
+  }{}%
+\fi
 
 % ========================================================================
 
-\ifx\setcode@style\@empty
+\ifx\setcode@style@normalized\@empty
   \relax
 \else
   \edef\@temp{
-    \noexpand\setminted{style=\setcode@style}
+    \noexpand\setminted{style=\setcode@style@normalized}
   }
   \@temp
 \fi
