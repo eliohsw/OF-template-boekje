@@ -1,9 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-memoir}[2026/01/12 v0.6.2 Basic packages for memoir class]
+\ProvidesPackage{packages/boekje}[2026/01/12 v0.6.2 Basic packages for memoir class]
 
 \RequirePackage{iftex}
 \ifXeTeX\else
-  \PackageError{packages/set-memoir}
+  \PackageError{packages/boekje}
     {This package requires XeLaTeX (XeTeX engine)}
     {You are compiling with a non-XeTeX engine.\MessageBreak
      Please switch to XeLaTeX.}
@@ -18,10 +18,10 @@
 \DeclareOption{cn}{\def\memo@Lang{cn}}
 \DeclareOption{de}{\def\memo@Lang{de}\def\poly@Lang{de}}
 
-\newif\ifpackagesetmemoirglossary
-\DeclareOption{glo}{\packagesetmemoirglossarytrue}
-\newif\ifpackagesetmemoirindex
-\DeclareOption{idx}{\packagesetmemoirindextrue}
+\newif\ifpackageboekjeglossary
+\DeclareOption{glo}{\packageboekjeglossarytrue}
+\newif\ifpackageboekjeindex
+\DeclareOption{idx}{\packageboekjeindextrue}
 
 \ExecuteOptions{en}
 \ProcessOptions\relax
@@ -86,10 +86,10 @@
   backend=biber, style=numeric, sorting=none,
   % language=english, autolang=other % for multilingual bibliographies
 ]{biblatex}
-\ifpackagesetmemoirindex
+\ifpackageboekjeindex
   \RequirePackage{makeidx}                                    % Indexing
 \fi
-\ifpackagesetmemoirglossary
+\ifpackageboekjeglossary
   \RequirePackage[acronym]{glossaries}                        % Acronyms and glossaries
 \fi
 
@@ -156,17 +156,17 @@
 
 % ========================================================================
 
-\RequirePackage{packages/listfonts}
+\RequirePackage{packages/boekje-fonts}
 
 \ifdefstring{\memo@Lang}{en}{
-  \RequirePackage[en]{packages/newtcbthm}
+  \RequirePackage[en]{packages/boekje-thm}
 }{}
 \ifdefstring{\memo@Lang}{de}{
-  \RequirePackage[de]{packages/newtcbthm}
+  \RequirePackage[de]{packages/boekje-thm}
 }{}
 \ifdefstring{\memo@Lang}{tw}{
-  \RequirePackage[tw]{packages/newtcbthm}
+  \RequirePackage[tw]{packages/boekje-thm}
 }{}
 \ifdefstring{\memo@Lang}{cn}{
-  \RequirePackage[cn]{packages/newtcbthm}
+  \RequirePackage[cn]{packages/boekje-thm}
 }{}

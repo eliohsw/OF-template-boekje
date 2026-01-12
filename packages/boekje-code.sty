@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-code}[2026/01/12 v0.4.4 Code Listing Settings]
+\ProvidesPackage{packages/boekje-code}[2026/01/12 v0.4.4 Code Listing Settings]
 
 % ========================================================================
 
@@ -11,8 +11,8 @@
 \RequirePackage{kvoptions}
 
 \SetupKeyvalOptions{
-  family=set-code,
-  prefix=setcode@
+  family=boekje-code,
+  prefix=boekjecode@
 }
 
 \DeclareStringOption[default]{style}
@@ -20,35 +20,38 @@
 \ProcessKeyvalOptions*\relax
 
 % Auto-generate custom minted style files when a local injector is available.
-\edef\setcode@style@normalized{\detokenize\expandafter{\setcode@style}}
-\ifx\setcode@style@normalized\@empty
+\edef\boekjecode@style@normalized{\detokenize\expandafter{\boekjecode@style}}
+\ifx\boekjecode@style@normalized\@empty
   \relax
 \else
   \IfFileExists{script/mint_injector.py}{%
-    \immediate\write18{mkdir -p _minted && python3 script/mint_injector.py --style \setcode@style@normalized\space --texfile \jobname.tex}%
+    \immediate\write18{mkdir -p _minted && python3 script/mint_injector.py --style \boekjecode@style@normalized\space --texfile \jobname.tex}%
   }{}%
 \fi
 
 % ========================================================================
 
-\ifx\setcode@style@normalized\@empty
+\ifx\boekjecode@style@normalized\@empty
   \relax
 \else
   \edef\@temp{
-    \noexpand\setminted{style=\setcode@style@normalized}
+    \noexpand\setminted{style=\boekjecode@style@normalized}
   }
   \@temp
 \fi
 
+
 \definecolor{custom-gray}{HTML}{B5B5AC}
 
 \tcbuselibrary{listings, minted, skins, breakable}
-
 \tcbset{listing engine=minted}
 
 % The default font of the numbering in minted environments
 \renewcommand{\theFancyVerbLine}{\sffamily{\scriptsize\arabic{FancyVerbLine}}}
 
+% Settings for inline code and code blocks
+% Edit the style here as you like
+% Usage: \mintinline{language}{code}  or  \begin{minted}{language} ... \end{minted}
 \setmintedinline{
   fontsize=\small,
   baselinestretch=1.15,
@@ -62,6 +65,9 @@
   highlightcolor=RoyalBlue1!12.5,
 }
 
+% Define custom tcolorbox environment for code listings
+% Edit the style here as you like
+% Usage: \begin{codelisting}{language}{additional minted options} ... \end{codelisting}
 \newtcblisting{codelisting}[2]{
   enhanced jigsaw, empty,
   listing only,
