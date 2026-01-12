@@ -39,7 +39,7 @@ Additional font and language settings can be adjusted in `preamble/schrift.tex` 
 4. [Source Han Serif](https://github.com/adobe-fonts/source-han-serif/releases) fonts
 5. [CMU](https://ctan.org/tex-archive/fonts/cm-unicode) fonts (the Computer Modern Unicode font family)
 6. [Source Sans 3](https://fonts.google.com/specimen/Source+Sans+3) or [Noto Sans](https://fonts.google.com/noto/specimen/Noto+Sans)
-7. [Source Code Pro](https://github.com/adobe-fonts/source-code-pro)
+7. [Source Code Pro](https://github.com/adobe-fonts/source-code-pro) or [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono)
 
 It is recommended to compile the document on your own machine, since the font support on Overleaf is limited.
 
