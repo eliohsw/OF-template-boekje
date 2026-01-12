@@ -20,10 +20,20 @@
 
 \ProcessKeyvalOptions*\relax
 
-% If Makefile is not used, then uncomment the following lines
-% \IfFileExists{_minted/style1.style.minted}{}{%
-%   \immediate\write18{mkdir -p _minted && python3 script/mint_injector.py --style style1 --texfile \jobname.tex}%
-% }
+% Auto-generate custom minted style files for bundled styles.
+\def\setcode@customstyle@a{style1}
+\def\setcode@customstyle@b{style2}
+\def\setcode@maybe@generate{%
+  \edef\setcode@stylefile{_minted/\setcode@style.style.minted}%
+  \IfFileExists{\setcode@stylefile}{}{%
+    \immediate\write18{mkdir -p _minted && python3 script/mint_injector.py --style \setcode@style --texfile \jobname.tex}%
+  }%
+}
+\ifx\setcode@style\setcode@customstyle@a
+  \setcode@maybe@generate
+\else\ifx\setcode@style\setcode@customstyle@b
+  \setcode@maybe@generate
+\fi\fi
 
 % ========================================================================
 
