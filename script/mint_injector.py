@@ -5,26 +5,55 @@ import os
 import sys
 import argparse
 from pygments.formatters.latex import LatexFormatter
+from pygments.style import Style
+from pygments.styles import get_all_styles
 
-# Import your styles from elio_styles.py
-# Update to reflect the new class names: style1, style2
-from mint_styles import style1, style2
+import mint_styles
+
+def collect_custom_styles():
+    style_map = {}
+    for obj in vars(mint_styles).values():
+        if isinstance(obj, type) and issubclass(obj, Style) and obj is not Style:
+            name = getattr(obj, "name", None) or obj.__name__
+            if name:
+                style_map[name] = obj
+    return style_map
+
+def resolve_source_paths():
+    sources = [mint_styles.__file__, __file__]
+    resolved = []
+    for path in sources:
+        if not path:
+            continue
+        if path.endswith(".pyc") and os.path.exists(path[:-1]):
+            path = path[:-1]
+        resolved.append(os.path.abspath(path))
+    return resolved
+
+def is_up_to_date(out_path, sources):
+    if not os.path.exists(out_path):
+        return False
+    out_mtime = os.path.getmtime(out_path)
+    for src in sources:
+        if os.path.exists(src) and os.path.getmtime(src) > out_mtime:
+            return False
+    return True
 
 def main():
     """
-    This script generates a .style.minted file for a chosen custom Pygments style,
-    placing the file in the correct _minted directory based on the LaTeX file location.
+    This script generates a .style.minted file for a chosen custom Pygments style
+    found in mint_styles.py, placing the file in the correct _minted directory
+    based on the LaTeX file location.
     """
 
-    # 1) Parse command-line arguments to pick which style to use and the LaTeX file path
+    # Parse command-line arguments to pick which style to use and the LaTeX file path
     parser = argparse.ArgumentParser(
-        description="Generate a custom minted style file from elio_styles.py"
+        description="Generate a custom minted style file from mint_styles.py"
     )
     parser.add_argument(
         "--style",
-        choices=["style1", "style2"],  # Updated choices
-        default="style1",              # Default is now style1
-        help="Choose which custom style to use (default: style1)"
+        default="style1",
+        help="Style name to use (default: style1)"
     )
     parser.add_argument(
         "--texfile",
@@ -33,39 +62,51 @@ def main():
     )
     args = parser.parse_args()
 
-    # 2) Resolve the absolute directory of the LaTeX file
+    # Resolve the absolute directory of the LaTeX file
     texfile_dir = os.path.abspath(os.path.dirname(args.texfile))
 
-    # 3) Determine the corresponding _minted directory
+    # Determine the corresponding _minted directory
     minted_dir = os.path.join(texfile_dir, "_minted")
 
     # Create _minted directory if it doesn't exist
     if not os.path.exists(minted_dir):
         os.makedirs(minted_dir)
 
-    # 4) Build a map of style names to actual style classes
-    style_map = {
-        "style1": style1,
-        "style2": style2,
-    }
+    # Build a map of style names to style classes from mint_styles.py
+    style_map = collect_custom_styles()
+    style_name = args.style
 
-    # 5) Pick the style class the user asked for
-    chosen_style = style_map[args.style]
+    # Skip if the style is not a custom style defined in mint_styles.py
+    if style_name not in style_map:
+        if style_name in set(get_all_styles()):
+            print(f"Style '{style_name}' is built-in; no custom file generated.")
+            return 0
+        print(f"Style '{style_name}' not found in mint_styles.py; no custom file generated.")
+        return 0
 
-    # 6) Initialize the LatexFormatter with the chosen style and set commandprefix to "PYG"
+    # Pick the style class the user asked for
+    chosen_style = style_map[style_name]
+
+    # Initialize the LatexFormatter with the chosen style and set commandprefix to "PYG"
     formatter = LatexFormatter(style=chosen_style, full=False, commandprefix="PYG")
     style_defs = formatter.get_style_defs()
 
-    # 7) Output filename (use the style as-is + ".style.minted")
-    out_filename = f"{args.style}.style.minted"
+    # Output filename (use the style as-is + ".style.minted")
+    out_filename = f"{style_name}.style.minted"
     out_path = os.path.join(minted_dir, out_filename)
 
-    # 8) Write the style definitions to the file
+    # Skip regeneration if cached file is newer than sources
+    sources = resolve_source_paths()
+    if is_up_to_date(out_path, sources):
+        print(f"'{out_path}' is up to date; skipping regeneration.")
+        return 0
+
+    # Write the style definitions to the file
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(style_defs)
 
     print(f"Successfully generated '{out_path}' with \\PYG macros "
-          f"using style '{args.style}'.")
+          f"using style '{style_name}'.")
 
 if __name__ == "__main__":
     main()

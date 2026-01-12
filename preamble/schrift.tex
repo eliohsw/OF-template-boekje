@@ -42,8 +42,17 @@
   TeX Gyre Heros, Latin Modern Sans
 }
 \SetFontFromList{mono}{
-  CMU Typewriter Text,
-  Source Code Pro, 
+  % CMU Typewriter Text,
+  Source Code Pro[
+    UprightFont    = SourceCodePro-Regular,
+    ItalicFont     = SourceCodePro-It,
+    BoldFont       = SourceCodePro-Semibold,
+    BoldItalicFont = SourceCodePro-SemiboldIt,
+    FontFace = {sb}{n}{SourceCodePro-Semibold},
+    FontFace = {sb}{it}{SourceCodePro-SemiboldIt},
+    FontFace = {sbx}{n}{SourceCodePro-Semibold},
+    FontFace = {sbx}{it}{SourceCodePro-SemiboldIt},
+  ], 
   Latin Modern Mono
 }
 
