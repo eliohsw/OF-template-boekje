@@ -8,13 +8,15 @@ To compile the document, type `make` or `make xelatexmk` in your terminal, or by
 
 ## Structure
 
-- **book.tex** — The main LaTeX document
-- **makefile** — Build automation script for compiling the document
-- **contents/** — Book contents (titlepage, preface, chapters, appendices, glossary, bibliography)
-- **packages/** — Custom packages for specialized formatting and features
-- **preamble/** — Document preamble configuration
+- `book.tex` — The main LaTeX document
+- `makefile` — Build automation script for compiling the document
+- `contents/` — Book contents (titlepage, preface, chapters, appendices, glossary, bibliography)
+- `packages/` — Custom packages for specialized formatting and features
+- `preamble/` — Document preamble configuration
 
 ## Usage
+
+Clone the repository from [GitHub](https://github.com/eliohsw/OF-template-boekje/) , or duplicate the project from [Overleaf](https://www.overleaf.com/read/rnkvhykqdxsk#c7c064) .
 
 1. Build locally with `make` (recommended).
 2. In `book.tex` , set the `boekje` options for language ( `en` , `de` , `tw` , `cn` ) and features ( `glo` , `idx` ).
