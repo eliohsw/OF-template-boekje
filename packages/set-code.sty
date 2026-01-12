@@ -1,9 +1,8 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/set-code}[2026/01/12 v0.4.2 Code Listing Settings]
+\ProvidesPackage{packages/set-code}[2026/01/12 v0.4.3 Code Listing Settings]
 
 % ========================================================================
 
-\RequirePackage{fontspec}
 \RequirePackage{xcolor}
 \RequirePackage{tcolorbox}
 \RequirePackage{listings}
@@ -12,8 +11,8 @@
 \RequirePackage{kvoptions}
 
 \SetupKeyvalOptions{
-  family=set-code,    % "family" distinguishes your keys from others
-  prefix=setcode@     % "prefix" is the control sequence prefix for the final macros
+  family=set-code,
+  prefix=setcode@
 }
 
 \DeclareStringOption[default]{style}
@@ -54,7 +53,7 @@
 \tcbset{listing engine=minted}
 
 % The default font of the numbering in minted environments
-\renewcommand{\theFancyVerbLine}{\Arial{\scriptsize\arabic{FancyVerbLine}}}
+\renewcommand{\theFancyVerbLine}{\sffamily{\scriptsize\arabic{FancyVerbLine}}}
 
 \setmintedinline{
   fontsize=\small,
