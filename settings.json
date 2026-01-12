@@ -1,0 +1,90 @@
+{
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk (xelatex)",
+            "tools": [
+                "xelatexmk"
+            ]
+        },
+        {
+            "name": "latexmk (xelatex, minted)",
+            "tools": [
+                "minted",
+                "xelatexmk"
+            ]
+        },
+        {
+            "name": "xelatex (book)",
+            "tools": [
+                "xelatex",
+                "biber",
+                "makeglossaries",
+                "makeindex",
+                "xelatex",
+                "xelatex"
+            ]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-shell-escape",
+                "%DOC%"
+            ],
+            "env": {
+                "TEXINPUTS": "./packages//:"
+            }
+        },
+        {
+            "name": "xelatexmk",
+            "command": "latexmk",
+            "args": [
+                "-xelatex",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-shell-escape",
+                "%DOC%"
+            ],
+            "env": {
+                "TEXINPUTS": "./packages//:"
+            }
+        },
+        {
+            "name": "minted",
+            "command": "python3",
+            "args": [
+                "script/mint_injector.py",
+                "--style",
+                "style1",
+                "--texfile",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "biber",
+            "command": "biber",
+            "args": [
+                "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "makeglossaries",
+            "command": "makeglossaries",
+            "args": [
+                "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "makeindex",
+            "command": "makeindex",
+            "args": [
+                "%DOCFILE%"
+            ]
+        }
+    ]
+}
