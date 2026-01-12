@@ -170,7 +170,7 @@ acs-*.bib
 *.stc[0-9]*
 
 # minted
-_minted*
+_minted/*
 *.pyg
 
 # morewrites
@@ -481,3 +481,5 @@ cython_debug/
 
 .DS_Store
 .vscode/
+
+!_minted/style*.style.minted
