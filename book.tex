@@ -19,10 +19,10 @@
 % Set fonts for Latin and CJK scripts
 \usepackage{set-fonts}
 
-% The template also provides additional packages for common use cases
-% \usepackage{set-operator}
-% \usepackage{set-tikz}
-% \usepackage{set-misc}
+% If Chinese names and labels are needed, load style package with appropriate option
+% Options: tw (Traditional Chinese), cn (Simplified Chinese)
+\usepackage[tw]{style}
+
 
 % Set latin script and CJK fonts
 % Provided by \usepackage{set-fonts}
@@ -45,6 +45,8 @@
 % \makeglossaries
 
 \addbibresource{contents/bibliography/references.bib}
+
+\raggedbottom
 
 % ================================================================================================
 

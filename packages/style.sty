@@ -1,0 +1,190 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{packages/style}[2026/01/11 v0.1.0 Chinese names and labels]
+
+\RequirePackage{zhnumber}
+\RequirePackage{etoolbox}
+\RequirePackage{atbegshi}
+
+\def\Lang{}
+
+\DeclareOption{tw}{
+  \xdef\Lang{tw}%
+  \zhnumsetup{style={Traditional}}
+}
+\DeclareOption{cn}{
+  \xdef\Lang{cn}%
+  \zhnumsetup{style={Simplified}}
+}
+
+\ProcessOptions\relax
+
+% Change translations without overriding Polyglossia’s language settings
+
+\newcommand*{\style@setzhchapternum}{%
+  % Display chapters as 第<zhnumber>章; guard against zero-valued counters (e.g., before first chapter)
+  \renewcommand*{\printchaptername}{}%
+  \renewcommand*{\printchapternum}{\chapnumfont 第\zhnumber{\arabic{chapter}}章}%
+}
+
+\newcommand*{\style@setleftmarkzh}{%
+  \renewcommand{\chaptermark}[1]{%
+    \markboth{第\zhnumber{\arabic{chapter}}章　##1}{}%
+  }%
+}
+
+\newcommand*{\style@setlabels@tw}{%
+  \renewcommand*{\contentsname}{目錄}%
+  \renewcommand*{\listfigurename}{圖目錄}%
+  \renewcommand*{\listtablename}{表目錄}%
+  \renewcommand*{\figurename}{圖}%
+  \renewcommand*{\tablename}{表}%
+  \renewcommand*{\partname}{部}%
+  \renewcommand*{\chaptername}{章}%
+  \renewcommand*{\appendixname}{附錄}%
+  \renewcommand*{\bibname}{參考文獻}%
+  \renewcommand*{\indexname}{索引}%
+}
+
+\newcommand*{\style@setlabels@cn}{%
+  \renewcommand*{\contentsname}{目录}%
+  \renewcommand*{\listfigurename}{图目录}%
+  \renewcommand*{\listtablename}{表目录}%
+  \renewcommand*{\figurename}{图}%
+  \renewcommand*{\tablename}{表}%
+  \renewcommand*{\partname}{部}%
+  \renewcommand*{\chaptername}{章}%
+  \renewcommand*{\appendixname}{附录}%
+  \renewcommand*{\bibname}{参考文献}%
+  \renewcommand*{\indexname}{索引}%
+}
+
+\newcommand*{\style@setcreflabels@tw}{
+  \crefname{equation}{式}{式}
+  \Crefname{equation}{式}{式}
+  \crefname{figure}{圖}{圖}
+  \Crefname{figure}{圖}{圖}
+  \crefname{table}{表}{表}
+  \Crefname{table}{表}{表}
+  \crefname{page}{頁}{頁}
+  \Crefname{page}{頁}{頁}
+  \crefname{chapter}{章}{章}
+  \Crefname{chapter}{章}{章}
+  \crefname{section}{節}{節}
+  \Crefname{section}{節}{節}
+  \crefname{appendix}{附錄}{附錄}
+  \Crefname{appendix}{附錄}{附錄}
+  \crefname{algorithm}{演算法}{演算法}
+  \Crefname{algorithm}{演算法}{演算法}
+  \crefname{listing}{列表}{列表}
+  \Crefname{listing}{列表}{列表}
+  \crefname{line}{行}{行}
+  \Crefname{line}{行}{行}
+
+  \crefformat{chapter}{##2第##1章##3}%
+  \crefformat{section}{##2第##1節##3}%
+  \crefformat{subsection}{##2第##1節##3}%
+  \crefformat{subsubsection}{##2第##1節##3}%
+  \Crefformat{chapter}{##2第##1章##3}%
+  \Crefformat{section}{##2第##1節##3}%
+  \Crefformat{subsection}{##2第##1節##3}%
+  \Crefformat{subsubsection}{##2第##1節##3}%
+
+  \crefrangeformat{chapter}{##3第##1章##4至##5第##2章##6}%
+  \crefrangeformat{section}{##3第##1節##4至##5第##2節##6}%
+  \crefrangeformat{subsection}{##3第##1節##4至##5第##2節##6}%
+  \crefrangeformat{subsubsection}{##3第##1節##4至##5第##2節##6}%
+  \Crefrangeformat{chapter}{##3第##1章##4至##5第##2章##6}%
+  \Crefrangeformat{section}{##3第##1節##4至##5第##2節##6}%
+  \Crefrangeformat{subsection}{##3第##1節##4至##5第##2節##6}%
+  \Crefrangeformat{subsubsection}{##3第##1節##4至##5第##2節##6}%
+
+  \crefmultiformat{chapter}{##2第##1章##3}{和##2第##1章##3}{，##2第##1章##3}{和##2第##1章##3}%
+  \crefmultiformat{section}{##2第##1節##3}{和##2第##1節##3}{，##2第##1節##3}{和##2第##1節##3}%
+  \crefmultiformat{subsection}{##2第##1節##3}{和##2第##1節##3}{，##2第##1節##3}{和##2第##1節##3}%
+  \crefmultiformat{subsubsection}{##2第##1節##3}{和##2第##1節##3}{，##2第##1節##3}{和##2第##1節##3}%
+
+  \crefrangemultiformat{chapter}{##3第##1章##4至##5第##2章##6}{和##3第##1章##4至##5第##2章##6}{，##3第##1章##4至##5第##2章##6}{和##3第##1章##4至##5第##2章##6}%
+  \crefrangemultiformat{section}{##3第##1節##4至##5第##2節##6}{和##3第##1節##4至##5第##2節##6}{，##3第##1節##4至##5第##2節##6}{和##3第##1節##4至##5第##2節##6}%
+  \crefrangemultiformat{subsection}{##3第##1節##4至##5第##2節##6}{和##3第##1節##4至##5第##2節##6}{，##3第##1節##4至##5第##2節##6}{和##3第##1節##4至##5第##2節##6}%
+  \crefrangemultiformat{subsubsection}{##3第##1節##4至##5第##2節##6}{和##3第##1節##4至##5第##2節##6}{，##3第##1節##4至##5第##2節##6}{和##3第##1節##4至##5第##2節##6}%
+}
+
+\newcommand*{\style@setcreflabels@cn}{
+  \crefname{equation}{式}{式}
+  \Crefname{equation}{式}{式}
+  \crefname{figure}{图}{图}
+  \Crefname{figure}{图}{图}
+  \crefname{table}{表}{表}
+  \Crefname{table}{表}{表}
+  \crefname{page}{页}{页}
+  \Crefname{page}{页}{页}
+  \crefname{chapter}{章}{章}
+  \Crefname{chapter}{章}{章}
+  \crefname{section}{节}{节}
+  \Crefname{section}{节}{节}
+  \crefname{appendix}{附录}{附录}
+  \Crefname{appendix}{附录}{附录}
+  \crefname{algorithm}{算法}{算法}
+  \Crefname{algorithm}{算法}{算法}
+  \crefname{listing}{列表}{列表}
+  \Crefname{listing}{列表}{列表}
+  \crefname{line}{行}{行}
+  \Crefname{line}{行}{行}
+
+  \crefformat{chapter}{##2第##1章##3}%
+  \crefformat{section}{##2第##1节##3}%
+  \crefformat{subsection}{##2第##1节##3}%
+  \crefformat{subsubsection}{##2第##1节##3}%
+  \Crefformat{chapter}{##2第##1章##3}%
+  \Crefformat{section}{##2第##1节##3}%
+  \Crefformat{subsection}{##2第##1节##3}%
+  \Crefformat{subsubsection}{##2第##1节##3}%
+
+  \crefrangeformat{chapter}{##3第##1章##4至##5第##2章##6}%
+  \crefrangeformat{section}{##3第##1节##4至##5第##2节##6}%
+  \crefrangeformat{subsection}{##3第##1节##4至##5第##2节##6}%
+  \crefrangeformat{subsubsection}{##3第##1节##4至##5第##2节##6}%
+  \Crefrangeformat{chapter}{##3第##1章##4至##5第##2章##6}%
+  \Crefrangeformat{section}{##3第##1节##4至##5第##2节##6}%
+  \Crefrangeformat{subsection}{##3第##1节##4至##5第##2节##6}%
+  \Crefrangeformat{subsubsection}{##3第##1节##4至##5第##2节##6}%
+
+  \crefmultiformat{chapter}{##2第##1章##3}{和##2第##1章##3}{，##2第##1章##3}{和##2第##1章##3}%
+  \crefmultiformat{section}{##2第##1节##3}{和##2第##1节##3}{，##2第##1节##3}{和##2第##1节##3}%
+  \crefmultiformat{subsection}{##2第##1节##3}{和##2第##1节##3}{，##2第##1节##3}{和##2第##1节##3}%
+  \crefmultiformat{subsubsection}{##2第##1节##3}{和##2第##1节##3}{，##2第##1节##3}{和##2第##1节##3}%
+
+  \crefrangemultiformat{chapter}{##3第##1章##4至##5第##2章##6}{和##3第##1章##4至##5第##2章##6}{，##3第##1章##4至##5第##2章##6}{和##3第##1章##4至##5第##2章##6}%
+  \crefrangemultiformat{section}{##3第##1节##4至##5第##2节##6}{和##3第##1节##4至##5第##2节##6}{，##3第##1节##4至##5第##2节##6}{和##3第##1节##4至##5第##2节##6}%
+  \crefrangemultiformat{subsection}{##3第##1节##4至##5第##2节##6}{和##3第##1节##4至##5第##2节##6}{，##3第##1节##4至##5第##2节##6}{和##3第##1节##4至##5第##2节##6}%
+  \crefrangemultiformat{subsubsection}{##3第##1节##4至##5第##2节##6}{和##3第##1节##4至##5第##2节##6}{，##3第##1节##4至##5第##2节##6}{和##3第##1节##4至##5第##2节##6}%
+}
+
+\newcommand*{\style@setcrefconjunctions}{%
+  % Use Chinese conjunctions for cleveref lists/ranges and prevent later English resets
+  \renewcommand*{\crefpairconjunction}{~和~}%
+  \renewcommand*{\crefmiddleconjunction}{、}%
+  \renewcommand*{\creflastconjunction}{~和~}%
+  \renewcommand*{\crefpairgroupconjunction}{~和~}%
+  \renewcommand*{\crefmiddlegroupconjunction}{、}%
+  \renewcommand*{\creflastgroupconjunction}{~和~}%
+  \renewcommand*{\crefrangeconjunction}{~至~}%
+}
+
+\AtBeginDocument{%
+  \ifdefstring{\Lang}{tw}{
+    \style@setzhchapternum
+    \style@setleftmarkzh
+    \appto\captionsenglish{\style@setlabels@tw}\captionsenglish
+    \style@setcrefconjunctions
+    \style@setcreflabels@tw
+  }{}%
+  \ifdefstring{\Lang}{cn}{
+    \style@setzhchapternum
+    \style@setleftmarkzh
+    \appto\captionsenglish{\style@setlabels@cn}\captionsenglish
+    \style@setcrefconjunctions
+    \style@setcreflabels@cn
+  }{}%
+}
+
