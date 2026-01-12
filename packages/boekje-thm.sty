@@ -1,9 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/newtcbthm}[2026/01/11 v0.5.4 Theorem-like Environments Settings]
+\ProvidesPackage{packages/boekje-thm}[2026/01/11 v0.5.4 Theorem-like Environments Settings]
 
 \RequirePackage{iftex}
 \ifXeTeX\else
-  \PackageError{packages/newtcbthm}
+  \PackageError{packages/boekje-thm}
     {This package requires XeLaTeX (XeTeX engine)}
     {You are compiling with a non-XeTeX engine.\MessageBreak
      Please switch to XeLaTeX.}
@@ -74,8 +74,8 @@
   \def\solname{Solution}
 
 \pgfkeys{
-  /newtcbthm/names/.is family,
-  /newtcbthm/names,
+  /boekjethm/names/.is family,
+  /boekjethm/names,
   axname/.code       = {\def\axname{#1}},
   cjname/.code       = {\def\cjname{#1}},
   corname/.code      = {\def\corname{#1}},
@@ -105,8 +105,8 @@
 }
 
 \pgfkeys{
-  /newtcbthm/lang/en/.style={
-    /newtcbthm/names/.cd,
+  /boekjethm/lang/en/.style={
+    /boekjethm/names/.cd,
     axname={Axiom},
     cjname={Conjecture},
     corname={Corollary},
@@ -134,8 +134,8 @@
     pfname={Proof},
     solname={Solution},
   },
-  /newtcbthm/lang/tw/.style={
-    /newtcbthm/names/.cd,
+  /boekjethm/lang/tw/.style={
+    /boekjethm/names/.cd,
     axname={公理},
     cjname={猜想},
     corname={推論},
@@ -163,8 +163,8 @@
     pfname={證明},
     solname={解答},
   },
-  /newtcbthm/lang/cn/.style={
-    /newtcbthm/names/.cd,
+  /boekjethm/lang/cn/.style={
+    /boekjethm/names/.cd,
     axname={公理},
     cjname={猜想},
     corname={推论},
@@ -192,8 +192,8 @@
     pfname={证明},
     solname={解答},
   },
-  /newtcbthm/lang/de/.style={
-    /newtcbthm/names/.cd,
+  /boekjethm/lang/de/.style={
+    /boekjethm/names/.cd,
     axname={Axiom},
     cjname={Vermutung},
     corname={Korollar},
@@ -226,7 +226,7 @@
 \makeatletter
 % Cleveref needs the label types registered before any \cref/\Cref usage.
 % Do it immediately if cleveref is already loaded; otherwise defer to begin document.
-\newcommand*\newtcbthm@declarecrefnames{%
+\newcommand*\boekjethm@declarecrefnames{%
   \crefname{ex}{\exname}{\exnameplural}%
   \Crefname{ex}{\exname}{\exnameplural}%
   \crefname{Ex}{\exname}{\exnameplural}%
@@ -278,27 +278,27 @@
 }
 
 \@ifpackageloaded{cleveref}{%
-  \newtcbthm@declarecrefnames
+  \boekjethm@declarecrefnames
 }{%
-  \AtBeginDocument{\@ifpackageloaded{cleveref}{\newtcbthm@declarecrefnames}{}}%
+  \AtBeginDocument{\@ifpackageloaded{cleveref}{\boekjethm@declarecrefnames}{}}%
 }%
 \makeatother
 
 \def\theoremlangen{%
   \message{Set Language: English}%
-  \pgfkeys{/newtcbthm/lang/en}%
+  \pgfkeys{/boekjethm/lang/en}%
 }
 \def\theoremlangtw{%
   \message{Set Language: Chinese (Traditional)}%
-  \pgfkeys{/newtcbthm/lang/tw}%
+  \pgfkeys{/boekjethm/lang/tw}%
 }
 \def\theoremlangcn{%
   \message{Set Language: Chinese (Simplified)}%
-  \pgfkeys{/newtcbthm/lang/cn}%
+  \pgfkeys{/boekjethm/lang/cn}%
 }
 \def\theoremlangde{%
   \message{Set Language: German}%
-  \pgfkeys{/newtcbthm/lang/de}%
+  \pgfkeys{/boekjethm/lang/de}%
 }
 
 % Modified from amsthm.sty

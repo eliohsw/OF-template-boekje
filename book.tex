@@ -13,11 +13,11 @@
 % Main packages for memoir class
 % Options: en (English), de (German), tw (Traditional Chinese), cn (Simplified Chinese),
 %          glo (glossary), idx (index)
-\usepackage[en]{set-memoir}
+\usepackage[en]{boekje}
 
 % If Chinese names and labels are needed, load style package with appropriate option
 % Options: tw (Traditional Chinese), cn (Simplified Chinese)
-% \usepackage[tw]{zhlabel}
+% \usepackage[tw]{boekje-label}
 
 % Set code listing style (UNCOMMENT if needed)
 % Options: [style=...]
@@ -25,11 +25,11 @@
 % 2. User defined styles: style1, style2, style3, ... (See script/mint_styles.py)
 %    Since Overleaf runs a restricted -shell-escape, to use custom styles,
 %    compile the _minted/style*.style.minted file locally by `make`, then sync via Git
-\usepackage[style=style1]{set-code}
+% \usepackage[style=style1]{boekje-code}
 
 
 % Set latin script and CJK fonts
-% Provided by \usepackage{listfonts}
+% Provided by \usepackage{boekje-fonts}
 \input{preamble/schrift.tex}
 
 % Set language-specific fonts (Polyglossia) (UNCOMMENT if needed)
