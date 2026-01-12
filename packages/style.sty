@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/style}[2026/01/11 v0.1.0 Chinese names and labels]
+\ProvidesPackage{packages/style}[2026/01/12 v0.1.0 Chinese names and labels]
 
 \RequirePackage{zhnumber}
 \RequirePackage{etoolbox}
@@ -19,6 +19,7 @@
 \ProcessOptions\relax
 
 % Change translations without overriding Polyglossia’s language settings
+% Modified from: https://gist.github.com/anamewing/5154b6278f63e8d738bb5d57413a923f
 
 \newcommand*{\style@setzhchapternum}{%
   % Display chapters as 第<zhnumber>章; guard against zero-valued counters (e.g., before first chapter)
