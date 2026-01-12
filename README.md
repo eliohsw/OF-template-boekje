@@ -25,10 +25,10 @@ Clone the repository from [GitHub](https://github.com/eliohsw/OF-template-boekje
 6. Customize headings and spacing in `preamble/stil.tex`. Add content in `contents/` and include new chapters or appendices via `\input{...}` in `book.tex` , and uncomment optional features in `book.tex` (glossary, index, bibliography) when needed.
 
 > [!NOTE]
-> For VS Code LaTeX Workshop integration, merge the LaTeX Workshop recipes/tools from `settings.json` into your own settings (notably `xelatexmk`, `minted`, and `TEXINPUTS`). The template defaults to `make` for a clean, reproducible build.
+> For VS Code LaTeX Workshop integration, merge the LaTeX Workshop recipes/tools from `settings.json` into your own settings. The template defaults to `make` for a clean, reproducible build.
 
 > [!CAUTION]
-> Custom minted styles (for `boekje-code` ) are generated locally by `script/mint_injector.py` from `script/mint_styles.py` and cached in `_minted/*.style.minted` . Overleaf cannot generate these files due to restricted shell-escape, so compile locally and commit the cached style file if you need Overleaf. This cache workaround is not ideal, but it is the current approach.
+> Custom minted styles are generated locally by `script/mint_injector.py` from `script/mint_styles.py` and cached in `_minted/*.style.minted` . Overleaf cannot generate these files due to restricted shell escape, so compile locally and commit the cached style file if you need to use Overleaf. This cache workaround is not ideal, but it is the current approach.
 
 ## Recommendations
 
