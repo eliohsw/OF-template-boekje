@@ -15,13 +15,14 @@ To compile the document, type `make` or `make xelatexmk` in your terminal, or by
 
 ## Initialization
 
-Install [VS Code](https://code.visualstudio.com/download) if you intend to compile locally, ensure the [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) extension is installed and enabled.
+Install [VS Code](https://code.visualstudio.com/download), GNU Make, and a LaTeX distribution (TeX Live, MacTeX, or MiKTeX) if you intend to compile locally. Ensure `latexmk` is available, and the [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) extension is installed and enabled.
 
-If you compile locally, install a LaTeX distribution (TeX Live, MacTeX, or MiKTeX) and make sure `latexmk` is available. Make sure GNU Make, Python 3, and pygments are available.
+If you intend to use `boekje-code.sty` , Make sure Python 3, and pygments are available.
 
 > [!NOTE]
-> - MacOS: Install Xcode Command Line Tools (`xcode-select --install`) to get `make`; install Python 3 if `python3` is missing.
+> - MacOS: Install Xcode Command Line Tools ( `xcode-select --install` ) to get `make` ; install Python 3 if `python3` is missing.
 > - Windows: Install `make` (Chocolatey, MSYS2, or WSL); install Python 3 and ensure `python` or `py -3` works.
+> 
 > Use `python -m pip install pygments` to install pygments.
 
 ## Usage
