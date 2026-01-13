@@ -12,8 +12,7 @@
         {
             "name": "latexmk (xelatex, minted)",
             "tools": [
-                "minted",
-                "xelatexmk"
+                "makeminted"
             ]
         },
         {
@@ -27,18 +26,6 @@
                 "xelatex"
             ]
         },
-        {
-            "name": "xelatex (boekje, minted)",
-            "tools": [
-                "minted",
-                "xelatex",
-                "biber",
-                "makeglossaries",
-                "makeindex",
-                "xelatex",
-                "xelatex"
-            ]
-        }
     ],
     "latex-workshop.latex.tools": [
         {
@@ -64,13 +51,20 @@
         },
         {
             "name": "minted",
-            "command": "python3",
+            "command": "python",
             "args": [
                 "script/mint_injector.py",
                 "--style",
                 "style1",
                 "--texfile",
                 "%DOC%"
+            ]
+        },
+        {
+            "name": "makeminted",
+            "command": "make",
+            "args": [
+                "minted"
             ]
         },
         {
@@ -97,5 +91,5 @@
     ],
     "latex-workshop.latex.autoClean.run": "onFailed",
     "latex-workshop.latex.clean.command": "make",
-    "latex-workshop.latex.clean.args": [ "clean" ]
+    "latex-workshop.latex.clean.args": [ "clean" ],
 }

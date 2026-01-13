@@ -1,8 +1,12 @@
-.PHONY: all xelatexmk clean
+.PHONY: all xelatexmk clean minted minted-prep
 
 LATEXMK_FLAGS = -xelatex -synctex=1 -file-line-error -interaction=nonstopmode -halt-on-error -shell-escape
+MAIN_TEX      = book.tex
+MINT_STYLE    = style1
+PYTHON        = python3
 
 ifeq ($(OS),Windows_NT)
+  PYTHON = python
   RM_AUX = powershell -NoProfile -Command \
     "Remove-Item -Force -ErrorAction SilentlyContinue \
     *.acn,*.acr,*.alg,*.aux,*.auxlock,*.bbl,*.bcf,*.blg,*.fdb_latexmk, \
@@ -30,7 +34,12 @@ endif
 all: xelatexmk
 
 xelatexmk:
-	latexmk $(LATEXMK_FLAGS) book.tex
+	latexmk $(LATEXMK_FLAGS) $(MAIN_TEX)
+
+minted: minted-prep xelatexmk
+
+minted-prep:
+	$(PYTHON) script/mint_injector.py --style $(MINT_STYLE) --texfile $(MAIN_TEX)
 
 clean:
 	@$(RM_AUX)
