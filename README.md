@@ -1,6 +1,6 @@
 # OF-template-boekje
 
-A lightweight, multipurpose, multilingual, multiplatform book template built for XeLaTeX.
+A (lightweight), multipurpose, multilingual, multiplatform book template built for XeLaTeX.
 
 To compile the document, type `make` or `make xelatexmk` in your terminal, or by clicking **Recompile** on Overleaf (make sure compiler `XeLaTeX` and main document `book.tex` are configured in the settings).
 
@@ -13,17 +13,17 @@ To compile the document, type `make` or `make xelatexmk` in your terminal, or by
 - `packages/` — Custom packages for specialized formatting and features
 - `preamble/` — Document preamble configuration
 
-## Usage
+## Initialization and Usage
 
-Clone the repository from [GitHub](https://github.com/eliohsw/OF-template-boekje/) , or duplicate the project from [Overleaf](https://www.overleaf.com/read/rnkvhykqdxsk#c7c064) .
+Install [LaTeX](https://www.latex-project.org/get/) and [VS Code](https://code.visualstudio.com/download) if you intend to compile the document locally, ensure the [LaTeX Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop) extension is working. Then, clone the repository from [GitHub](https://github.com/eliohsw/OF-template-boekje/) , or duplicate the project from [Overleaf](https://www.overleaf.com/read/rnkvhykqdxsk#c7c064) . 
 
-1. Build locally with `make` (recommended).
-2. In `book.tex` , set the `boekje` options for document language and features. Enable optional modules `boekje-label` for Chinese labels and `boekje-code` for code listings.
-4. Configure fonts in `preamble/schrift.tex` (Latin and CJK lists). Install the fonts you select, or use fonts on your machine. For extra languages, uncomment `\input{preamble/sprache.tex}` and adjust its font declarations.
-6. Customize headings and spacing in `preamble/stil.tex`. Add content in `contents/` and include new chapters or appendices via `\input{...}` in `book.tex` , and uncomment optional features in `book.tex` (glossary, index, bibliography) when needed.
+1. In `book.tex` , set the `boekje` options for document language and features. Enable optional modules `boekje-label` for Chinese labels and `boekje-code` for code listings.
+2. Configure fonts in `preamble/schrift.tex` (Latin and CJK lists). Install the fonts you select, or use fonts on your machine. For extra languages, uncomment `\input{preamble/sprache.tex}` and adjust its font declarations.
+3. Customize headings and spacing in `preamble/stil.tex`. Add content in `contents/` and include new chapters or appendices via `\input{...}` in `book.tex` , and uncomment optional features in `book.tex` (glossary, index, bibliography) when needed.
+4. Build locally with `make` or LaTeX Workshop.
 
 > [!NOTE]
-> For VS Code LaTeX Workshop integration, merge the LaTeX Workshop recipes/tools from `settings.json` into your own settings. The template defaults to `make` for a clean, reproducible build.
+> For VS Code LaTeX Workshop integration, merge the LaTeX Workshop recipes/tools from `settings.jsonc` into your own settings. The template defaults to `make` for a clean, reproducible build.
 
 > [!CAUTION]
 > Custom minted styles are generated locally by `script/mint_injector.py` from `script/mint_styles.py` and cached in `_minted/*.style.minted` . Overleaf cannot generate these files due to restricted shell escape, so compile locally and commit the cached style file if you need to use Overleaf. This cache workaround is not ideal, but it is the current approach.
