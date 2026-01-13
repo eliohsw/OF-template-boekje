@@ -1,9 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/boekje}[2026/01/12 v0.6.2 Basic packages for memoir class]
+\ProvidesPackage{boekje}[2026/01/12 v0.6.2 Basic packages for memoir class]
 
 \RequirePackage{iftex}
 \ifXeTeX\else
-  \PackageError{packages/boekje}
+  \PackageError{boekje}
     {This package requires XeLaTeX (XeTeX engine)}
     {You are compiling with a non-XeTeX engine.\MessageBreak
      Please switch to XeLaTeX.}
@@ -156,17 +156,17 @@
 
 % ========================================================================
 
-\RequirePackage{packages/boekje-fonts}
+\RequirePackage{boekje-fonts}
 
 \ifdefstring{\memo@Lang}{en}{
-  \RequirePackage[en]{packages/boekje-thm}
+  \RequirePackage[en]{boekje-thm}
 }{}
 \ifdefstring{\memo@Lang}{de}{
-  \RequirePackage[de]{packages/boekje-thm}
+  \RequirePackage[de]{boekje-thm}
 }{}
 \ifdefstring{\memo@Lang}{tw}{
-  \RequirePackage[tw]{packages/boekje-thm}
+  \RequirePackage[tw]{boekje-thm}
 }{}
 \ifdefstring{\memo@Lang}{cn}{
-  \RequirePackage[cn]{packages/boekje-thm}
+  \RequirePackage[cn]{boekje-thm}
 }{}
