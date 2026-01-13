@@ -1,5 +1,7 @@
 {
+    // Disable autobuild
     "latex-workshop.latex.autoBuild.run": "never",
+    // Custom recipes and tools
     "latex-workshop.latex.recipes": [
         {
             "name": "latexmk (xelatex)",
@@ -15,8 +17,20 @@
             ]
         },
         {
-            "name": "xelatex (book)",
+            "name": "xelatex (boekje)",
             "tools": [
+                "xelatex",
+                "biber",
+                "makeglossaries",
+                "makeindex",
+                "xelatex",
+                "xelatex"
+            ]
+        },
+        {
+            "name": "xelatex (boekje, minted)",
+            "tools": [
+                "minted",
                 "xelatex",
                 "biber",
                 "makeglossaries",
