@@ -49,10 +49,7 @@
                 "-interaction=nonstopmode",
                 "-shell-escape",
                 "%DOC%"
-            ],
-            "env": {
-                "TEXINPUTS": "./packages//:"
-            }
+            ]
         },
         {
             "name": "xelatexmk",
@@ -63,10 +60,7 @@
                 "-interaction=nonstopmode",
                 "-shell-escape",
                 "%DOC%"
-            ],
-            "env": {
-                "TEXINPUTS": "./packages//:"
-            }
+            ]
         },
         {
             "name": "minted",

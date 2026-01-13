@@ -28,6 +28,12 @@ Install [LaTeX](https://www.latex-project.org/get/) and [VS Code](https://code.v
 > [!CAUTION]
 > Custom minted styles are generated locally by `script/mint_injector.py` from `script/mint_styles.py` and cached in `_minted/*.style.minted` . Overleaf cannot generate these files due to restricted shell escape, so compile locally and commit the cached style file if you need to use Overleaf. This cache workaround is not ideal, but it is the current approach.
 
+## Windows notes
+
+- `make` is POSIX-only; use LaTeX Workshop or run `latexmk -xelatex -synctex=1 -file-line-error -interaction=nonstopmode -halt-on-error -shell-escape book.tex` in PowerShell/CMD (or use WSL/Git Bash).
+- The build relies on `latexmkrc` to set `TEXINPUTS` with the correct path separator on Windows.
+- For minted styles, install Python 3 and run `python script/mint_injector.py --style style1 --texfile book.tex` (or `py -3 ...`). If you use the LaTeX Workshop minted recipe, update the `minted` tool command in `settings.jsonc` to match your Python binary (`python3`, `python`, or `py -3`). Keep `_minted/*.style.minted` tracked for Overleaf.
+
 ## Recommendations
 
 This template supports multilingual documents via Polyglossia, primarily handling Latin (English, German) and CJK text. If other languages are needed, adjust the corresponding Polyglossia settings.

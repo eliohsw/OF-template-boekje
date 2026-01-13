@@ -3,7 +3,7 @@
 all: xelatexmk
 
 xelatexmk:
-	TEXINPUTS=./packages//: latexmk -xelatex -synctex=1 -file-line-error -interaction=nonstopmode -halt-on-error -shell-escape book.tex
+	latexmk -xelatex -synctex=1 -file-line-error -interaction=nonstopmode -halt-on-error -shell-escape book.tex
 
 clean:
 	@rm -f *.acn *.acr *.alg *.aux *.auxlock *.bbl *.bcf *.blg *.fdb_latexmk \
