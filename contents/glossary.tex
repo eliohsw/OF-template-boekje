@@ -1,13 +1,31 @@
-% The BEST PRACTICE is to insert this file in the preamble.
-% Here are some examples of how to use the glossary and acronyms:
-% see https://overleaf.com/learn/latex/Glossaries
+% Insert this file in the preamble
+% See also: https://overleaf.com/learn/latex/Glossaries
 
-% ============ Acronyms =======================================================
+% Usage: \newacronym{<label>}{<short>}{<long>}
+%        \newglossaryentry{<label>}{name=<name>, description={...}}
+% E.g.,  \newacronym{adc}{ADC}{analog-to-digital converter}
+%        \newglossaryentry{meter}{name=meter, description={Some description}}
 
-\newacronym{gcd}{GCD}{Greatest Common Divisor}
-\newacronym{lcm}{LCM}{Least Common Multiple}
+% Useful keys: `firstplural`, `plural`, `longplural`, `description`
+% \newacronym[
+%   plural={ADCs},
+%   firstplural={analog-to-digital converters (ADCs)},
+%   longplural={analog-to-digital converters},
+%   description={Some description}
+% ]{adc}{ADC}{analog-to-digital converter}
 
-% ============ Glossary =======================================================
+% Refer to acronyms and glossary entries with 
+%   \gls{},\Gls{},\glspl{},\Glspl{} 
+% Forcing a specific form of acronyms with
+%   \acrshort{},\acrlong{},\acrfull{},\acrshortpl{},\acrlongpl{},\acrfullpl{}
 
-\newglossaryentry{meter}{name=meter, description={unit of length}}
+% Set acronym as used or unused with \glsunset{} \glsreset{}
+% Reset all acronyms with \glsresetall{}
+
+% --------------------------------------------------------------------------
+
+
+
+% --------------------------------------------------------------------------
+
 
