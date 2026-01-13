@@ -100,5 +100,8 @@
                 "%DOCFILE%"
             ]
         }
-    ]
+    ],
+    "latex-workshop.latex.autoClean.run": "onFailed",
+    "latex-workshop.latex.clean.command": "make",
+    "latex-workshop.latex.clean.args": [ "clean" ]
 }
