@@ -2,9 +2,11 @@
 
 A (lightweight), multipurpose, multilingual, multiplatform book template built for XeLaTeX.
 
-Collaborate on LaTeX projects with your friends with this template. This template is designed for maximum support for common typesetting usage across different platforms.
+You can collaborate on LaTeX projects with your friends with this template. This template is designed to provide maximum support for common typesetting usage across various platforms.
 
-To compile the document, type `make` or `make xelatexmk` in your terminal, or by clicking **Recompile** on Overleaf (make sure compiler `XeLaTeX` and main document `book.tex` are configured in the settings).
+I designed the template with my personal preferences. However, most settings are highly customizable, with detailed guides written in the comments.
+
+To compile the document, type `make` in your terminal, or by clicking **Recompile** on Overleaf (make sure compiler `XeLaTeX` and main document `book.tex` are configured in the settings).
 
 ## Structure
 
@@ -21,8 +23,8 @@ Install [VS Code](https://code.visualstudio.com/download), GNU Make, and a LaTeX
 
 If you intend to use `boekje-code.sty` , make sure Python 3 and Pygments are available. Use `python -m pip install pygments` or `python3 -m pip install pygments` to install Pygments.
 
-> [!NOTE]
-> For MacOS users, install Xcode Command Line Tools via `xcode-select --install` to get `make` ; install Python 3 if `python3` is missing. For Windows users, install `make` (Chocolatey, MSYS2, or WSL); install Python 3 and ensure `python` or `py -3` works.
+For MacOS users, install Xcode Command Line Tools via `xcode-select --install` to get `make` .\
+For Windows users, install `make` via Chocolatey, MSYS2, or WSL.
 
 ## Usage
 
