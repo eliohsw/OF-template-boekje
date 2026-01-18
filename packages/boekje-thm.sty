@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{boekje-thm}[2026/01/11 v0.5.4 Theorem-like Environments Settings]
+\ProvidesPackage{boekje-thm}[2026/01/19 v0.5.5 Theorem-like Environments Settings]
 
 \RequirePackage{iftex}
 \ifXeTeX\else
@@ -394,7 +394,7 @@
     middle=4mm, lower separated=true, halign lower=justify,
     left=2mm, right=2mm,
     breakable, toprule at break=0mm, bottomrule at break=0mm, lines before break=1,
-    before skip=12pt minus 4pt, after skip=12pt plus 4pt minus 4pt,
+    beforeafter skip balanced=0.375\baselineskip plus 2pt,
     borderline={0.75pt}{0pt}{black},
     segmentation engine=path,
     segmentation style={draw=black!50, line width=0.6pt, dashed}
@@ -408,7 +408,7 @@
     left=0mm, right=0mm, boxsep=0mm,
     leftrule=0pt, rightrule=0pt, toprule=0pt, bottomrule=0pt,
     breakable, toprule at break=0mm, bottomrule at break=0mm,
-    before skip=6pt, after skip=8pt plus 2.5pt,
+    beforeafter skip balanced=0.375\baselineskip plus 2pt,
   },
   geo_base/.style={
     sidebyside adapt= right, boxsep=0pt, sharp corners=all, blankest,
