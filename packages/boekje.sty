@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{boekje}[2026/01/14 v0.6.3 Basic packages for memoir class]
+\ProvidesPackage{boekje}[2026/01/19 v0.6.4 Basic packages for memoir class]
 
 \RequirePackage{iftex}
 \ifXeTeX\else
@@ -152,15 +152,18 @@
 
 \RequirePackage{boekje-fonts}
 
-\ifdefstring{\memo@Lang}{en}{
+% Load boekje-thm based on language option
+\makeatletter
+\IfStrEq{\memo@Lang}{en}{
   \RequirePackage[en]{boekje-thm}
 }{}
-\ifdefstring{\memo@Lang}{de}{
+\IfStrEq{\memo@Lang}{de}{
   \RequirePackage[de]{boekje-thm}
 }{}
-\ifdefstring{\memo@Lang}{tw}{
+\IfStrEq{\memo@Lang}{tw}{
   \RequirePackage[tw]{boekje-thm}
 }{}
-\ifdefstring{\memo@Lang}{cn}{
+\IfStrEq{\memo@Lang}{cn}{
   \RequirePackage[cn]{boekje-thm}
 }{}
+\makeatother
