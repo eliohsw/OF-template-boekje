@@ -3,7 +3,7 @@
 
 \usepackage[
   inner=2.8cm, outer=2.2cm, top=2.5cm, bottom=2cm,
-  showframe % show page layout for debugging
+  % showframe % show page layout for debugging
 ]{geometry}
 
 \makeatletter
@@ -25,6 +25,8 @@
 % 2. User defined styles: style1, style2, style3, ... (See script/mint_styles.py)
 %    Since Overleaf runs a restricted -shell-escape, to use custom styles,
 %    compile the _minted/style*.style.minted file locally by `make`, then sync via Git
+% 3. When custom styles change, regenerate them before latexmk compilation
+%    (e.g., `make minted` or `python3 script/mint_injector.py --style style1 --texfile book.tex`)
 % \usepackage[style=style1]{boekje-code}
 
 

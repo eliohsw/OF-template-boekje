@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{boekje-thm}[2026/01/19 v0.5.5 Theorem-like Environments Settings]
+\ProvidesPackage{boekje-thm}[2026/01/19 v0.5.6 Theorem-like Environments Settings]
 
 \RequirePackage{iftex}
 \ifXeTeX\else
@@ -424,6 +424,8 @@
   },
 }
 
+% Usage: \begin{<thm>}{<title>}{<label>} ... \end{<thm>}
+%        \cref{<thm>:<label>} and \Cref{<thm>:<label>}
 \newtcbtheorem[number within=section]{ex}{\bfseries \exname}{normalstyle,label type=ex}{ex}
 \newtcbtheorem[use counter from=ex]{Ex}{\bfseries \exname\TheoremExtraSpace}{theoremstyle,label type=ex}{Ex}
 

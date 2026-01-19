@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{boekje-code}[2026/01/14 v0.4.5 Code Listing Settings]
+\ProvidesPackage{boekje-code}[2026/01/19 v0.4.6 Code Listing Settings]
 
 % ========================================================================
 
@@ -20,21 +20,15 @@
 
 \ProcessKeyvalOptions*\relax
 
-% Auto-generate custom minted style files when a local injector is available.
-\edef\boekjecode@style@normalized{\detokenize\expandafter{\boekjecode@style}}
-\ifx\boekjecode@style@normalized\@empty
-  \relax
-\else
-  \IfFileExists{script/mint_injector.py}{%
-    \immediate\write18{python3 script/mint_injector.py --style \boekjecode@style@normalized\space --texfile \jobname.tex || python script/mint_injector.py --style \boekjecode@style@normalized\space --texfile \jobname.tex || py -3 script/mint_injector.py --style \boekjecode@style@normalized\space --texfile \jobname.tex}%
-  }{}%
-\fi
-
 % ========================================================================
 
+% Normalize style option to a plain string for safe comparisons/use
+\edef\boekjecode@style@normalized{\detokenize\expandafter{\boekjecode@style}}
+
 \ifx\boekjecode@style@normalized\@empty
   \relax
 \else
+  % Custom styles must be generated beforehand via script/mint_injector.py
   \edef\@temp{
     \noexpand\setminted{style=\boekjecode@style@normalized}
   }
